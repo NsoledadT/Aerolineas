@@ -1,0 +1,613 @@
+body{
+background-color:#99a3aa;
+font-family:verdara,arial;
+margin:0 auto;
+
+}
+
+a{
+text-decoration:none;
+}
+
+ul li{
+float:left;
+list-style:none;
+margin-left:18px;
+}
+
+#general{
+width:1100px;
+height: auto;
+margin:0 auto;
+}
+
+#encabezado{
+background-color:#223853;
+width:1100px;
+height:60px;
+}
+
+#formulario  form label{
+font-size:11px;
+}
+
+#formulario  form  input[type="text"]{
+width:150px;
+height: 10px;
+-moz-border-radius:10px; /* Firefox */ 
+-webkit-border-radius:10px; /* Safari y Chrome */
+}
+
+#formulario{
+float:right;
+margin-right:30px;
+}
+
+#formulario p input[type=image]{
+width:63px;
+height:21px;
+float:right;
+margin-top:-15px;
+}
+
+#encabezado_medio{
+background: url("../img/avion_inicio.jpg") no-repeat;
+width:1100px;
+height:543px;
+margin-top:-16px;
+}
+
+#encabezado_medio_vuelos{
+background: url("../img/avion_paginas.jpg") no-repeat;
+width:1100px;
+height:379px;
+margin-top:-16px;
+}
+
+#encabezado_medio img,#encabezado_medio_vuelos img{
+margin-top:16px;
+margin-left:16px;
+float:left;
+}
+
+#encabezado_medio a,#encabezado_medio_vuelos a{
+margin-top:-50px;
+background: url("../img/li_principal_1.gif") no-repeat;
+width:123px;
+height:50px;
+color:#ffffff;
+float:left;
+padding-top:30px;
+padding-left:7px;
+}
+
+#encabezado_medio a:hover,#encabezado_medio_vuelos a:hover{
+color:#ffffff;
+background: url("../img/li_principal.gif") no-repeat;
+
+}
+
+#encabezado_medio ul li,#encabezado_medio_vuelos ul li{
+margin-top:50px;
+margin-left:50px;
+color:#ffffff;
+text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+#encabezado label{
+color:#ffffff;
+font-size:12px;
+}
+
+#contenido{
+float:left;
+background-color:#ffffff;
+width:1100px;
+height:auto;
+color:#5178bf;
+}
+
+.columna{
+width:341px;
+height:400px;
+float:left;
+padding-left:10px;
+}
+
+.columna p imput[type="image"]{
+width:98px; 
+height:30px;
+}
+
+.linea_formulario{
+margin-top:-10px;
+margin-left:105px;
+}
+
+#categoria{
+margin-top:14px;
+}
+
+.primeros_input{
+width:312px;
+}
+
+.columna form  p select{
+float:left;
+margin-top:-5px;
+}
+
+.columna form  p  input[type="image"]{
+margin-top:50px;
+}
+
+.columna  p a{
+font-size:11px;
+color:#5178bf;
+}
+
+.columna p{
+font-size:13px;
+}
+
+.boton_info{
+float:right;
+margin-bottom:10px;
+}
+
+.blanco_columna{
+float:left;
+width:23px;
+height:3px;
+}
+
+.recuadro_promocion{
+background-color:#f1f6fb;
+width:330px;
+height:118px;
+margin-top:20px;
+-moz-border-radius:10px; /* Firefox */ 
+-webkit-border-radius:10px; /* Safari y Chrome */
+padding-top:2px;
+}
+
+.recuadro_promocion img{
+float:left;
+margin-left:10px;
+margin-right:10px;
+margin-top:20px;
+}
+
+.recuadro_promocion p{
+margin-top:-10px;
+font-size:12px;
+}
+
+
+.recuadro_promocion a img{
+margin-top:-15px;
+}
+
+.recuadro_promocion a{
+float:right;
+}
+
+#check{
+position:absolute;
+margin-top:-27px;
+}
+
+#pie{
+background-color:#dbe7f3;
+width:1100px;
+height:120px;
+float:left;
+}
+
+#pie img{
+margin-top:20px;
+margin-left:40px;
+float:left;
+}
+
+#pie p{
+font-size:10px;
+}
+
+#pie p,#pie h2{
+color:#0b2f7d;
+margin-left:100px;
+}
+
+#menu_lateral{
+background-color:#ffffff;
+width:351px;
+height:400px;
+float:left;
+}
+
+#columna_contenido{
+width:749px;
+height:auto;
+float:left;
+background-color:#ffffff;
+}
+
+#encabezado_medio_vuelos .aeromoza{
+position:absolute;
+margin-top:100px;
+margin-left:-220px;
+}
+
+#menu_contenedor_li{
+position:absolute;
+margin-top:-30px;
+background-color:white;
+box-shadow: 2px 2px 10px #d5d3cb;
+width:240px;
+height:230px;
+padding-top:70px;
+margin-left:60px;
+}
+
+#menu_contenedor_li p{
+position:relative;
+font-size:80px;
+color:#007d76;
+margin-top:-50px;
+margin-left:15px;
+z-index:1;
+}
+
+#contenedor_li{
+background-color:#e0e8ee;
+position:relative;
+width:210px;
+height:200px;
+margin-left:14px;
+margin-top:-110px;
+z-index:3;
+}
+
+#contenedor_li a{
+font-size:13px;
+color:#506da9;
+margin-left:10px;
+font-weight:bold;
+background: url("../img/menu_lateral.gif") no-repeat;
+width:152px;
+height:21px;
+float:left;
+padding-left:30px;
+}
+
+#contenedor_li a:hover{
+color:#ffffff;
+background: url("../img/menu_lateral_a.gif") no-repeat;
+}
+
+.blanco_columna_li{
+width:10px;
+height:15px;
+}
+
+#barra_titulo{
+background-color:#0b2f7d;
+box-shadow: 2px 2px 10px #d5d3cb;
+width:680px;
+height:40px;
+margin-top:30px;
+}
+
+#barra_titulo h4{
+font-size:15px;
+color:#55b8d3;
+margin-left:70px;
+margin-top:-20px;
+}
+
+#barra_titulo img{
+margin-left:40px;
+margin-top:15px;
+}
+
+#columna_contenido p{
+font-size:12px;
+width:540px;
+float:left;
+}
+
+.titulito{
+margin-left:5px;
+font-weight:bold;
+font-size:14px;
+}
+
+.recuadro_tabla{
+background-color:#f5f8fa;
+width:680px;
+height:140px;
+margin-bottom:50px;
+padding:30px 30px 30px 30px;
+}
+
+#boton_continuar{
+margin-left:540px;
+margin-top:-50px;
+}
+
+#boton_volver{
+margin-left:10px;
+}
+
+.espacio_blanco_pie{
+width:30px;
+height:100px;
+float:left;
+}
+
+.recuadro_tabla  tr td{
+border-bottom-style:dotted;
+border-bottom-color:black;
+border-bottom-width:1px;
+}
+
+.recuadro_tabla table {
+width:600px;
+height:100px;
+margin-left:25px;
+}
+
+.recuadro_tabla th {
+background: url("../img/fondo_barra.gif") repeat-x;
+margin-left:25px;
+width:600px;
+height:29px;
+border-style:solid;
+border-color:#707273;
+border-width:1px;
+-moz-border-radius:10px; /* Firefox */ 
+-webkit-border-radius:10px; /* Safari y Chrome */
+font-size:13px;
+}
+
+#columna_contenido h5{
+margin-left:25px;
+margin-top:-20px;
+}
+
+#tarifa{
+background-color:#f5f8fa;
+width:678px;
+height:90px;
+margin-bottom:40px;
+}
+
+#tarifa p{
+background-color:#e0e8ee;
+width:668px;
+height:20px;
+font-weight:bold;
+margin-top:1px;
+padding-left:10px;
+padding-top:10px;
+}
+
+#tarifa p span,#tarifa h6{
+float:right;
+margin-right:10px;
+}
+
+.recuadro_tabla_verificacion {
+background-color:#f5f8fa;
+width:670px;
+height:auto;
+margin-bottom:50px;
+float:left;
+}
+
+.recuadro_tabla_verificacion table tr td {
+color:black;
+font-size:12px;
+width:300px;
+}
+
+.recuadro_tabla_verificacion span{
+font-weight:bold;
+}
+
+.recuadro_tabla_verificacion p{
+height:50px;
+}
+
+#recuadrito_tarifa{
+background-color:#f5f8fa;
+width:200px;
+height:200px;
+margin-right:80px;
+margin-bottom:20px;
+float:right;
+}
+
+#recuadrito_tarifa p {
+width:200px;
+}
+
+
+#recuadrito_tarifa span{
+float:right;
+margin-right:10px;
+font-weight:bold;
+margin-top:-35px;
+}
+
+
+/*Estilo Marcos*/
+/*-------------------------------------------------------------------------------------------*/
+
+.parrafos{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 450px;
+	font-size: 15px;
+	float:left;
+}
+
+
+.campos{
+margin-left: 0px;
+margin-top: 20px;
+font-size: 12pt;
+}
+
+.asterisco{
+font-family: verdara,arial;
+font-size: 10pt;
+color:#DF2E26;
+}
+.pasajero{
+	background-color: #01226B;
+	width:355px;
+	height: 20px;
+	font-size:12pt;
+	
+	text-align: left;
+	color:#55b8d3;
+	padding-left:20px;
+	padding-top: 5px; 
+}
+
+#formulario_datos{
+width:700px;
+height:500px;
+}
+
+.ltipo{
+	font-size: 12pt;
+	margin-right: 185px;
+}
+
+.categoria{
+	border-color:#01226B;
+	width: 60px;
+	color:#01226B;
+}
+.ltipo1{
+	font-size: 12pt;
+	margin-right: 154px;
+	
+}
+.ltipo2{
+	font-size: 12pt;
+	margin-right: 153px;
+	
+}
+.ltipo3{
+	font-size: 12pt;
+    margin-right: 130px;
+	
+}
+.ltipo4{
+	font-size: 12pt;
+	margin-right: 174px;
+	
+}
+
+.ltipo5{
+	font-size: 12pt;
+	margin-right: 152px;
+	
+}
+
+.ltipo6{
+	font-size: 12pt;
+	
+	margin-right: 170px;
+	
+}
+.ltipo7{
+	font-size: 12pt;
+	margin-right: 54px;
+	
+}
+
+.barra{
+	font-size: 10pt;
+}
+
+.back{
+margin-right: 170px;
+}
+
+.chico{
+	width: 15px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.grande{
+	margin-left: 10px;
+	width: 30px;
+}
+
+/*Estilo Paula*/
+/*-------------------------------------------------------------------------------------------*/
+
+h5{
+margin-left: 15px;
+}
+
+#formulario_pagos{
+width: 749px;
+height: 570px;
+padding-left: 10px;
+font-family: arial;
+}
+
+#formulario_pagos p span{
+background-image: url("../img/barra_digitos.png");
+}
+
+#formulario_pagos input{
+background-image: url("../img/barra_digitos.png");
+}
+
+#formulario_pagos select{
+background-image: url("../img/barra_digitos.png");
+}
+
+#documentacion{
+width: 700px;
+height: 80px;
+}
+
+#documentacion p{
+width: 180px;
+height: 30px;
+float:left;
+margin-left: 10px;
+font-weight: bold;
+}
+
+#pagos_cuotas{
+width: 700px;
+height: 170px;
+}
+
+#tarjetas {
+margin-left: 30px;
+}
+
+#tarjetas_dos{
+margin-left: 20px;
+}
+
+/*Estilo Andres*/
+/*-------------------------------------------------------------------------------------------*/
+
+#avioncito{
+  float: left;
+  width: 40%;
+  margin-top: -200px;
+  margin-left: 200px;
+}
