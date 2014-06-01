@@ -590,8 +590,17 @@ font-weight: bold;
 }
 
 #pagos_cuotas{
-width: 700px;
-height: 170px;
+width: 680px;
+height: 100px;
+}
+
+.cuotas{
+width: 145px;
+height: 100px;
+float: left;
+text-align:center;
+font-size: 12px;
+margin-left: 5px;
 }
 
 #tarjetas {
