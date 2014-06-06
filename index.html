@@ -3,6 +3,18 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="css/estilo.css" />
+ <link rel="stylesheet" href="js/jquery-ui.css">
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  </script>
 </head>
 <body>
  <div id="general">
@@ -29,51 +41,59 @@
    <div id="contenido">
       <div class="columna">
 	  <h4>VUELOS Y CHECK-IN</h4>
-	   <a><img src="img/tab_vuelo.gif" alt="Link busqueda de vuelos" width="351" height="23" /></a>
-	   <a><img src="img/tab_vuelo_check.gif" id="check" alt="Link ingresar a Check-In" width="324" height="23" /></a>
+	   <div id="tabs">
+	   <ul>
+       <li><a href="#tabs-1">VUELOS</a></li>
+       <li><a href="#tabs-2">CHECK-IN WEB</a></li>
+	   <li><a href="#tabs-3">PAGO ONLINE</a></li>
+       </ul>
+	   <div id="tabs-1">
 	   <form action="" method="post">
 	   <p><input type="radio" name="ida"/>Ida<input type="radio" name="ida_vuelta" />Ida y Vuelta</p>
-	   <p><input type="text" name="origen" class="primeros_input" /></p>
-	   <p><input type="text" name="destino" class="primeros_input" /></p>
-	   <p><input type="text" name="origen" />
-	   <input type="text" name="destino" /></p>
+	   <p><select name="origen" class="primeros_input">
+	   </select></p>
+	   <p><select name="destino" class="primeros_input">
+	   </select></p>
+	   <p><input type="text" name="origen" value="Destino" class="datepicker" />
+	   <input type="text" name="destino" value="Origen" class="datepicker"  /></p>
 	   <p><select id="categoria">
-	     <option value="economica">Econ&oacute;mica</option>
-		 <option value="primera">Primera</option>
-		 </select></p>
-		 <p class="linea_formulario"> adultos niños bebes</p>
-		 <p><select id="cantidad_adulto">
-	     <option value="1">01</option>
-		 <option value="2">02</option>
-		  <option value="1">03</option>
-		 <option value="2">04</option>
-		  <option value="1">05</option>
-		 <option value="2">06</option> 
-		 <option value="1">07</option>
-		 </select></p>
-		 <p><select id="cantidad_ninos">
-	     <option value="1">01</option>
-		 <option value="2">02</option>
-		  <option value="1">03</option>
-		 <option value="2">04</option>
-		  <option value="1">05</option>
-		 <option value="2">06</option> 
-		 <option value="1">07</option>
-		 </select></p>
-		 <p><select id="cantidad_bebes">
-	     <option value="1">01</option>
-		 <option value="2">02</option>
-		  <option value="1">03</option>
-		 <option value="2">04</option>
-		  <option value="1">05</option>
-		 <option value="2">06</option> 
-		 <option value="1">07</option>
-		 </select></p>
-		 <p><input type="image" src="img/boton_buscar.png" /></p>
+	   <option value="economica">Econ&oacute;mica</option>
+	   <option value="primera">Primera</option>
+	   </select></p>
+	   <p><input type="image" src="img/boton_buscar.png" /></p>
 	   </form>
-	  </div>
-	  <div class="blanco_columna">
-	  </div>
+	   <div class="blanco_tabs"></div>
+	   </div>
+	   
+	   <div id="tabs-2">
+	   <form action="" method="post">
+       <p><input type="text" name="nombre" value="Apellido" />
+	   <input type="text" name="apellido" value="Nombre"/></p>
+	   <label>origen:</label>
+	   <p><select name="destino" class="primeros_input">
+	   </select></p>
+	   <p><input type="text" name="nro_vuelo" value="Numero de vuelo AR"/>
+	   <input type="text" name="codigo_reserva" value="Numero de reserva" /></p>
+	   <p><input type="image" src="img/boton_buscar.png" /></p>
+	   </form>
+	   <div class="blanco_tabs"></div>
+	   <div class="blanco_tabs"></div>
+	   </div>
+	   
+	   <div id="tabs-3">
+	   <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
+	   <form action="" method="post">
+	   <label>Codigo de reserva</label>
+	   <p><input type="text" name="codigo_reserva"/></p>
+	   <label>Apellido de pasajero</label>
+	   <p><input type="text" name="apellido_pasajero" /></p>
+	   <p><input type="image" src="img/boton_buscar.png" /></p>
+	   </form>
+	   <div class="blanco_tabs"></div>
+	   </div>
+	   </div>
+	 </div>
+	 
 	  <div class="columna">
 	   <h4>DATOS GENERALES</h4>
 	    <img src="img/informacion.gif" alt="link de Informacion de destinos y tarifas" width="351" height="91"/>

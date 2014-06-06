@@ -3,6 +3,18 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
+ <link rel="stylesheet" href="../js/jquery-ui.css">
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script>
+  $(function() {
+    $( "#tabs_vuelos" ).tabs();
+	$( "#tabs_vuelos_2" ).tabs();
+	$( "#tabs_vuelos" ).tabs({ active:3 });
+	$( "#tabs_vuelos_2" ).tabs({ active:3 });
+  });
+ 
+  </script>
 </head>
 <body>
  <div id="general">
@@ -53,9 +65,19 @@
 	   restrictivas ser&aacute;n aplicadas para todos el billete.</p>
 	    <img src="../img/chica_vuelos_chico.gif" alt="imagen de recepcionista" width="137" height="179"/>
 		<div class="espacio_blanco"></div>
-		<form action="ntocci@gmail.com" method="post">
 			 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		     <h5>IDA</h5>
+			 <div id="tabs_vuelos">
+	            <ul>
+                  <li><a href="#tabs-1">Fecha 1</a></li>
+                  <li><a href="#tabs-2">Fecha 2</a></li>
+	              <li><a href="#tabs-3">Fecha 3</a></li>
+				  <li><a href="#tabs-4">Fecha 4</a></li>
+                  <li><a href="#tabs-5">Fecha 5</a></li>
+	              <li><a href="#tabs-6">Fecha 6</a></li>
+				  <li><a href="#tabs-7">Fecha 7</a></li>
+                </ul>
+	           <div id="tabs-4">
 				<table class="recuadro_tabla">
 				  <tr>
 				    <th>Salida</th>
@@ -82,7 +104,40 @@
 					<td>&nbsp;</td>
 				  </tr>
 				</table>
-		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">VUELTA</span></p>
+			 </div>
+			 <div id="tabs-2">
+			  <h1>Natalia soledad Tocci tab 2</h1>
+			 </div>
+			 
+			  <div id="tabs-3">
+			 <h1>Natalia soledad Tocci tab 3</h1>
+			 </div>
+			  <div id="tabs-4">
+			  <h1>Natalia soledad Tocci tab 4</h1>
+			 </div>
+			  <div id="tabs-5">
+			 <h1>Natalia soledad Tocci tab 5</h1>
+			 </div>
+			   <div id="tabs-6">
+			 <h1>Natalia soledad Tocci tab 6</h1>
+			 </div>
+			   <div id="tabs-7">
+			 <h1>Natalia soledad Tocci tab 7</h1>
+			 </div>
+			 </div>
+		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
+		     <h5>IDA</h5>
+			 <div id="tabs_vuelos_2">
+	            <ul>
+                  <li><a href="#tabs-1-a">Fecha 1</a></li>
+                  <li><a href="#tabs-2-a">Fecha 2</a></li>
+	              <li><a href="#tabs-3-a">Fecha 3</a></li>
+				  <li><a href="#tabs-4-a">Fecha 4</a></li>
+                  <li><a href="#tabs-5-a">Fecha 5</a></li>
+	              <li><a href="#tabs-6-a">Fecha 6</a></li>
+				  <li><a href="#tabs-7-a">Fecha 7</a></li>
+                </ul>
+	           <div id="tabs-4-a">
 		       <table class="recuadro_tabla">
 				  <tr>
 				    <th>Salida</th>
@@ -109,9 +164,10 @@
 					<td>&nbsp;</td>
 				  </tr>
 				</table>
+				</div>
+				</div>
 				<p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
 		        <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
-		 </form>
 	   </div>
 	</div>
     <div id="pie">

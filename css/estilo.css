@@ -109,7 +109,7 @@ color:#5178bf;
 
 .columna{
 width:341px;
-height:400px;
+height:auto;
 float:left;
 padding-left:10px;
 }
@@ -117,6 +117,13 @@ padding-left:10px;
 .columna p imput[type="image"]{
 width:98px; 
 height:30px;
+}
+
+.datepicker{
+background:url("../img/calendar.gif") no-repeat;
+color:#BFBFBF;
+padding:0px 0px 0px 20px;
+width:105px;
 }
 
 .linea_formulario{
@@ -129,7 +136,8 @@ margin-top:14px;
 }
 
 .primeros_input{
-width:312px;
+width:260px;
+margin-bottom:20px;
 }
 
 .columna form  p select{
@@ -138,7 +146,18 @@ margin-top:-5px;
 }
 
 .columna form  p  input[type="image"]{
-margin-top:50px;
+float:right;
+margin-top:10px;
+}
+
+#tabs{
+width:320px;
+height:auto;
+}
+
+#tabs_vuelos,#tabs_vuelos_2{
+width:600px;
+height:auto;
 }
 
 .columna  p a{
@@ -160,6 +179,21 @@ float:left;
 width:23px;
 height:3px;
 }
+
+.blanco_tabs{
+width:200px;
+height:50px;
+margin-top:25px;
+}
+
+#tabs-2 p input[type="text"]{
+width:120px;
+float:left;
+margin-right:20px;
+color:#BFBFBF;
+font-size:10px;
+}
+
 
 .recuadro_promocion{
 background-color:#f1f6fb;
@@ -194,7 +228,14 @@ float:right;
 
 #check{
 position:absolute;
-margin-top:-27px;
+margin-top:-20px;
+z-index:1;
+}
+
+#vuelos{
+position:absolute;
+margin-top:-20px;
+z-index:5;
 }
 
 #pie{
@@ -325,7 +366,7 @@ font-size:14px;
 
 .recuadro_tabla{
 background-color:#f5f8fa;
-width:680px;
+width:570px;
 height:140px;
 margin-bottom:50px;
 padding:30px 30px 30px 30px;
