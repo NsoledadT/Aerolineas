@@ -15,6 +15,12 @@
     $( "#tabs" ).tabs();
   });
   </script>
+  <?php
+   include("clases/DataBase.php");
+   $baseDatos = new DataBase();
+ 
+ 
+  ?>
 </head>
 <body>
  <div id="general">
@@ -43,6 +49,7 @@
 	  <h4>VUELOS Y CHECK-IN</h4>
 	   <div id="tabs">
 	   <ul>
+	   
        <li><a href="#tabs-1">VUELOS</a></li>
        <li><a href="#tabs-2">CHECK-IN WEB</a></li>
 	   <li><a href="#tabs-3">PAGO ONLINE</a></li>
@@ -51,8 +58,17 @@
 	   <form action="" method="post">
 	   <p><input type="radio" name="ida"/>Ida<input type="radio" name="ida_vuelta" />Ida y Vuelta</p>
 	   <p><select name="origen" class="primeros_input">
+	    <?php
+		$baseDatos->consulta('select nombre from provincia');
+		$baseDatos->impresion();
+		?>
 	   </select></p>
+	   
 	   <p><select name="destino" class="primeros_input">
+	    <?php
+		$baseDatos->consulta('select nombre from provincia');
+		$baseDatos->impresion();
+		?>
 	   </select></p>
 	   <p><input type="text" name="origen" value="Destino" class="datepicker" />
 	   <input type="text" name="destino" value="Origen" class="datepicker"  /></p>
