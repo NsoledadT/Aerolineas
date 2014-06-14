@@ -3,18 +3,35 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
- <link rel="stylesheet" href="../js/jquery-ui.css">
-<script src="../js/jquery-1.10.2.js"></script>
-<script src="../js/jquery-ui.js"></script>
-<script>
+ <link type="text/css" rel="stylesheet" href="../js/jquery-ui.css" />
+<script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.js"></script>
+<script type="text/javascript">
   $(function() {
     $( "#tabs_vuelos" ).tabs();
 	$( "#tabs_vuelos_2" ).tabs();
 	$( "#tabs_vuelos" ).tabs({ active:3 });
 	$( "#tabs_vuelos_2" ).tabs({ active:3 });
   });
+ </script>
  
-  </script>
+<?php
+   include("../clases/funcionFecha.php");
+   $partida =$_POST['partida'];
+   $llegada =$_POST['destino'];
+   $fecha_ida =$_POST['fechaPartida'];
+   $fecha_vuelta =$_POST['fechaDestino'];
+   $fecha_ida_invertir = fechaDma($fecha_ida);
+   $fecha_vuelta_invertir = fechaDma($fecha_vuelta);
+   $conexion = mysql_connect("localhost","root","xxxxxxxxx","") or die ("no se pudo realizar conexion");
+   $db = mysql_select_db("aerolineas",$conexion) or die ("no se pudo seleccionar base de datos");
+   $query = "select * from vuelo where lugar_partida='$partida' and lugar_llegada='$llegada'";
+   $consulta = mysql_query($query,$conexion) or die ("no se pudo hacer insercion");
+   $nfilas= mysql_num_rows($consulta);
+   $dias = array('nada','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
+   $fecha=$dias[date('N', strtotime($_POST['fechaPartida']))];
+
+?>
 </head>
 <body>
  <div id="general">
@@ -26,8 +43,7 @@
 		<p><input type="image" src="../img/boton_enviar.png" /></p>
         </form>
 		</div>
-    </div>
-	
+	</div>
     <div id="encabezado_medio_vuelos">
 	<img src="../img/logotipo_chico.png" id="logotipo" alt="logotipo aerolinea rutics" width="242" height="100"/>
 	<img src="../img/chica_vuelos.png" class="aeromoza" alt="azafata" width="227" height="280"/>
@@ -67,44 +83,41 @@
 		<div class="espacio_blanco"></div>
 			 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		     <h5>IDA</h5>
+			 <form action="verificacion.php" method="POST">
 			 <div id="tabs_vuelos">
 	            <ul>
-                  <li><a href="#tabs-1">Fecha 1</a></li>
+                  <li><a href="#tabs-1">Fecha1</a></li>
                   <li><a href="#tabs-2">Fecha 2</a></li>
 	              <li><a href="#tabs-3">Fecha 3</a></li>
-				  <li><a href="#tabs-4">Fecha 4</a></li>
+				  <li><a href="#tabs-4"><?php echo($fecha);?></a></li>
                   <li><a href="#tabs-5">Fecha 5</a></li>
 	              <li><a href="#tabs-6">Fecha 6</a></li>
 				  <li><a href="#tabs-7">Fecha 7</a></li>
                 </ul>
-	           <div id="tabs-4">
-				<table class="recuadro_tabla">
-				  <tr>
-				    <th>Salida</th>
-                    <th>Llegada</th>
-					 <th>Econ&oacute;mica</th>
-                     <th>Primera</th>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				</table>
-			 </div>
+	            <?php
+				    
+				       echo("<div id='tabs-4'>");
+				         if($nfilas > 0){
+						 
+						      echo ("<table class='recuadro_tabla'>");
+						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
+						         for($i=0;$i<$nfilas;$i++){
+								   
+		    	                    $filas = mysql_fetch_array($consulta);
+									 
+			                         echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
+									 <td><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'></input>".$filas['precio_economica']."</td><td>
+									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'></input>".$filas['precio_primera']."</td>");
+		                           }
+							   echo ("</table>");
+						   
+						    }
+						    else{
+						       echo("No hay vuelos disponibles");
+							 }
+						echo("</div>");
+				 ?>
+			
 			 <div id="tabs-2">
 			  <h1>Natalia soledad Tocci tab 2</h1>
 			 </div>
@@ -112,7 +125,7 @@
 			  <div id="tabs-3">
 			 <h1>Natalia soledad Tocci tab 3</h1>
 			 </div>
-			  <div id="tabs-4">
+			  <div id="tabs-1">
 			  <h1>Natalia soledad Tocci tab 4</h1>
 			 </div>
 			  <div id="tabs-5">
@@ -167,7 +180,8 @@
 				</div>
 				</div>
 				<p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		        <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
+		        <p id="boton_continuar"><input type="image" src="../img/continuar.png"  alt="boton continuar"/></p>
+				</form>
 	   </div>
 	</div>
     <div id="pie">

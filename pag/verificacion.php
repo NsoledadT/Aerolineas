@@ -3,6 +3,19 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
+
+   <?php
+	$vuelo_ida =$_POST['vuelo_ida'];
+	$vuelo_ida_separada = explode("+",$vuelo_ida);
+	$clase=$vuelo_ida_separada[0];
+	$nro_vuelo=$vuelo_ida_separada[1];
+    $conexion = mysql_connect("localhost","root","xxxxxxxx","") or die ("no se pudo realizar conexion");
+    $db = mysql_select_db("aerolineas",$conexion) or die ("no se pudo seleccionar base de datos");
+    $query = "select * from vuelo where `nro vuelo`='$nro_vuelo'";
+    $consulta = mysql_query($query,$conexion) or die ("no se pudo hacer insercion");
+    $nfilas= mysql_num_rows($consulta);
+	echo( $nfilas);
+   ?>
 </head>
 <body>
  <div id="general">

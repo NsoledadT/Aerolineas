@@ -3,24 +3,22 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="css/estilo.css" />
- <link rel="stylesheet" href="js/jquery-ui.css">
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery-ui.js"></script>
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-  
-  $(function() {
-    $( "#tabs" ).tabs();
+ <link   type="text/css" rel="stylesheet" href="js/jquery-ui.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript">
+   $(function() {
+    $( ".datepicker" ).datepicker(
+	       { dateFormat: "dd-mm-yy" }
+		   );
+	
+	$( "#tabs" ).tabs();
   });
   </script>
-  <?php
+ <?php
    include("clases/DataBase.php");
    $baseDatos = new DataBase();
- 
- 
-  ?>
+ ?>
 </head>
 <body>
  <div id="general">
@@ -49,30 +47,30 @@
 	  <h4>VUELOS Y CHECK-IN</h4>
 	   <div id="tabs">
 	   <ul>
-	   
        <li><a href="#tabs-1">VUELOS</a></li>
        <li><a href="#tabs-2">CHECK-IN WEB</a></li>
 	   <li><a href="#tabs-3">PAGO ONLINE</a></li>
        </ul>
 	   <div id="tabs-1">
-	   <form action="" method="post">
-	   <p><input type="radio" name="ida"/>Ida<input type="radio" name="ida_vuelta" />Ida y Vuelta</p>
-	   <p><select name="origen" class="primeros_input">
+	   <form action="pag/vuelos.php" method="post">
+	   <p><input type="radio" name="tipoViaje" value="ida"/>Ida<input type="radio" name="tipoViaje"  value="idaVuelta"/>Ida y Vuelta</p>
+	   <p><select name="partida" class="primeros_input">
 	    <?php
 		$baseDatos->consulta('select nombre from provincia');
 		$baseDatos->impresion();
 		?>
+	   <option></option>
 	   </select></p>
-	   
 	   <p><select name="destino" class="primeros_input">
 	    <?php
 		$baseDatos->consulta('select nombre from provincia');
 		$baseDatos->impresion();
 		?>
+	   <option></option>
 	   </select></p>
-	   <p><input type="text" name="origen" value="Destino" class="datepicker" />
-	   <input type="text" name="destino" value="Origen" class="datepicker"  /></p>
-	   <p><select id="categoria">
+	   <p><input type="text" name="fechaPartida" value="Destino" class="datepicker" />
+	   <input type="text" name="fechaDestino" value="Origen" class="datepicker"  /></p>
+	   <p><select name="categoria" id="categoria">
 	   <option value="economica">Econ&oacute;mica</option>
 	   <option value="primera">Primera</option>
 	   </select></p>
@@ -85,8 +83,9 @@
 	   <form action="" method="post">
        <p><input type="text" name="nombre" value="Apellido" />
 	   <input type="text" name="apellido" value="Nombre"/></p>
-	   <label>origen:</label>
+	   <p><label>origen:</label></p>
 	   <p><select name="destino" class="primeros_input">
+	   <option></option>
 	   </select></p>
 	   <p><input type="text" name="nro_vuelo" value="Numero de vuelo AR"/>
 	   <input type="text" name="codigo_reserva" value="Numero de reserva" /></p>
@@ -99,9 +98,9 @@
 	   <div id="tabs-3">
 	   <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
 	   <form action="" method="post">
-	   <label>Codigo de reserva</label>
+	   <p><label>Codigo de reserva</label></p>
 	   <p><input type="text" name="codigo_reserva"/></p>
-	   <label>Apellido de pasajero</label>
+	   <p><label>Apellido de pasajero</label></p>
 	   <p><input type="text" name="apellido_pasajero" /></p>
 	   <p><input type="image" src="img/boton_buscar.png" /></p>
 	   </form>

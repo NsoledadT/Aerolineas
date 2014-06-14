@@ -373,8 +373,16 @@ padding:30px 30px 30px 30px;
 }
 
 #boton_continuar{
-margin-left:540px;
+margin-left:100px;
 margin-top:-50px;
+}
+
+#boton_continuar img{
+float:right;
+}
+
+#boton_continuar input{
+float:right;
 }
 
 #boton_volver{
