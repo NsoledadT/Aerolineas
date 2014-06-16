@@ -5,7 +5,7 @@ private $usuario;
 private $password;
 private $base;
 private $conexion;
-private $consulta;
+private $array_ini;
 
 
 public function __construct(){
@@ -24,16 +24,21 @@ $this->conexion = mysql_connect($this->localhost,$this->usuario,$this->password,
 
 public function consulta($sql){
 $db = mysql_select_db($this->base,$this->conexion) or die ("no se pudo seleccionar base de datos");
-$this->consulta = mysql_query($sql,$this->conexion) or die ("no se pudo hacer insercion");
+$consulta = mysql_query($sql,$this->conexion) or die ("no se pudo hacer insercion");
+return $consulta;
 }
 
-public function impresion(){
-$nfilas= mysql_num_rows($this->consulta);
-   for($i=0; $i < $nfilas; $i++){
-		   $fila = mysql_fetch_array($this->consulta);
-		   echo('<option value="'.$fila['nombre'].'">'.$fila['nombre'].'</option>');
-		  }
-}
+ public function resultToArray($resultado) {
+        $lista = array();
+
+        // Recorro el resultado
+        while ($fila = mysql_fetch_assoc($resultado)) {
+
+            // Agrego el array resultante a la lista
+            $lista[] = $fila;
+        }
+        return $lista;
+    }
 
 public function cerrar(){
 mysql_close($this->conexion);

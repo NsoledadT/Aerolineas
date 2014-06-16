@@ -14,6 +14,9 @@
     $query = "select * from vuelo where `nro vuelo`='$nro_vuelo'";
     $consulta = mysql_query($query,$conexion) or die ("no se pudo hacer insercion");
     $nfilas= mysql_num_rows($consulta);
+	$fila= mysql_fetch_array($consulta);
+	$tasa=$fila['precio_'.$clase]*1.21;
+	echo($fila['precio_economica'] );
 	echo( $nfilas);
    ?>
 </head>
@@ -64,8 +67,8 @@
 	    <img src="../img/chica_vuelos_chico.gif" alt="imagen de recepcionista" width="137" height="179"/>
 		<div class="espacio_blanco"></div>
 		 <div id="tarifa">
-		   <p>Tarifa<span>Precio Total</span></p>
-		   <h6>Adulto+Tasa=PrecioTotal</h6>
+		   <p>Tarifa<span><?php echo($fila['precio_'.$clase]); ?></span></p>
+		   <h6><?php echo($fila['precio_'.$clase]." + IVA = $tasa" ); ?></h6>
 		 </div>
 		 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		     <div class="recuadro_tabla_verificacion">
@@ -76,8 +79,8 @@
 					<td>Aerolinea Rustics</td>
 					</tr>
 					<tr>
-					<td>Hora</td>
-					<td>Lugar de Partida</td>
+					<td><?php echo($fila['horario_partida']); ?></td>
+					<td><?php echo($fila['lugar_partida']); ?></td>
 					<td>caracteristicas del vuelo AR/1682</td>
 					</tr>
 					<tr>
@@ -86,8 +89,8 @@
 					<td>Cabina: Clase economica +/Boing 737-700</td>
 					</tr>
 					<tr>
-					<td>Hora</td>
-					<td>Lugar de llegada</td>
+					<td><?php echo($fila['horario_llegada']);?></td>
+					<td><?php echo($fila['lugar_llegada']); ?></td>
 					<td>&nbsp;</td>
 					</tr>
 				</table>
@@ -120,11 +123,11 @@
 			 <div id="recuadrito_tarifa">
 			 <h4>Tarifa</h4>
 			 <p>Tarifa base</p>
-			 <p><span>Precio_base</span></p>
+			 <p><span><?php echo($fila['precio_'.$clase]); ?></span></p>
 			 <p>Impuesto</p>
-			 <p><span>Valor_impuesto</span></p>
+			 <p><span><?php echo("21%"); ?></span></p>
 			 <hr/>
-			 <p><span>Total</span></p>
+			 <p><span><?php echo($fila['precio_'.$clase]." + IVA = $tasa" ); ?></span></p>
 			 </div>
 			 <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
 		     <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>

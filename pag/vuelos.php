@@ -17,19 +17,22 @@
  
 <?php
    include("../clases/funcionFecha.php");
+   include("../clases/DataBase.php");
+   $baseDatos = new DataBase();
    $partida =$_POST['partida'];
+   $tipo_viaje=$_POST['tipoViaje'];
    $llegada =$_POST['destino'];
    $fecha_ida =$_POST['fechaPartida'];
    $fecha_vuelta =$_POST['fechaDestino'];
    $fecha_ida_invertir = fechaDma($fecha_ida);
    $fecha_vuelta_invertir = fechaDma($fecha_vuelta);
-   $conexion = mysql_connect("localhost","root","xxxxxxxxx","") or die ("no se pudo realizar conexion");
-   $db = mysql_select_db("aerolineas",$conexion) or die ("no se pudo seleccionar base de datos");
-   $query = "select * from vuelo where lugar_partida='$partida' and lugar_llegada='$llegada'";
-   $consulta = mysql_query($query,$conexion) or die ("no se pudo hacer insercion");
-   $nfilas= mysql_num_rows($consulta);
+   $lista = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where lugar_partida='$partida' and lugar_llegada='$llegada'"));
+   $lista_vuelta = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where lugar_partida='$llegada' and lugar_llegada='$partida'"));
+   echo(strlen($tipo_viaje));
    $dias = array('nada','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
    $fecha=$dias[date('N', strtotime($_POST['fechaPartida']))];
+   $nfilas_ida=count($lista);
+    $nfilas_vuelta=count($lista_vuelta);
 
 ?>
 </head>
@@ -97,20 +100,15 @@
 	            <?php
 				    
 				       echo("<div id='tabs-4'>");
-				         if($nfilas > 0){
-						 
+				         if($nfilas_ida > 0){
 						      echo ("<table class='recuadro_tabla'>");
 						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
-						         for($i=0;$i<$nfilas;$i++){
-								   
-		    	                    $filas = mysql_fetch_array($consulta);
-									 
-			                         echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
+						         foreach($lista as $filas){
+								    echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
 									 <td><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'></input>".$filas['precio_economica']."</td><td>
 									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'></input>".$filas['precio_primera']."</td>");
 		                           }
 							   echo ("</table>");
-						   
 						    }
 						    else{
 						       echo("No hay vuelos disponibles");
@@ -138,10 +136,12 @@
 			 <h1>Natalia soledad Tocci tab 7</h1>
 			 </div>
 			 </div>
-		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
-		     <h5>IDA</h5>
-			 <div id="tabs_vuelos_2">
-	            <ul>
+		     <?php 
+			 if(strlen($tipo_viaje) > 3){
+			   echo('<p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
+		         <h5>IDA</h5>
+			     <div id="tabs_vuelos_2">
+	                <ul>
                   <li><a href="#tabs-1-a">Fecha 1</a></li>
                   <li><a href="#tabs-2-a">Fecha 2</a></li>
 	              <li><a href="#tabs-3-a">Fecha 3</a></li>
@@ -150,36 +150,25 @@
 	              <li><a href="#tabs-6-a">Fecha 6</a></li>
 				  <li><a href="#tabs-7-a">Fecha 7</a></li>
                 </ul>
-	           <div id="tabs-4-a">
-		       <table class="recuadro_tabla">
-				  <tr>
-				    <th>Salida</th>
-                    <th>Llegada</th>
-					 <th>Econ&oacute;mica</th>
-                     <th>Primera</th>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				    <tr>
-				    <td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-				  </tr>
-				</table>
-				</div>
-				</div>
-				<p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
+	           <div id="tabs-4-a">');
+		            if($nfilas_vuelta > 0){
+						      echo ("<table class='recuadro_tabla'>");
+						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
+						         foreach($lista as $filas){
+								    echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
+									 <td><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'></input>".$filas['precio_economica']."</td><td>
+									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'></input>".$filas['precio_primera']."</td>");
+		                           }
+							   echo ("</table>");
+						    }
+						    else{
+						       echo("No hay vuelos disponibles");
+							 }
+				echo("</div>
+				</div>");
+				}
+				?>
+				<p><a href="../index.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
 		        <p id="boton_continuar"><input type="image" src="../img/continuar.png"  alt="boton continuar"/></p>
 				</form>
 	   </div>

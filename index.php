@@ -53,20 +53,23 @@
        </ul>
 	   <div id="tabs-1">
 	   <form action="pag/vuelos.php" method="post">
-	   <p><input type="radio" name="tipoViaje" value="ida"/>Ida<input type="radio" name="tipoViaje"  value="idaVuelta"/>Ida y Vuelta</p>
+	   <p><input type="radio" name="tipoViaje" value="ida" checked="checked"/>Ida<input type="radio" name="tipoViaje"  value="idaVuelta"/>Ida y Vuelta</p>
 	   <p><select name="partida" class="primeros_input">
 	    <?php
-		$baseDatos->consulta('select nombre from provincia');
-		$baseDatos->impresion();
+		$lista=$baseDatos->resultToArray($baseDatos->consulta('select nombre from provincia'));
+		  foreach($lista as $value){
+		    echo("<option>".$value['nombre']."</option>");
+			}
 		?>
-	   <option></option>
-	   </select></p>
+	  </select></p>
 	   <p><select name="destino" class="primeros_input">
 	    <?php
-		$baseDatos->consulta('select nombre from provincia');
-		$baseDatos->impresion();
+		$lista=$baseDatos->resultToArray($baseDatos->consulta('select nombre from provincia'));
+		foreach($lista as $value){
+		  echo("<option>".$value['nombre']."</option>");
+		  }
 		?>
-	   <option></option>
+
 	   </select></p>
 	   <p><input type="text" name="fechaPartida" value="Destino" class="datepicker" />
 	   <input type="text" name="fechaDestino" value="Origen" class="datepicker"  /></p>
