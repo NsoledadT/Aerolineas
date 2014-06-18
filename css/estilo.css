@@ -105,6 +105,7 @@ background-color:#ffffff;
 width:1100px;
 height:auto;
 color:#5178bf;
+
 }
 
 .columna{
@@ -548,33 +549,21 @@ height:500px;
 }
 .ltipo2{
 	font-size: 12pt;
-	margin-right: 153px;
+	margin-right: 130px;
 	
 }
 .ltipo3{
 	font-size: 12pt;
-    margin-right: 130px;
+    margin-right: 100px;
 	
 }
 .ltipo4{
 	font-size: 12pt;
-	margin-right: 174px;
+	margin-right: 170px;
 	
 }
 
 .ltipo5{
-	font-size: 12pt;
-	margin-right: 152px;
-	
-}
-
-.ltipo6{
-	font-size: 12pt;
-	
-	margin-right: 170px;
-	
-}
-.ltipo7{
 	font-size: 12pt;
 	margin-right: 54px;
 	
@@ -598,7 +587,21 @@ margin-right: 170px;
 	margin-left: 10px;
 	width: 30px;
 }
+.mensajeValido{
+	font-size: 12pt;
+	color:#ff0000;
+}
 
+h1{
+	text-align: center;
+}
+
+h3{
+	margin-left: 50px;
+}
+h5{
+	color: #000000;
+}
 /*Estilo Paula*/
 /*-------------------------------------------------------------------------------------------*/
 
