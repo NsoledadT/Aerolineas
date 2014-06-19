@@ -1,3 +1,16 @@
+<?php
+					$admin = "marcos";
+					$clave = "M4rcos2014";
+					if(isset($_POST['usuario']) && isset($_POST['pass'])){
+						if(($_POST['usuario'] == $admin) && ($_POST['pass'] == $clave)){
+						session_start();
+						$_SESSION['log'] = true;
+						header('location:pag/loginAdmin.php');
+						}
+					}
+				?>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Aerolinea Rustics</title>
@@ -24,9 +37,9 @@
  <div id="general">
      <div id="encabezado">
 	    <div id="formulario">
-        <form action="pag/loginAdmin.php" method="post">
+        <form action="index.php" method="post">
 		<p><label>Usuario:</label><input type="text" name="usuario"/>
-		<label>Contrase&ntilde;a:</label><input type="text" name="usuario"/></p>
+		<label>Contrase&ntilde;a:</label><input type="text" name="pass"/></p>
 		<p><input type="image" src="img/boton_enviar.png"/></p>
         </form>
 		</div>

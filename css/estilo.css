@@ -161,6 +161,17 @@ width:600px;
 height:auto;
 }
 
+.vuelo_asiento{
+background-image: url(../img/asientos.jpg);
+background-repeat: no-repeat;
+width: 21px;
+height: 21px;
+padding: 0px 2px 0px 0px;
+margin: 0 auto;
+font-size: 10px;
+text-align: center;
+}
+
 .columna  p a{
 font-size:11px;
 color:#5178bf;
