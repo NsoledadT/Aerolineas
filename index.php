@@ -24,7 +24,7 @@
  <div id="general">
      <div id="encabezado">
 	    <div id="formulario">
-        <form action="usuario.html" method="post">
+        <form action="pag/loginAdmin.php" method="post">
 		<p><label>Usuario:</label><input type="text" name="usuario"/>
 		<label>Contrase&ntilde;a:</label><input type="text" name="usuario"/></p>
 		<p><input type="image" src="img/boton_enviar.png"/></p>

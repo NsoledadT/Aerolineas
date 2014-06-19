@@ -13,9 +13,10 @@
 	$( "#tabs_vuelos" ).tabs({ active:3 });
 	$( "#tabs_vuelos_2" ).tabs({ active:3 });
   });
- </script>
  
-<?php
+  </script>
+  
+  <?php
    include("../clases/funcionFecha.php");
    include("../clases/DataBase.php");
    $baseDatos = new DataBase();
@@ -78,6 +79,7 @@
 	   <img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16"/>
 	   <h4>SELECCIONA TU VUELO</h4>
 	   </div>
+	   <form action="verificacion.php" method="POST">
 	   <p>La tarifa informada en este paso corresponde a una tarifa base para pasajero
 	   oculto y no incluye tasas ni impuestos. En el pr&oacute;ximo paso podr&aacute;s ver la tarifa
 	   total a abonar. Al combinar tarifas con diferentes condiciones, las regulaciones m&aacute;
@@ -86,27 +88,27 @@
 		<div class="espacio_blanco"></div>
 			 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		     <h5>IDA</h5>
-			 <form action="verificacion.php" method="POST">
 			 <div id="tabs_vuelos">
 	            <ul>
-                  <li><a href="#tabs-1">Fecha1</a></li>
+                  <li><a href="#tabs-1">Fecha 1</a></li>
                   <li><a href="#tabs-2">Fecha 2</a></li>
 	              <li><a href="#tabs-3">Fecha 3</a></li>
-				  <li><a href="#tabs-4"><?php echo($fecha);?></a></li>
+				  <li><a href="#tabs-4">Fecha 4</a></li>
                   <li><a href="#tabs-5">Fecha 5</a></li>
 	              <li><a href="#tabs-6">Fecha 6</a></li>
 				  <li><a href="#tabs-7">Fecha 7</a></li>
                 </ul>
-	            <?php
+	           <?php
 				    
 				       echo("<div id='tabs-4'>");
 				         if($nfilas_ida > 0){
 						      echo ("<table class='recuadro_tabla'>");
 						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
 						         foreach($lista as $filas){
-								    echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
-									 <td><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'></input>".$filas['precio_economica']."</td><td>
-									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'></input>".$filas['precio_primera']."</td>");
+								    echo ("<tr><td align='center'>".$filas['horario_partida']."</td><td align='center'>".$filas['horario_llegada']."</td>
+									 <td align='center'><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_asiento'>60</div></td>
+									 <td align='center'>
+									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_asiento'>60</div></td>");
 		                           }
 							   echo ("</table>");
 						    }
@@ -136,7 +138,7 @@
 			 <h1>Natalia soledad Tocci tab 7</h1>
 			 </div>
 			 </div>
-		     <?php 
+		       <?php 
 			 if(strlen($tipo_viaje) > 3){
 			   echo('<p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		         <h5>IDA</h5>

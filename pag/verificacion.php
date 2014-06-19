@@ -5,19 +5,15 @@
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
 
    <?php
+   include("../clases/DataBase.php");
 	$vuelo_ida =$_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
 	$clase=$vuelo_ida_separada[0];
 	$nro_vuelo=$vuelo_ida_separada[1];
-    $conexion = mysql_connect("localhost","root","xxxxxxxx","") or die ("no se pudo realizar conexion");
-    $db = mysql_select_db("aerolineas",$conexion) or die ("no se pudo seleccionar base de datos");
-    $query = "select * from vuelo where `nro vuelo`='$nro_vuelo'";
-    $consulta = mysql_query($query,$conexion) or die ("no se pudo hacer insercion");
-    $nfilas= mysql_num_rows($consulta);
-	$fila= mysql_fetch_array($consulta);
-	$tasa=$fila['precio_'.$clase]*1.21;
-	echo($fila['precio_economica'] );
-	echo( $nfilas);
+	$baseDatos = new DataBase();
+	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro vuelo`='$nro_vuelo'"));
+    $tasa=$fila[0]['precio_'.$clase]*1.21;
+	echo($fila[0]['precio_economica'] );
    ?>
 </head>
 <body>
@@ -67,8 +63,8 @@
 	    <img src="../img/chica_vuelos_chico.gif" alt="imagen de recepcionista" width="137" height="179"/>
 		<div class="espacio_blanco"></div>
 		 <div id="tarifa">
-		   <p>Tarifa<span><?php echo($fila['precio_'.$clase]); ?></span></p>
-		   <h6><?php echo($fila['precio_'.$clase]." + IVA = $tasa" ); ?></h6>
+		   <p>Tarifa<span><?php echo($fila[0]['precio_'.$clase]); ?></span></p>
+		   <h6><?php echo($fila[0]['precio_'.$clase]." + IVA = $tasa" ); ?></h6>
 		 </div>
 		 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
 		     <div class="recuadro_tabla_verificacion">
@@ -79,8 +75,8 @@
 					<td>Aerolinea Rustics</td>
 					</tr>
 					<tr>
-					<td><?php echo($fila['horario_partida']); ?></td>
-					<td><?php echo($fila['lugar_partida']); ?></td>
+					<td><?php echo($fila[0]['horario_partida']); ?></td>
+					<td><?php echo($fila[0]['lugar_partida']); ?></td>
 					<td>caracteristicas del vuelo AR/1682</td>
 					</tr>
 					<tr>
@@ -89,8 +85,8 @@
 					<td>Cabina: Clase economica +/Boing 737-700</td>
 					</tr>
 					<tr>
-					<td><?php echo($fila['horario_llegada']);?></td>
-					<td><?php echo($fila['lugar_llegada']); ?></td>
+					<td><?php echo($fila[0]['horario_llegada']);?></td>
+					<td><?php echo($fila[0]['lugar_llegada']); ?></td>
 					<td>&nbsp;</td>
 					</tr>
 				</table>
@@ -123,11 +119,11 @@
 			 <div id="recuadrito_tarifa">
 			 <h4>Tarifa</h4>
 			 <p>Tarifa base</p>
-			 <p><span><?php echo($fila['precio_'.$clase]); ?></span></p>
+			 <p><span><?php echo($fila[0]['precio_'.$clase]); ?></span></p>
 			 <p>Impuesto</p>
 			 <p><span><?php echo("21%"); ?></span></p>
 			 <hr/>
-			 <p><span><?php echo($fila['precio_'.$clase]." + IVA = $tasa" ); ?></span></p>
+			 <p><span><?php echo($fila[0]['precio_'.$clase]." + IVA = $tasa" ); ?></span></p>
 			 </div>
 			 <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
 		     <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
