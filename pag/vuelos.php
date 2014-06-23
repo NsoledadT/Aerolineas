@@ -18,22 +18,26 @@
   
   <?php
    include("../clases/funcionFecha.php");
+    include("../clases/funcion_evaluar_tipos.php");
    include("../clases/DataBase.php");
    $baseDatos = new DataBase();
-   $partida =$_POST['partida'];
+   $partida = $_POST['partida'];
+   $categoria = $_POST['categoria'];
    $tipo_viaje=$_POST['tipoViaje'];
    $llegada =$_POST['destino'];
    $fecha_ida =$_POST['fechaPartida'];
    $fecha_vuelta =$_POST['fechaDestino'];
    $fecha_ida_invertir = fechaDma($fecha_ida);
    $fecha_vuelta_invertir = fechaDma($fecha_vuelta);
-   $lista = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where lugar_partida='$partida' and lugar_llegada='$llegada'"));
+  
    $lista_vuelta = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where lugar_partida='$llegada' and lugar_llegada='$partida'"));
-   echo(strlen($tipo_viaje));
+ 
    $dias = array('nada','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
-   $fecha=$dias[date('N', strtotime($_POST['fechaPartida']))];
-   $nfilas_ida=count($lista);
-    $nfilas_vuelta=count($lista_vuelta);
+   $dia_ida=$dias[date('N', strtotime($_POST['fechaPartida']))];
+   $dia_vuelta=$dias[date('N', strtotime($_POST['fechaDestino']))];
+   $nfilas_vuelta=count($lista_vuelta);
+	
+
 
 ?>
 </head>
@@ -93,29 +97,153 @@
                   <li><a href="#tabs-1">Fecha 1</a></li>
                   <li><a href="#tabs-2">Fecha 2</a></li>
 	              <li><a href="#tabs-3">Fecha 3</a></li>
-				  <li><a href="#tabs-4">Fecha 4</a></li>
+				  <li><a href="#tabs-4"><?php echo($dia_ida); ?></a></li>
                   <li><a href="#tabs-5">Fecha 5</a></li>
 	              <li><a href="#tabs-6">Fecha 6</a></li>
 				  <li><a href="#tabs-7">Fecha 7</a></li>
                 </ul>
 	           <?php
-				    
-				       echo("<div id='tabs-4'>");
-				         if($nfilas_ida > 0){
-						      echo ("<table class='recuadro_tabla'>");
-						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
-						         foreach($lista as $filas){
-								    echo ("<tr><td align='center'>".$filas['horario_partida']."</td><td align='center'>".$filas['horario_llegada']."</td>
-									 <td align='center'><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_asiento'>60</div></td>
-									 <td align='center'>
-									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_asiento'>60</div></td>");
-		                           }
-							   echo ("</table>");
-						    }
-						    else{
-						       echo("No hay vuelos disponibles");
-							 }
-						echo("</div>");
+				                echo("<div id='tabs-4'>");
+								
+								
+					 
+				                /*--------------------------------------------------------------------------------------------------------------------
+								Primero se verifica si la categoria elegida. Si es primera los nro_tipo deben ser o  2 ó 3 ó 4
+								si es economica solo nro_tipo = 1
+							   --------------------------------------------------------------------------------------------------------------------   */
+							 
+							   if($categoria == "Primera"){
+							   
+								/*-------------------------------------------------------------------------------------------------------------------- 
+								Realiza busqueda de los vuelos de acuerdo a las elecciones del usuario en la pagina anterior : Lugar_Partida,
+								Lugar_Llegada, dia de la semana y nro_tipo ya fue definido anteriormente 
+								 --------------------------------------------------------------------------------------------------------------------*/
+								 
+								$lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
+								and`tipoavion`.`nro_tipo`in (2,3,4)"));
+								
+								$nfilas_ida=count($lista);
+								
+								
+								 if($nfilas_ida > 0){
+								     echo ("<table class='recuadro_tabla'>");
+						              echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
+
+								
+									   foreach($lista as $filas){
+									   
+										/*-------------------------------------------------------------------------------------------------------------------- 
+										obtiene de la lista el tipo de avion que me permite saber la capacidad en primera información que será utilizada en el
+										switch que viene a continuacion, cuenta en reservas de acuerdo a Nro_vuelo,Fecha_ida(aa-mm-dd),Clase, 
+										Estado_pasaje = Reserva se guarda el valor en la variable cantidad_reserva 
+										Si 
+										La cantidad_reserva es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_reserva  
+										que seria lo que falta para llegar a llenar la capacidad del vuelo	
+										Sino 			
+										Se busca a los que estan en estado_pasaje = Espera 
+										Si 
+										La cantidad_espera es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_espera  
+										que seria lo que falta para llegar a llenar la capacidad en espera
+										Sino 
+										El vuelo no se muestra
+										--------------------------------------------------------------------------------------------------------------------*/
+										  $tipo_avion = $filas['nro_tipo'];
+										  
+										  $nro_vuelo = $filas['nro_vuelo'];
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  
+									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+									
+										  
+											 switch($tipo_avion){
+												case 2:
+													  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'], 10 , $filas);
+												      break;
+												
+												case 3:
+													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 20 ,$filas);
+												     break;
+													 
+											   case 4:
+													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
+												     break;
+											 
+											    }
+										   }
+										  echo ("</table>");
+								     }
+									
+									
+						            else{
+						                 echo("No hay vuelos disponibles");
+							            }
+					     	       
+							   }
+							   
+							   
+							   else {
+							    $lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
+								and`tipoavion`.`nro_tipo`in (1,2,3,4)"));
+								
+								$nfilas_ida=count($lista);
+								
+								if($nfilas_ida > 0){
+								     echo ("<table class='recuadro_tabla'>");
+						              echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
+
+								
+									   foreach($lista as $filas){
+									   
+										/*-------------------------------------------------------------------------------------------------------------------- 
+										obtiene de la lista el tipo de avion que me permite saber la capacidad en primera información que será utilizada en el
+										switch que viene a continuacion, cuenta en reservas de acuerdo a Nro_vuelo,Fecha_ida(aa-mm-dd),Clase, 
+										Estado_pasaje = Reserva se guarda el valor en la variable cantidad_reserva 
+										Si 
+										La cantidad_reserva es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_reserva  
+										que seria lo que falta para llegar a llenar la capacidad del vuelo	
+										Sino 			
+										Se busca a los que estan en estado_pasaje = Espera 
+										Si 
+										La cantidad_espera es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_espera  
+										que seria lo que falta para llegar a llenar la capacidad en espera
+										Sino 
+										El vuelo no se muestra
+										--------------------------------------------------------------------------------------------------------------------*/
+										  $tipo_avion = $filas['nro_tipo'];
+										  
+										  $nro_vuelo = $filas['nro_vuelo'];
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  
+									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+									
+										  
+											 switch($tipo_avion){
+												case 1:
+													  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'], 10 , $filas);
+												      break;
+												
+												case 2:
+													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 20 ,$filas);
+													 break;
+												
+												case 3:
+													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
+													 break;
+												
+												case 4:
+													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
+												     break;
+											 
+											  }
+										 }
+										 echo ("</table>");
+								   	}
+									
+									 else{
+						                 echo("No hay vuelos disponibles");
+							            }
+								}
+					     	      echo("</div>");
 				 ?>
 			
 			 <div id="tabs-2">
@@ -147,7 +275,7 @@
                   <li><a href="#tabs-1-a">Fecha 1</a></li>
                   <li><a href="#tabs-2-a">Fecha 2</a></li>
 	              <li><a href="#tabs-3-a">Fecha 3</a></li>
-				  <li><a href="#tabs-4-a">Fecha 4</a></li>
+				  <li><a href="#tabs-4-a">'.$fecha_vuelta.'</a></li>
                   <li><a href="#tabs-5-a">Fecha 5</a></li>
 	              <li><a href="#tabs-6-a">Fecha 6</a></li>
 				  <li><a href="#tabs-7-a">Fecha 7</a></li>

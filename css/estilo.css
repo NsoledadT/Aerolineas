@@ -164,9 +164,21 @@ height:auto;
 .vuelo_asiento{
 background-image: url(../img/asientos.jpg);
 background-repeat: no-repeat;
-width: 21px;
-height: 21px;
+width: 29px;
+height: 20px;
 padding: 0px 2px 0px 0px;
+margin: 0 auto;
+font-size: 10px;
+text-align: center;
+}
+
+
+.vuelo_espera{
+background-image: url(../img/espera2.jpg);
+background-repeat: no-repeat;
+width: 40px;
+height: 17px;
+padding: 3px 4px 0px 0px;
 margin: 0 auto;
 font-size: 10px;
 text-align: center;
