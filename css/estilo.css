@@ -382,6 +382,15 @@ width:540px;
 float:left;
 }
 
+.cuadradito{
+float:left;
+}
+
+.espacio_blanco{
+height:40px;
+width:200px;
+}
+
 .titulito{
 margin-left:5px;
 font-weight:bold;

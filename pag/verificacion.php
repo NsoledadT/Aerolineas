@@ -66,7 +66,7 @@
 		   <p>Tarifa<span><?php echo($fila[0]['precio_'.$clase]); ?></span></p>
 		   <h6><?php echo($fila[0]['precio_'.$clase]." + IVA = $tasa" ); ?></h6>
 		 </div>
-		 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
+		 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" /><span class="titulito">IDA</span></p>
 		     <div class="recuadro_tabla_verificacion">
 				<table>
 				    <tr>
@@ -91,7 +91,7 @@
 					</tr>
 				</table>
 			 </div>
-		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">VUELTA</span></p>
+		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" /><span class="titulito">VUELTA</span></p>
 		     <div class="recuadro_tabla_verificacion">
 				<table>
 				    <tr>

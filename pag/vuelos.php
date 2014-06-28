@@ -27,6 +27,7 @@
    $llegada =$_POST['destino'];
    $fecha_ida =$_POST['fechaPartida'];
    $fecha_vuelta =$_POST['fechaDestino'];
+   
    $fecha_ida_invertir = fechaDma($fecha_ida);
    $fecha_vuelta_invertir = fechaDma($fecha_vuelta);
   
@@ -80,6 +81,7 @@
 	 </div>
 	 <div id="columna_contenido">
 	   <div id="barra_titulo">
+	   <div class="espacio_arriba"></div>
 	   <img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16"/>
 	   <h4>SELECCIONA TU VUELO</h4>
 	   </div>
@@ -89,9 +91,9 @@
 	   total a abonar. Al combinar tarifas con diferentes condiciones, las regulaciones m&aacute;
 	   restrictivas ser&aacute;n aplicadas para todos el billete.</p>
 	    <img src="../img/chica_vuelos_chico.gif" alt="imagen de recepcionista" width="137" height="179"/>
-		<div class="espacio_blanco"></div>
-			 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
-		     <h5>IDA</h5>
+		
+			 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito" /><span class="titulito">IDA</span></p>
+			 <div class="espacio_blanco"></div>
 			 <div id="tabs_vuelos">
 	            <ul>
                   <li><a href="#tabs-1">Fecha 1</a></li>
@@ -102,155 +104,17 @@
 	              <li><a href="#tabs-6">Fecha 6</a></li>
 				  <li><a href="#tabs-7">Fecha 7</a></li>
                 </ul>
+				<div id='tabs-4'>
 	           <?php
-				                echo("<div id='tabs-4'>");
-								
-								
-					 
-				                /*--------------------------------------------------------------------------------------------------------------------
-								Primero se verifica si la categoria elegida. Si es primera los nro_tipo deben ser o  2 ó 3 ó 4
-								si es economica solo nro_tipo = 1
-							   --------------------------------------------------------------------------------------------------------------------   */
-							 
-							   if($categoria == "Primera"){
-							   
-								/*-------------------------------------------------------------------------------------------------------------------- 
-								Realiza busqueda de los vuelos de acuerdo a las elecciones del usuario en la pagina anterior : Lugar_Partida,
-								Lugar_Llegada, dia de la semana y nro_tipo ya fue definido anteriormente 
-								 --------------------------------------------------------------------------------------------------------------------*/
-								 
-								$lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
-								and`tipoavion`.`nro_tipo`in (2,3,4)"));
-								
-								$nfilas_ida=count($lista);
-								
-								
-								 if($nfilas_ida > 0){
-								     echo ("<table class='recuadro_tabla'>");
-						              echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
-
-								
-									   foreach($lista as $filas){
-									   
-										/*-------------------------------------------------------------------------------------------------------------------- 
-										obtiene de la lista el tipo de avion que me permite saber la capacidad en primera información que será utilizada en el
-										switch que viene a continuacion, cuenta en reservas de acuerdo a Nro_vuelo,Fecha_ida(aa-mm-dd),Clase, 
-										Estado_pasaje = Reserva se guarda el valor en la variable cantidad_reserva 
-										Si 
-										La cantidad_reserva es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_reserva  
-										que seria lo que falta para llegar a llenar la capacidad del vuelo	
-										Sino 			
-										Se busca a los que estan en estado_pasaje = Espera 
-										Si 
-										La cantidad_espera es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_espera  
-										que seria lo que falta para llegar a llenar la capacidad en espera
-										Sino 
-										El vuelo no se muestra
-										--------------------------------------------------------------------------------------------------------------------*/
-										  $tipo_avion = $filas['nro_tipo'];
-										  
-										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
-										  
-									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
-									
-										  
-											 switch($tipo_avion){
-												case 2:
-													  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'], 10 , $filas);
-												      break;
-												
-												case 3:
-													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 20 ,$filas);
-												     break;
-													 
-											   case 4:
-													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
-												     break;
-											 
-											    }
-										   }
-										  echo ("</table>");
-								     }
-									
-									
-						            else{
-						                 echo("No hay vuelos disponibles");
-							            }
-					     	       
-							   }
-							   
-							   
-							   else {
-							    $lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
-								and`tipoavion`.`nro_tipo`in (1,2,3,4)"));
-								
-								$nfilas_ida=count($lista);
-								
-								if($nfilas_ida > 0){
-								     echo ("<table class='recuadro_tabla'>");
-						              echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
-
-								
-									   foreach($lista as $filas){
-									   
-										/*-------------------------------------------------------------------------------------------------------------------- 
-										obtiene de la lista el tipo de avion que me permite saber la capacidad en primera información que será utilizada en el
-										switch que viene a continuacion, cuenta en reservas de acuerdo a Nro_vuelo,Fecha_ida(aa-mm-dd),Clase, 
-										Estado_pasaje = Reserva se guarda el valor en la variable cantidad_reserva 
-										Si 
-										La cantidad_reserva es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_reserva  
-										que seria lo que falta para llegar a llenar la capacidad del vuelo	
-										Sino 			
-										Se busca a los que estan en estado_pasaje = Espera 
-										Si 
-										La cantidad_espera es menor a la cantidad maxima se guarda en  numero= cantidad_maxima - cantidad_espera  
-										que seria lo que falta para llegar a llenar la capacidad en espera
-										Sino 
-										El vuelo no se muestra
-										--------------------------------------------------------------------------------------------------------------------*/
-										  $tipo_avion = $filas['nro_tipo'];
-										  
-										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
-										  
-									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
-									
-										  
-											 switch($tipo_avion){
-												case 1:
-													  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'], 10 , $filas);
-												      break;
-												
-												case 2:
-													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 20 ,$filas);
-													 break;
-												
-												case 3:
-													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
-													 break;
-												
-												case 4:
-													 evaluar_tipos( $cantidad_reserva[0]['numero'],$cantidad_espera[0]['numero'], 30 ,$filas);
-												     break;
-											 
-											  }
-										 }
-										 echo ("</table>");
-								   	}
-									
-									 else{
-						                 echo("No hay vuelos disponibles");
-							            }
-								}
-					     	      echo("</div>");
+				    include("../clases/busqueda_include.php");	
 				 ?>
+				   </div>
+				 
 			
 			 <div id="tabs-2">
 			  <h1>Natalia soledad Tocci tab 2</h1>
 			 </div>
-			 
-			  <div id="tabs-3">
+			 <div id="tabs-3">
 			 <h1>Natalia soledad Tocci tab 3</h1>
 			 </div>
 			  <div id="tabs-1">
@@ -266,10 +130,11 @@
 			 <h1>Natalia soledad Tocci tab 7</h1>
 			 </div>
 			 </div>
+			 <div class="espacio_blanco"></div>
 		       <?php 
 			 if(strlen($tipo_viaje) > 3){
-			   echo('<p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito"/><span class="titulito">IDA</span></p>
-		         <h5>IDA</h5>
+			   echo('<p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito" /><span class="titulito">VUELTA</span></p>
+				 <div class="espacio_blanco"></div>
 			     <div id="tabs_vuelos_2">
 	                <ul>
                   <li><a href="#tabs-1-a">Fecha 1</a></li>
@@ -281,23 +146,16 @@
 				  <li><a href="#tabs-7-a">Fecha 7</a></li>
                 </ul>
 	           <div id="tabs-4-a">');
-		            if($nfilas_vuelta > 0){
-						      echo ("<table class='recuadro_tabla'>");
-						      echo("<tr><th>Salida</th><th>Llegada</th><th>Econ&oacute;mica</th><th>Primera</th></tr>");
-						         foreach($lista as $filas){
-								    echo ("<tr><td>".$filas['horario_partida']."</td><td>".$filas['horario_llegada']."</td>
-									 <td><input type='radio' name='vuelo_ida' value='economica+".$filas['nro vuelo']."'></input>".$filas['precio_economica']."</td><td>
-									 <input type='radio' name='vuelo_ida' value='primera+".$filas['nro vuelo']."'></input>".$filas['precio_primera']."</td>");
-		                           }
-							   echo ("</table>");
-						    }
-						    else{
-						       echo("No hay vuelos disponibles");
-							 }
+			           $fecha_ida_invertir=$fecha_vuelta_invertir;
+                       $auxiliar=$partida;
+			           $partida=$llegada;
+					   $llegada =$auxiliar;
+		               include("../clases/busqueda_include.php");
 				echo("</div>
 				</div>");
 				}
 				?>
+
 				<p><a href="../index.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
 		        <p id="boton_continuar"><input type="image" src="../img/continuar.png"  alt="boton continuar"/></p>
 				</form>

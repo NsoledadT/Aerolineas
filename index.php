@@ -15,14 +15,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<link type="text/css" rel="stylesheet" href="css/estilo.css" />
  <link   type="text/css" rel="stylesheet" href="js/jquery-ui.css" />
+<link type="text/css" rel="stylesheet" href="css/estilo.css" />
 <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript">
    $(function() {
+  var d = $.datepicker.formatDate('dd-mm-yy', new Date());
+  $("#fechaPartida").attr("value",d);
+   $("#fechaDestino").attr("value",d);
+  
     $( ".datepicker" ).datepicker(
-	       { dateFormat: "dd-mm-yy" }
+	       { dateFormat: "dd-mm-yy",
+             		   }
 		   );
 	
 	$( "#tabs" ).tabs();
@@ -84,11 +89,11 @@
 		?>
 
 	   </select></p>
-	   <p><input type="text" name="fechaPartida" value="Destino" class="datepicker" />
-	   <input type="text" name="fechaDestino" value="Origen" class="datepicker"  /></p>
+	   <p><input type="text" name="fechaPartida" value="Destino" id="fechaPartida" class="datepicker" />
+	   <input type="text" name="fechaDestino" value="Origen" id="fechaDestino" class="datepicker"  /></p>
 	   <p><select name="categoria" id="categoria">
-	   <option value="economica">Econ&oacute;mica</option>
-	   <option value="primera">Primera</option>
+	   <option value="Economica">Econ&oacute;mica</option>
+	   <option value="Primera">Primera</option>
 	   </select></p>
 	   <p><input type="image" src="img/boton_buscar.png" /></p>
 	   </form>
