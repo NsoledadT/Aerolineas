@@ -106,6 +106,7 @@
                 </ul>
 				<div id='tabs-4'>
 	           <?php
+			        $value="vuelo_ida";
 				    include("../clases/busqueda_include.php");	
 				 ?>
 				   </div>
@@ -140,16 +141,18 @@
                   <li><a href="#tabs-1-a">Fecha 1</a></li>
                   <li><a href="#tabs-2-a">Fecha 2</a></li>
 	              <li><a href="#tabs-3-a">Fecha 3</a></li>
-				  <li><a href="#tabs-4-a">'.$fecha_vuelta.'</a></li>
+				  <li><a href="#tabs-4-a">'.$dia_vuelta.'</a></li>
                   <li><a href="#tabs-5-a">Fecha 5</a></li>
 	              <li><a href="#tabs-6-a">Fecha 6</a></li>
 				  <li><a href="#tabs-7-a">Fecha 7</a></li>
                 </ul>
 	           <div id="tabs-4-a">');
+			           $dia_ida=$dia_vuelta;
 			           $fecha_ida_invertir=$fecha_vuelta_invertir;
                        $auxiliar=$partida;
 			           $partida=$llegada;
 					   $llegada =$auxiliar;
+					   $value="vuelo_vuelta";
 		               include("../clases/busqueda_include.php");
 				echo("</div>
 				</div>");

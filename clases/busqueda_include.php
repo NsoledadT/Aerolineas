@@ -57,7 +57,7 @@
 										  
 									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
-										   evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_primera, $tipo_avion, $filas,$categoria);
+										   evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_primera, $tipo_avion, $filas,$categoria,$value);
 										   }
 										  echo ("</table>");
 								     }
@@ -106,7 +106,7 @@
 									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
 										  
-										  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_economica,$tipo_avion, $filas,$categoria);
+										  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_economica,$tipo_avion, $filas,$categoria,$value);
 											
 										}
 										 echo ("</table>");
