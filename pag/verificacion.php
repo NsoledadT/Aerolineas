@@ -8,12 +8,21 @@
    include("../clases/DataBase.php");
 	$vuelo_ida =$_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
-	$clase=$vuelo_ida_separada[0];
-	$nro_vuelo=$vuelo_ida_separada[1];
+	$tipo_viaje=$vuelo_ida_separada[0];
+	$clase=$vuelo_ida_separada[1];
+	$nro_vuelo=$vuelo_ida_separada[2];
 	$baseDatos = new DataBase();
 	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro vuelo`='$nro_vuelo'"));
-    $tasa=$fila[0]['precio_'.$clase]*1.21;
+    $precio=$fila[0]['precio_'.$clase] ;
 	echo($fila[0]['precio_economica'] );
+	if(isset($_POST['vuelo_vuelta'])){
+	   $vuelo_vuelta = $_POST['vuelo_vuelta'];
+	   $precio=$fila[0]['precio_'.$clase]* 2 ;
+	   $tasa=$precio * 1.21;
+	}
+	else{
+	  $tasa=$precio* 1.21;
+	}
    ?>
 </head>
 <body>
@@ -63,8 +72,8 @@
 	    <img src="../img/chica_vuelos_chico.gif" alt="imagen de recepcionista" width="137" height="179"/>
 		<div class="espacio_blanco"></div>
 		 <div id="tarifa">
-		   <p>Tarifa<span><?php echo($fila[0]['precio_'.$clase]); ?></span></p>
-		   <h6><?php echo($fila[0]['precio_'.$clase]." + IVA = $tasa" ); ?></h6>
+		   <p>Tarifa<span><?php echo($tasa); ?></span></p>
+		   <h6><?php echo($precio." + IVA = $tasa" ); ?></h6>
 		 </div>
 		 <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" /><span class="titulito">IDA</span></p>
 		     <div class="recuadro_tabla_verificacion">
@@ -91,8 +100,10 @@
 					</tr>
 				</table>
 			 </div>
-		     <p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" /><span class="titulito">VUELTA</span></p>
-		     <div class="recuadro_tabla_verificacion">
+			 <?php
+			 if(isset($_POST['vuelo_vuelta'])){
+		     echo("<p><img src='../img/cuadradito.gif' alt='cuadradito' width='16' height='16' /><span class='titulito'>VUELTA</span></p>
+		     <div class='recuadro_tabla_verificacion'>
 				<table>
 				    <tr>
 				    <td><span>salida:</span></td>
@@ -115,15 +126,17 @@
 					<td>&nbsp;</td>
 					</tr>
 				</table>
-		     </div>
+		     </div>");
+			 }
+			 ?>
 			 <div id="recuadrito_tarifa">
 			 <h4>Tarifa</h4>
 			 <p>Tarifa base</p>
-			 <p><span><?php echo($fila[0]['precio_'.$clase]); ?></span></p>
+			 <p><span><?php echo($precio); ?></span></p>
 			 <p>Impuesto</p>
 			 <p><span><?php echo("21%"); ?></span></p>
 			 <hr/>
-			 <p><span><?php echo($fila[0]['precio_'.$clase]." + IVA = $tasa" ); ?></span></p>
+			 <p><span><?php echo($precio." + IVA = $tasa" ); ?></span></p>
 			 </div>
 			 <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
 		     <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>

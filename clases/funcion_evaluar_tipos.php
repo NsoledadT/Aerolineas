@@ -8,11 +8,11 @@ function evaluar_tipos($cantidad_reserva,$cantidad_espera,$array,$tipo_avion,$fi
 			  
 			     if($categoria == "Primera"){
 					  echo ("<td align='center'>-</div></td>
-					  <td align='center'><input type='radio' name='$value' value='Reserva+Primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_asiento'>$numero</div></td>
+					  <td align='center'><input type='radio' name='$value' value='Reserva+primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_asiento'>$numero</div></td>
 					  </tr>");
 				  }
 				  else{
-					   echo ("<td align='center'><input type='radio' name='$value' value='Reserva+Economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_asiento'>$numero</div></td>
+					   echo ("<td align='center'><input type='radio' name='$value' value='Reserva+economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_asiento'>$numero</div></td>
 					  <td align='center'>-</div></td>");
 				  }
 				  echo("</tr>");
@@ -28,11 +28,11 @@ function evaluar_tipos($cantidad_reserva,$cantidad_espera,$array,$tipo_avion,$fi
 			  
 					 if($categoria == "Primera"){
 						  echo ("<td align='center'>-</div></td>
-						  <td align='center'><input type='radio' name='$value' value='Espera+Primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_espera'>$numero</div></td>
+						  <td align='center'><input type='radio' name='$value' value='Espera+primera+".$filas['nro vuelo']."'/>".$filas['precio_primera']."<div class='vuelo_espera'>$numero</div></td>
 						  </tr>");
 					  }
 					  else{
-						   echo ("<td align='center'><input type='radio' name='$value' value='Espera+Economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_espera'>$numero</div></td>
+						   echo ("<td align='center'><input type='radio' name='$value' value='Espera+economica+".$filas['nro vuelo']."'/>".$filas['precio_economica']."<div class='vuelo_espera'>$numero</div></td>
 						  <td align='center'>-</div></td>");
 					  }
 					  echo("</tr>");
