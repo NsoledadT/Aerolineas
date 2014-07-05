@@ -1,3 +1,7 @@
+            <?php
+			 session_start();
+			?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Aerolinea Rustics</title>
@@ -18,7 +22,7 @@
   
   <?php
    include("../clases/funcionFecha.php");
-    include("../clases/funcion_evaluar_tipos.php");
+   include("../clases/funcion_evaluar_tipos.php");
    include("../clases/DataBase.php");
    $baseDatos = new DataBase();
    $partida = $_POST['partida'];
@@ -38,7 +42,11 @@
    $dia_vuelta=$dias[date('N', strtotime($_POST['fechaDestino']))];
    $nfilas_vuelta=count($lista_vuelta);
 	
-
+   $_SESSION['clase'] = $_POST['categoria'];
+   $_SESSION['fecha_ida'] =  $fecha_ida_invertir ;
+   $_SESSION['fecha_vuelta'] = $fecha_vuelta_invertir ;
+   
+						
 
 ?>
 </head>

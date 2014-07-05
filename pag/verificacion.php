@@ -1,3 +1,6 @@
+    <?php
+	session_start();
+	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Aerolinea Rustics</title>
@@ -5,24 +8,34 @@
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
 
    <?php
-   include("../clases/DataBase.php");
+    include("../clases/DataBase.php");
 	$vuelo_ida =$_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
-	$tipo_viaje=$vuelo_ida_separada[0];
+	$estado_pasaje=$vuelo_ida_separada[0];
 	$clase=$vuelo_ida_separada[1];
 	$nro_vuelo=$vuelo_ida_separada[2];
 	$baseDatos = new DataBase();
-	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro vuelo`='$nro_vuelo'"));
+	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro_vuelo`='$nro_vuelo'"));
     $precio=$fila[0]['precio_'.$clase] ;
 	echo($fila[0]['precio_economica'] );
 	if(isset($_POST['vuelo_vuelta'])){
-	   $vuelo_vuelta = $_POST['vuelo_vuelta'];
-	   $precio=$fila[0]['precio_'.$clase]* 2 ;
-	   $tasa=$precio * 1.21;
+		  $vuelo_vuelta =$_POST['vuelo_vuelta'];
+		  $vuelo_vuelta_separada = explode("+",$vuelo_vuelta);
+		  $estado_pasaje_vuelta=$vuelo_ida_separada[0];
+		  $clase_vuelta=$vuelo_ida_separada[1];
+		  $nro_vuelo_vuelta=$vuelo_ida_separada[2];
+		  $precio=$fila[0]['precio_'.$clase]* 2 ;
+		  $tasa=$precio * 1.21;
+		  $_SESSION['nro_vuelo_vuelta'] = $nro_vuelo_vuelta;
+		  $_SESSION['estado_pasaje_vuelta'] = $estado_pasaje_vuelta;
 	}
 	else{
 	  $tasa=$precio* 1.21;
 	}
+	
+	$_SESSION['nro_vuelo_ida'] = $nro_vuelo;
+	$_SESSION['estado_pasaje_ida'] = $estado_pasaje;
+	
    ?>
 </head>
 <body>
@@ -138,8 +151,8 @@
 			 <hr/>
 			 <p><span><?php echo($precio." + IVA = $tasa" ); ?></span></p>
 			 </div>
-			 <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		     <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
+				<p><a href="vuelos.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
+		        <p id="boton_continuar"><a href="datos.php"><input type="image" src="../img/continuar.png"  alt="boton continuar"/></a></p>
 			 <div class="espacio_blanco_formulario"></div>
 		  </div>
 		 </div>

@@ -68,9 +68,7 @@
 			    <div class="pasajero">Pasajero:</div>
 				<form action="validaDatos.php" method="post"> 
 						
-						<p><label class="ltipo">Tipo de pasaje:</label>
-						<input class="categoria" type="text" name="tipo" value="ida/ida-vuelta"/></p>
-           
+						           
             <p><label class="ltipo1"><span class="asterisco">*</span>Nombre:</label>
 						<input type="text" name="nombre" id="nom"/></p>
             

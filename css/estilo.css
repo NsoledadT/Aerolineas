@@ -105,7 +105,10 @@ background-color:#ffffff;
 width:1100px;
 height:auto;
 color:#5178bf;
-
+}
+.input_invisible{
+width:100px;
+height:20px;
 }
 
 .columna{

@@ -22,7 +22,7 @@
 								Lugar_Llegada, dia de la semana y nro_tipo ya fue definido anteriormente 
 								 --------------------------------------------------------------------------------------------------------------------*/
 								 
-								$lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
+								$lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro_vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula_avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro_tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
 								and`tipoavion`.`nro_tipo`in (2,3,4)"));
 								
 								$nfilas_ida=count($lista);
@@ -53,9 +53,9 @@
 										  $tipo_avion = $filas['nro_tipo'];
 										  
 										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado_pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 										  
-									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado_pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
 										   evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_primera, $tipo_avion, $filas,$categoria,$value);
 										   }
@@ -71,7 +71,7 @@
 							   
 							   
 							   else {
-							    $lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
+							   $lista = $baseDatos->resultToArray($baseDatos->consulta("SELECT * FROM `vuelo`,`vuelos_dias`,`dias_semana` , `avion`,`tipoavion` WHERE `vuelo`.`nro_vuelo` = `vuelos_dias`.`nro_vuelo` and `vuelos_dias`.`dias_semana` = `dias_semana`.`codigo_dia` and `vuelo`.`matricula_avion` =`avion`.`matricula` and `tipoavion`.`nro_tipo`= `avion`. `nro_tipo` and `vuelo`.`lugar_partida`='$partida' and`vuelo`.`lugar_llegada`='$llegada' and `dias_semana`.`dia_semana`='$dia_ida'
 								and`tipoavion`.`nro_tipo`in (1,2,3,4)"));
 								
 								$nfilas_ida=count($lista);
@@ -101,9 +101,9 @@
 										  $tipo_avion = $filas['nro_tipo'];
 										  
 										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado_pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 										  
-									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado_pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
 										  
 										  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_economica,$tipo_avion, $filas,$categoria,$value);

@@ -101,13 +101,10 @@
 	   </div>
 	   
 	   <div id="tabs-2">
-	   <form action="" method="post">
-       <p><input type="text" name="nombre" value="Apellido" />
-	   <input type="text" name="apellido" value="Nombre"/></p>
-	   <p><label>origen:</label></p>
-	   <p><select name="destino" class="primeros_input">
-	   <option></option>
-	   </select></p>
+	   <form action="pag/reserva.php" method="post">
+       <p><input type="text" name="apellido" value="Apellido" />
+	   <input type="text" name="nombre" value="Nombre"/></p>
+	   <div class="input_invisible"></div>
 	   <p><input type="text" name="nro_vuelo" value="Numero de vuelo AR"/>
 	   <input type="text" name="codigo_reserva" value="Numero de reserva" /></p>
 	   <p><input type="image" src="img/boton_buscar.png" /></p>
@@ -118,11 +115,11 @@
 	   
 	   <div id="tabs-3">
 	   <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
-	   <form action="" method="post">
+	   <form action="pag/pago.php" method="post">
 	   <p><label>Codigo de reserva</label></p>
 	   <p><input type="text" name="codigo_reserva"/></p>
-	   <p><label>Apellido de pasajero</label></p>
-	   <p><input type="text" name="apellido_pasajero" /></p>
+	   <p><label>DNI</label></p>
+	   <p><input type="text" name="dni_pasajero" /></p>
 	   <p><input type="image" src="img/boton_buscar.png" /></p>
 	   </form>
 	   <div class="blanco_tabs"></div>
