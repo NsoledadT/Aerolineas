@@ -11,21 +11,22 @@
     include("../clases/DataBase.php");
 	$vuelo_ida =$_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
+	$clase=$texto = strtolower($_SESSION['clase']);
 	$estado_pasaje=$vuelo_ida_separada[0];
-	$clase=$vuelo_ida_separada[1];
+	$tipo_avion=$vuelo_ida_separada[1];
 	$nro_vuelo=$vuelo_ida_separada[2];
 	$baseDatos = new DataBase();
 	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro_vuelo`='$nro_vuelo'"));
     $precio=$fila[0]['precio_'.$clase] ;
-	echo($fila[0]['precio_economica'] );
 	if(isset($_POST['vuelo_vuelta'])){
 		  $vuelo_vuelta =$_POST['vuelo_vuelta'];
 		  $vuelo_vuelta_separada = explode("+",$vuelo_vuelta);
-		  $estado_pasaje_vuelta=$vuelo_ida_separada[0];
-		  $clase_vuelta=$vuelo_ida_separada[1];
-		  $nro_vuelo_vuelta=$vuelo_ida_separada[2];
+		  $estado_pasaje_vuelta=$vuelo_vuelta_separada[0];
+		  $tipo_avion_vuelta=$vuelo_vuelta_separada[1];
+		  $nro_vuelo_vuelta=$vuelo_vuelta_separada[2];
 		  $precio=$fila[0]['precio_'.$clase]* 2 ;
 		  $tasa=$precio * 1.21;
+		  $_SESSION['tipo_viaje_vuelta'] =  $tipo_avion_vuelta;
 		  $_SESSION['nro_vuelo_vuelta'] = $nro_vuelo_vuelta;
 		  $_SESSION['estado_pasaje_vuelta'] = $estado_pasaje_vuelta;
 	}
@@ -35,6 +36,7 @@
 	
 	$_SESSION['nro_vuelo_ida'] = $nro_vuelo;
 	$_SESSION['estado_pasaje_ida'] = $estado_pasaje;
+	$_SESSION['tipo_viaje_ida'] = $tipo_avion;
 	
    ?>
 </head>
