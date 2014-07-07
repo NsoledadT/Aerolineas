@@ -17,7 +17,7 @@
 	   <div id="formulario">
         <form action="loginAdmin.php" method="post">
 		<p><label>Usuario:</label><input type="text" name="usuario"/>
-		<label>Contrase&ntilde;a:</label><input type="text" name="pass"/></p>
+		<label>Contrase&ntilde;a:</label><input type="password" name="pass" class="adminCont"/></p>
 		<p><input type="image" src="../img/boton_enviar.png" /></p>
         </form>
 		</div>
@@ -41,8 +41,16 @@
 	   
 	  		<h3>Aqui verificar&aacute; las estadisticas de la empresa.</h3>
 	    
-	    	<h5>Ver estadisticas en forma nominal:<h5>
-			
+	    	<div>
+	    		<form action="nominal.php" method="post">
+	    				<input type="submit" value="Ver en forma nominal" name="bot1"/>
+	    		</form>
+	    	</div>
+				<div>
+					<form action="graficos.php" method="post">
+						<input type="submit" value="Ver en graficos" name="bot2"/>
+					</form>
+				</div>	
 			    
 				
              

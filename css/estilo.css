@@ -577,6 +577,10 @@ height:500px;
 	width: 60px;
 	color:#01226B;
 }
+.ltipo0{
+	font-size: 12pt;
+	margin-right: 154px;
+}
 .ltipo1{
 	font-size: 12pt;
 	margin-right: 154px;
@@ -626,7 +630,14 @@ margin-right: 170px;
 	font-size: 12pt;
 	color:#ff0000;
 }
-
+.codigoIda{
+	font-size: 12pt;
+	color:#ff0000;
+}
+.codigoVuelta{
+	font-size: 12pt;
+	color:#ff0000;
+}
 h1{
 	text-align: center;
 }
@@ -636,6 +647,13 @@ h3{
 }
 h5{
 	color: #000000;
+}
+
+.botonesDatos{
+	margin-top: 140px;
+}
+.botonContinuar{
+	margin-left: 190px;
 }
 /*Estilo Paula*/
 /*-------------------------------------------------------------------------------------------*/

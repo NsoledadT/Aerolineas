@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <title>Aerolinea Rustics</title>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
-<!--<script type="text/javascript" src="../js/datos.js"></script>!-->
+<script type="text/javascript" src="../js/datos.js"></script>
 </head>
 <body>
  <div id="general">
@@ -69,8 +69,11 @@
 				<form action="validaDatos.php" method="post"> 
 						
 						           
-            <p><label class="ltipo1"><span class="asterisco">*</span>Nombre:</label>
+            <p><label class="ltipo0"><span class="asterisco">*</span>Nombre:</label>
 						<input type="text" name="nombre" id="nom"/></p>
+
+						<p><label class="ltipo1"><span class="asterisco">*</span>Apellido:</label>
+						<input type="text" name="apellido" id="ape"/></p>
             
             <p><label class="ltipo2"><span class="asterisco">*</span>Documento:</label>
 						<input type="text" name="documento" id="doc"/></p>
@@ -86,9 +89,10 @@
 						<input class="chico" type="text" name="mes" maxlength="2" id="m"/><label class="barra">/</label>
 						<input class="grande" type="text" name="anio" maxlength="4" id="a"/></p>
              
-             <p><input type="submit" value="enviar" name="envia" onclick="return valida()"/><input type="reset" value="limpiar" name="resetea"/></p>         
-                          <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		                  <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
+  <p class="botonesDatos"><a href="verificacion.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/>
+             </a><input class="botonContinuar" type="image" name="envia" src="../img/continuar.png" onclick="return valida()" /></p>         
+                          
+		                  
 				  </form>
 	     	</div>
 	   </div>

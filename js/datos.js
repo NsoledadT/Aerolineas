@@ -1,5 +1,6 @@
 function valida () {
 	var nombre = document.getElementById('nom').value;	
+	var apellido = document.getElementById('ape').value;
 	var documento = document.getElementById('doc').value;
 	var telefono = document.getElementById('tel').value;
 	var correo = document.getElementById('correo').value;
@@ -11,6 +12,7 @@ function valida () {
 	var fecha = new Date(anio, mes, dia);
 	
 	var expRegNom = /^[a-zA-Z]{4,10}$/;
+	var expRegApe = /^[a-zA-Z]{4,15}$/;
 	var expRegDni = /^\d{8}$/;
 	var expRegEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	var expRegTelefono = /^[0-9]{2,3}-? ?[0-9]{6,7}$/;
@@ -20,6 +22,12 @@ function valida () {
 		return false;
 	}else if(!expRegNom.test(nombre)){
 		alert("El nombre puede tener entre 4 y 10 caracteres y no puedo contener numero o caracteres especiales");
+		return false;
+	}else if(apellido == ""){
+		alert("Por favor ingrese su apellido");
+		return false;
+	}else if(!expRegApe.test(apellido)){
+		alert("El apellido puede tener entre 4 y 15 caracteres y no puede tener caracteres especiales");
 		return false;
 	}else if(documento == null){
 		alert("Por favor ingrese su numero de dni");
