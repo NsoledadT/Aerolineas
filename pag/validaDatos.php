@@ -1,10 +1,12 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <title>Aerolinea Rustics</title>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
-<!--<script type="text/javascript" src="../js/datos.js"></script>-->
 </head>
 <body>
  <div id="general">
@@ -57,7 +59,9 @@
 			    <div class="pasajero">Pasajero:</div>
 				<form action="validaDatos.php" method="post"> 
 						<?php
+								include('../clases/DataBase.php');
 								$expNom = '/^[a-zA-Z]{4,10}$/';
+								$expApe = '/^[a-zA-Z]{4,15}$/';
 								$expDoc = '/^\d{8}$/';
 								$expEmail = '/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/';
 								$expTel = '/^[0-9]{2,3}-? ?[0-9]{6,7}$/';
@@ -66,7 +70,11 @@
 										$nombre = $_POST["nombre"];
 									}
 								}
-
+								if(isset($_POST['apellido'])){
+									if(preg_match($expApe, $_POST['apellido'])){
+										$apellido = $_POST['apellido'];
+									}
+								}
 								if(isset($_POST["documento"])){
 									if(preg_match($expDoc, $_POST["documento"])){
 										$documento = $_POST["documento"];
@@ -94,17 +102,80 @@
 								if(isset($_POST["anio"])){
 								$anio = $_POST["anio"];
 								}
+								
+								if(isset($_SESSION['nro_vuelo_ida'])){
+									$nro_vuelo_ida = $_SESSION['nro_vuelo_ida'];
+								}
+								if(isset($_SESSION['estado_pasaje_ida'])){
+									$estado_pasaje_ida = $_SESSION['estado_pasaje_ida'];
+								}
+								if(isset($_SESSION['tipo_viaje_ida'])){
+									$tipo_avion = $_SESSION['tipo_viaje_ida'];
+								}
+								if(isset($_SESSION['clase'])){
+									$clase = strtolower($_SESSION['clase']);
+								}
+								date_default_timezone_set("America/Argentina/Buenos_Aires");
+								$fecha_reserva = date("Y-m-d");
 
-							include($_SERVER['DOCUMENT_ROOT']."/Tp-final/Aerolineas/pag/coneccionBDD.php");
-							$fecha = $anio."-".$mes."-".$dia;
-							$query = "insert into pasajero values('$documento','$nombre','$telefono','$correo','$fecha')";
+								$BD = new DataBase();
+								$fecha = $anio."-".$mes."-".$dia;
+								$query = "insert into pasajero values('$documento','$nombre','$apellido','$fecha','$correo','$telefono')";
+								$consulta = $BD->consulta($query);
+								$reserva = $BD->consulta("insert into reserva values(null,'$clase','','','$estado_pasaje_ida','$tipo_avion','$nro_vuelo_ida','$fecha_reserva')");
+								
+								$result = $BD->consulta("select count(codigo_reserva) as cant_reservas from reserva");
+								$resultados = $BD->resultToArray($result);
+								foreach ($resultados as $resultado) {
+									$codigo_ida = $resultado['cant_reservas']; 
+								}
+									
+								$codigo_vuelta = 0;
+								if(isset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'])){
+									
+									$nro_vuelo_vuelta = $_SESSION['nro_vuelo_vuelta'];
+									
+									$estado_pasaje_vuelta = $_SESSION['estado_pasaje_vuelta'];
+									
+									$tipo_avion_vuelta = $_SESSION['tipo_viaje_vuelta'];
+									
+									$reserva2 = $BD->consulta("insert into reserva values(null,'$clase','','','$estado_pasaje_vuelta','$tipo_avion_vuelta','$nro_vuelo_vuelta','$fecha_reserva')");
 
-						$mensaje = consulta($query); 
-						
-						echo "<p><label class = mensajeValido>".$mensaje."</label></p>";	
+									$result2 = $BD->consulta("select count(codigo_reserva) as cant_reservas from reserva");
+									
+									$resultados2 = $BD->resultToArray($result2);
+									
+									foreach ($resultados2 as $resultado2) {
+									$codigo_vuelta = $resultado2['cant_reservas']; 
+									}
+									unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta']);
+								}
+								
+								if(isset($reserva2)){
+									if(isset($consulta,$reserva)){
+										$mensaje = "Las reservas y sus datos fueron registrados";
+									}else{
+										$mensaje = "Hubo problemas al registrar sus datos o la reserva";
+									}
+								}else{
+									if(isset($consulta,$reserva)){
+										$mensaje = "Las reservas y sus datos fueron registrados";
+									}else{
+										$mensaje = "Hubo problemas al registrar sus datos o la reserva";
+									}
+								}
+						echo "<p><label class = mensajeValido>".$mensaje.".</label></p>";	
             
-           	echo "<p><label class=ltipo1><span class=asterisco>*</span>Nombre:</label>
+            echo "<p><label class = codigoIda>Su codigo de reserva de ida es: ".$codigo_ida.".</label></p>";
+            
+            if($codigo_vuelta != 0){
+            	echo "<p><label class = codigoVuelta>Su codigo de reserva de vuelta es: ".$codigo_vuelta.".</label></p>";
+            }
+           	echo "<p><label class=ltipo0><span class=asterisco>*</span>Nombre:</label>
 										<input type = text name = nombre id = nom value ='$nombre' /></p>";
+
+           	echo "<p><label class=ltipo1><span class=asterisco>*</span>Apellido:</label>
+										<input type = text name = apellido id = ape value ='$apellido' /></p>";
 						
 						echo"<p><label class = ltipo2 ><span class = asterisco >*</span>Documento:</label>
 						<input type = text name = documento  id = doc value ='$documento' /></p>";
@@ -119,11 +190,13 @@
 						  <input class= chico  type= text  name= dia  maxlength= 2  id=d value='$dia' /><label class= barra >/</label>
 						  <input class= chico  type= text  name= mes  maxlength= 2  id=m value='$mes' /><label class= barra >/</label>
 						  <input class= grande  type= text  name= anio  maxlength= 4  id= a value='$anio' /></p>";
+            
+            echo "<p><label class = mensajeValido>Para realizar el pago usted debera ingresar su codigo de reserva y dni en la pagina principal de Aerolineas.</label></p>";	
             ?>
               
               
-                   <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		               <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
+                 <p><a href="verificacion.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
+		             <p id="boton_continuar"><a href="../index.php"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></a></p>
 				  </form>
 	     	</div>
 	   </div>

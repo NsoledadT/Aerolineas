@@ -9,7 +9,7 @@
 
    <?php
     include("../clases/DataBase.php");
-	$vuelo_ida =$_POST['vuelo_ida'];
+	$vuelo_ida = $_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
 	$clase=$texto = strtolower($_SESSION['clase']);
 	$estado_pasaje=$vuelo_ida_separada[0];
