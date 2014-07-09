@@ -60,11 +60,13 @@ session_start();
 				<form action="validaDatos.php" method="post"> 
 						<?php
 								include('../clases/DataBase.php');
+								include('../clases/funcion_random.php');
+								include('../clases/buscarCodigoReserva.php');
 								$expNom = '/^[a-zA-Z]{4,10}$/';
 								$expApe = '/^[a-zA-Z]{4,15}$/';
 								$expDoc = '/^\d{8}$/';
 								$expEmail = '/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/';
-								$expTel = '/^[0-9]{2,3}-? ?[0-9]{6,7}$/';
+								$expTel = '/^[0-9]{10}$/';
 								if(isset($_POST["nombre"])){
 									if(preg_match($expNom, $_POST["nombre"])){
 										$nombre = $_POST["nombre"];
@@ -113,63 +115,81 @@ session_start();
 									$tipo_avion = $_SESSION['tipo_viaje_ida'];
 								}
 								if(isset($_SESSION['clase'])){
-									$clase = strtolower($_SESSION['clase']);
+									$clase = $_SESSION['clase'];
 								}
-								date_default_timezone_set("America/Argentina/Buenos_Aires");
-								$fecha_reserva = date("Y-m-d");
+								if(isset($_SESSION['fecha_ida'])){
+									$fecha_ida = $_SESSION['fecha_ida'];
+								}
 
+								
 								$BD = new DataBase();
 								$fecha = $anio."-".$mes."-".$dia;
 								$query = "insert into pasajero values('$documento','$nombre','$apellido','$fecha','$correo','$telefono')";
 								$consulta = $BD->consulta($query);
-								$reserva = $BD->consulta("insert into reserva values(null,'$clase','','','$estado_pasaje_ida','$tipo_avion','$nro_vuelo_ida','$fecha_reserva')");
 								
-								$result = $BD->consulta("select count(codigo_reserva) as cant_reservas from reserva");
-								$resultados = $BD->resultToArray($result);
-								foreach ($resultados as $resultado) {
-									$codigo_ida = $resultado['cant_reservas']; 
-								}
-									
-								$codigo_vuelta = 0;
-								if(isset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'])){
+								
+								$consulta2 = $BD->consulta("select codigo_reserva from reserva");
+								
+								$result = $BD->resultToArray($consulta2);
+								
+								$codigo_ida = random($result);
+								
+								$reserva = $BD->consulta("insert into reserva values('$codigo_ida','$clase','','','$estado_pasaje_ida','$tipo_avion','$nro_vuelo_ida','$fecha_ida')");
+								
+								$busqueda = $BD->consulta("select codigo_reserva from reserva where codigo_reserva = '$codigo_ida'");
+								
+								$busquedaResult = $BD->resultToArray($busqueda);
+								
+								$codigo_ida_mostrar = traer_codigo($busquedaResult);
+								
+								$boardingInsertIda = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_ida','$codigo_ida_mostrar')");	
+								
+
+								$codigo_vuelta_mostrar = 0;
+								if(isset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta'])){
 									
 									$nro_vuelo_vuelta = $_SESSION['nro_vuelo_vuelta'];
 									
 									$estado_pasaje_vuelta = $_SESSION['estado_pasaje_vuelta'];
 									
 									$tipo_avion_vuelta = $_SESSION['tipo_viaje_vuelta'];
-									
-									$reserva2 = $BD->consulta("insert into reserva values(null,'$clase','','','$estado_pasaje_vuelta','$tipo_avion_vuelta','$nro_vuelo_vuelta','$fecha_reserva')");
 
-									$result2 = $BD->consulta("select count(codigo_reserva) as cant_reservas from reserva");
+									$fecha_vuelta = $_SESSION['fecha_vuelta'];
 									
-									$resultados2 = $BD->resultToArray($result2);
+									$consulta3 = $BD->consulta("select codigo_reserva from reserva");
+									 
+									 $result2 = $BD->resultToArray($consulta3);
+
+									$codigo_vuelta = random($result2);
 									
-									foreach ($resultados2 as $resultado2) {
-									$codigo_vuelta = $resultado2['cant_reservas']; 
-									}
-									unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta']);
+									$reserva2 = $BD->consulta("insert into reserva values('$codigo_vuelta','$clase','','','$estado_pasaje_vuelta','$tipo_avion_vuelta','$nro_vuelo_vuelta','$fecha_vuelta')");
+
+									$busqueda2 = $BD->consulta("select codigo_reserva from reserva where codigo_reserva = '$codigo_vuelta'");
+
+									$busquedaResult2 = $BD->resultToArray($busqueda2);
+
+									$codigo_vuelta_mostrar = traer_codigo($busquedaResult2);
+									
+									$boardingInsertVuelta = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_vuelta','$codigo_vuelta_mostrar')");	
+									
+									unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta']);
 								}
 								
 								if(isset($reserva2)){
 									if(isset($consulta,$reserva)){
 										$mensaje = "Las reservas y sus datos fueron registrados";
-									}else{
-										$mensaje = "Hubo problemas al registrar sus datos o la reserva";
 									}
 								}else{
 									if(isset($consulta,$reserva)){
-										$mensaje = "Las reservas y sus datos fueron registrados";
-									}else{
-										$mensaje = "Hubo problemas al registrar sus datos o la reserva";
+										$mensaje = "La reserva y sus datos fueron registrados";
 									}
 								}
 						echo "<p><label class = mensajeValido>".$mensaje.".</label></p>";	
             
-            echo "<p><label class = codigoIda>Su codigo de reserva de ida es: ".$codigo_ida.".</label></p>";
+            echo "<p><label class = codigoIda>Su codigo de reserva de ida es: ".$codigo_ida_mostrar.".</label></p>";
             
-            if($codigo_vuelta != 0){
-            	echo "<p><label class = codigoVuelta>Su codigo de reserva de vuelta es: ".$codigo_vuelta.".</label></p>";
+            if($codigo_vuelta_mostrar != 0){
+            	echo "<p><label class = codigoVuelta>Su codigo de reserva de vuelta es: ".$codigo_vuelta_mostrar.".</label></p>";
             }
            	echo "<p><label class=ltipo0><span class=asterisco>*</span>Nombre:</label>
 										<input type = text name = nombre id = nom value ='$nombre' /></p>";

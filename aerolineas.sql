@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-07-2014 a las 23:10:41
+-- Tiempo de generación: 08-07-2014 a las 04:48:39
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -100,6 +100,15 @@ CREATE TABLE IF NOT EXISTS `pasajero` (
   PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `pasajero`
+--
+
+INSERT INTO `pasajero` (`dni`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`) VALUES
+(23232311, 'Astrada', 'barbieri', '2014-07-10', 'andres_sav@hotmail.com', 0),
+(23232332, 'Astrada', 'Acosta', '2014-07-08', 'indestructibles@yahoo.com.ar', 0),
+(93641759, 'Diego', 'Acosta', '2014-07-08', 'vicentebarbieri@yahoo.com.ar', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -148,7 +157,7 @@ INSERT INTO `provincia` (`codigo`, `nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `reserva` (
-  `codigo_reserva` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo_reserva` int(11) NOT NULL,
   `clase` varchar(45) NOT NULL,
   `asiento` varchar(45) DEFAULT NULL,
   `fila` varchar(10) DEFAULT NULL,
@@ -158,15 +167,18 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `fecha_reserva` date NOT NULL,
   PRIMARY KEY (`codigo_reserva`),
   KEY `nro_vuelo` (`nro_vuelo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `reserva`
 --
 
 INSERT INTO `reserva` (`codigo_reserva`, `clase`, `asiento`, `fila`, `estado_pasaje`, `tipo_viaje`, `nro_vuelo`, `fecha_reserva`) VALUES
-(1, 'Economica', NULL, NULL, 'Reserva', 3, 1234, '2014-07-08'),
-(2, 'Economica', NULL, NULL, 'Reserva', 3, 1234, '2014-07-08');
+(10, 'Economica', 'A', '2', 'Pago', 1, 1234, '2014-07-08'),
+(11, 'Economica', 'C', '4', 'Pago', 1, 1234, '2014-07-08'),
+(12, 'Economica', 'B', '9', 'Pago', 2, 4567, '2014-07-10'),
+(13, 'Economica', '', '', 'Pago', 2, 5555, '2014-07-13'),
+(15, 'Economica', NULL, NULL, 'Pago', 2, 4567, '2014-07-09');
 
 -- --------------------------------------------------------
 
@@ -269,7 +281,7 @@ ALTER TABLE `avion`
 -- Filtros para la tabla `boarding_pass`
 --
 ALTER TABLE `boarding_pass`
-  ADD CONSTRAINT `boarding_pass_ibfk_1` FOREIGN KEY (`codigo_reserva`) REFERENCES `reserva` (`codigo_reserva`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `boarding_pass_ibfk_1` FOREIGN KEY (`codigo_reserva`) REFERENCES `reserva` (`codigo_reserva`),
   ADD CONSTRAINT `dni` FOREIGN KEY (`dni`) REFERENCES `pasajero` (`dni`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `nro vuelo` FOREIGN KEY (`nro_vuelo`) REFERENCES `vuelo` (`nro_vuelo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
