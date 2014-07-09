@@ -6,22 +6,25 @@
 <body>
 <?php
 session_start();
-$codelimit=$_GET['codelimit'];
-
-		$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");/* determina asientos ya reservados para que sea 1 a 1 */
-		$db = mysql_select_db('aerolinearustics',$link);
-		$sql3 = "SELECT max(codigo_reserva) FROM reserva";
-		$ubicacion3 = mysql_query($sql3);
-		while ($rowid = mysql_fetch_row($ubicacion3))
-		{
-			$rowid[0];
-			if ($codelimit!=$rowid[0])
-			{
-				die ("Usted ya ha reservado un asiento");
-				mysql_close();
-			}
-		}
-		mysql_close();
+$_SESSION['cambiar']= $_GET['cambiar'];
+$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
+				$db = mysql_select_db('aerolineas',$link);
+					$sql = "SELECT asiento, fila FROM reserva WHERE nro_vuelo = '$_SESSION[nro_vuelo]' AND codigo_reserva= '$_SESSION[codigo]'"; /* Se accede a la base para guardar los asientos ocupados en tipo 2*/
+					$ubicacion = mysql_query($sql);
+					while ($row = mysql_fetch_row($ubicacion))
+					{
+						$row[0];
+						$row[1];
+						if ($_SESSION['cambiar']==0)
+						{
+						if (($row[0]&&$row[1])!=NULL)
+						{
+							die ("Usted ya ha reservado un asiento");
+							mysql_close();
+						}
+						}
+					}
+					mysql_close();
 
 $puesto=$_GET['posto'];
 	if ($puesto == 1)/* determina que uso el grafico del avion para elegir asiento, lo toma por url. */
@@ -30,7 +33,7 @@ $puesto=$_GET['posto'];
 		$_SESSION['clase']= $_GET['clase'];
 		$letras=$_GET['asiento'];
 		$fila=$_GET['fila'];
-		$_SESSION['cambiar']= $_GET['cambiar'];
+
 		
 		echo "<form action=reservabase.php id=formulary2 method=post enctype=multipart/form-data onsubmit=return active(this)>";
 			echo "<input type=hidden name=tipo value=$_SESSION[tipo]>";
