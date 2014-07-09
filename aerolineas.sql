@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-07-2014 a las 04:48:39
+-- Tiempo de generación: 09-07-2014 a las 16:54:30
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -59,6 +59,13 @@ CREATE TABLE IF NOT EXISTS `boarding_pass` (
   KEY `codigo reserva_idx` (`codigo_reserva`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `boarding_pass`
+--
+
+INSERT INTO `boarding_pass` (`dni`, `nro_vuelo`, `codigo_reserva`) VALUES
+(55566644, 1234, 136);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `pasajero` (
 INSERT INTO `pasajero` (`dni`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`) VALUES
 (23232311, 'Astrada', 'barbieri', '2014-07-10', 'andres_sav@hotmail.com', 0),
 (23232332, 'Astrada', 'Acosta', '2014-07-08', 'indestructibles@yahoo.com.ar', 0),
+(55566644, 'Luffy', 'barbosa', '1907-12-15', 'asdsad@hotmail.com', 2147483647),
 (93641759, 'Diego', 'Acosta', '2014-07-08', 'vicentebarbieri@yahoo.com.ar', 0);
 
 -- --------------------------------------------------------
@@ -178,7 +186,8 @@ INSERT INTO `reserva` (`codigo_reserva`, `clase`, `asiento`, `fila`, `estado_pas
 (11, 'Economica', 'C', '4', 'Pago', 1, 1234, '2014-07-08'),
 (12, 'Economica', 'B', '9', 'Pago', 2, 4567, '2014-07-10'),
 (13, 'Economica', '', '', 'Pago', 2, 5555, '2014-07-13'),
-(15, 'Economica', NULL, NULL, 'Pago', 2, 4567, '2014-07-09');
+(15, 'Economica', NULL, NULL, 'Pago', 2, 4567, '2014-07-09'),
+(136, 'Economica', 'B', '2', 'Pago', 1, 1234, '2014-07-14');
 
 -- --------------------------------------------------------
 

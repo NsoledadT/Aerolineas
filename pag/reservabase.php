@@ -15,9 +15,10 @@ $_SESSION['asiento']= $_POST['asiento'];
 	
 		if ($cambiar==0) /* determina que no se esta cambiando de asiento o reserva */
 		{
+		
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
-			$db = mysql_select_db('aerolinearustics',$link);
-			$sql = "SELECT asiento, fila FROM reserva WHERE tipo = $_SESSION[tipo]";
+			$db = mysql_select_db('aerolineas',$link);
+			$sql = "SELECT asiento, fila FROM reserva WHERE tipo_viaje = $_SESSION[tipo] AND nro_vuelo = '$_SESSION[nro_vuelo]' AND codigo_reserva ='$_SESSION[codigo]'";
 			$ubicacion = mysql_query($sql);
 			while ($row = mysql_fetch_row($ubicacion))
 			{
@@ -45,26 +46,22 @@ $_SESSION['asiento']= $_POST['asiento'];
 			echo "Fila: $fila<br/>";
 			echo "Asiento: $asiento<br/>";
 			$req = (strlen($tipo)*strlen($clase)*strlen($fila)*strlen($asiento)) or die ("No se han llenado todos los campos");/* campos requeridos*/
-
-			mysql_query("insert into reserva values ('','','','$tipo','$clase','$asiento','$fila')",$link)or die("Error de envio");
+			mysql_query("update reserva SET tipo_viaje='$tipo', clase='$clase',asiento='$asiento',fila='$fila' where nro_vuelo = '$_SESSION[nro_vuelo]' AND codigo_reserva='$_SESSION[codigo]'",$link)or die("Error de envio");
+			// No,mysql_query("insert into reserva values ('','$clase','$asiento','$fila','','','','')where nro_vuelo = '$_SESSION[nro_vuelo]' AND codigo_reserva='$_SESSION[codigo]'",$link)or die("Error de envio");
 			echo "<br>registro de datos completo";
 	
 	
-			$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo = '$tipo' AND asiento = '$asiento' AND fila = '$fila'";/*compara para dar codigo de reserva*/
-			$code = mysql_query($sql2);
-			while ($row = mysql_fetch_row($code))
-			{
-				echo "<br/>Su codigo de reserva es:".$row[0]."";
-			}
+			echo "<br/>Su codigo de reserva es: $_SESSION[codigo]";
 			mysql_close();
 			session_destroy();
 			//echo "<input type=button name=continuar value=continuar onclick=location.href='datos.html'>";
 		}
 		if ($cambiar!=0)/* determina que se esta cambiando de asiento o reserva */
 		{	
+		
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
-			$db = mysql_select_db('aerolinearustics',$link);
-			$sql = "SELECT asiento, fila FROM reserva WHERE tipo = $_SESSION[tipo]";
+			$db = mysql_select_db('aerolineas',$link);
+			$sql = "SELECT asiento, fila FROM reserva WHERE tipo_viaje = $_SESSION[tipo] AND nro_vuelo = $_SESSION[nro_vuelo] AND codigo_reserva ='$_SESSION[codigo]'";
 			$ubicacion = mysql_query($sql);
 			while ($row = mysql_fetch_row($ubicacion))
 			{
@@ -81,10 +78,10 @@ $_SESSION['asiento']= $_POST['asiento'];
 					mysql_close();
 				}
 			}
-	
+			
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
-			$db = mysql_select_db('aerolinearustics',$link);
-			$sql6 = "SELECT * FROM reserva WHERE codigo_reserva = $cambiar";
+			$db = mysql_select_db('aerolineas',$link);
+			$sql6 = "SELECT codigo_reserva FROM reserva WHERE codigo_reserva = $cambiar";
 			$ubicacion6 = mysql_query($sql6);
 			while ($row = mysql_fetch_row($ubicacion6))
 			{
@@ -101,11 +98,11 @@ $_SESSION['asiento']= $_POST['asiento'];
 					echo "Asiento: $asiento<br>";
 					$req = (strlen($cambiar)*strlen($tipo)*strlen($clase)*strlen($fila)*strlen($asiento)) or die ("No se han llenado todos los campos");
 
-					mysql_query("update reserva SET codigo_reserva='$cambiar', tipo='$tipo', clase='$clase',asiento='$asiento',fila='$fila' where codigo_reserva=$cambiar",$link)or die("Error de envio");
+					mysql_query("update reserva SET tipo_viaje='$tipo', clase='$clase',asiento='$asiento',fila='$fila' where codigo_reserva = $cambiar",$link)or die("Error de envio");
 					echo "<br>registro de datos completo";
 			
 					/* se actualizan los datos en el lugar correcto de la base */
-					$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo = '$tipo' AND asiento = '$asiento' AND fila = '$fila'";
+					$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo_viaje = '$tipo' AND asiento = '$asiento' AND fila = '$fila 'AND nro_vuelo = '$_SESSION[nro_vuelo]'";
 					$code = mysql_query($sql2);
 					while ($row = mysql_fetch_row($code))
 					{
