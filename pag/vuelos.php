@@ -7,6 +7,7 @@
 <head><title>Aerolinea Rustics</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
+<script type="text/javascript" src="../js/validar_index_vuelo.js"></script>
  <link type="text/css" rel="stylesheet" href="../js/jquery-ui.css" />
 <script type="text/javascript" src="../js/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.js"></script>
@@ -28,6 +29,7 @@
    $partida = $_POST['partida'];
    $categoria = $_POST['categoria'];
    $tipo_viaje=$_POST['tipoViaje'];
+   echo($tipo_viaje);
    $llegada =$_POST['destino'];
    $fecha_ida =$_POST['fechaPartida'];
    $fecha_vuelta =$_POST['fechaDestino'];
@@ -93,7 +95,7 @@
 	   <img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16"/>
 	   <h4>SELECCIONA TU VUELO</h4>
 	   </div>
-	   <form action="verificacion.php" method="POST">
+	   <form action="verificacion.php" method="POST" onSubmit="return validar_vuelos()" id="formulario_vuelos">
 	   <p>La tarifa informada en este paso corresponde a una tarifa base para pasajero
 	   oculto y no incluye tasas ni impuestos. En el pr&oacute;ximo paso podr&aacute;s ver la tarifa
 	   total a abonar. Al combinar tarifas con diferentes condiciones, las regulaciones m&aacute;
@@ -141,7 +143,7 @@
 			 </div>
 			 <div class="espacio_blanco"></div>
 		       <?php 
-			 if(strlen($tipo_viaje) > 3){
+			 if($tipo_viaje == "idaVuelta"){
 			   echo('<p><img src="../img/cuadradito.gif" alt="cuadradito" width="16" height="16" class="cuadradito" /><span class="titulito">VUELTA</span></p>
 				 <div class="espacio_blanco"></div>
 			     <div id="tabs_vuelos_2">
@@ -163,8 +165,10 @@
 					   $value="vuelo_vuelta";
 		               include("../clases/busqueda_include.php");
 				echo("</div>
-				</div>");
+				</div><input type='hidden' value='$tipo_viaje' id='tipo_viaje'/>");
+				
 				}
+				echo("<input type='hidden' value='$tipo_viaje' id='tipo_viaje'/>");
 				?>
 
 				<p><a href="../index.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>

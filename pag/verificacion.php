@@ -9,14 +9,15 @@
 
    <?php
     include("../clases/DataBase.php");
-	$vuelo_ida = $_POST['vuelo_ida'];
+	$vuelo_ida =$_POST['vuelo_ida'];
 	$vuelo_ida_separada = explode("+",$vuelo_ida);
 	$clase=$texto = strtolower($_SESSION['clase']);
 	$estado_pasaje=$vuelo_ida_separada[0];
 	$tipo_avion=$vuelo_ida_separada[1];
-	$nro_vuelo=$vuelo_ida_separada[2];
+	$nro_vuelo_ida=$vuelo_ida_separada[2];
 	$baseDatos = new DataBase();
-	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo where `nro_vuelo`='$nro_vuelo'"));
+	$fila = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo, tipoavion, avion where`vuelo`.`matricula_avion`=`avion`.`matricula`
+    and `avion`.`nro_tipo` = `tipoavion`.`nro_tipo` and `vuelo`.`nro_vuelo`= '$nro_vuelo_ida'"));
     $precio=$fila[0]['precio_'.$clase] ;
 	if(isset($_POST['vuelo_vuelta'])){
 		  $vuelo_vuelta =$_POST['vuelo_vuelta'];
@@ -24,6 +25,8 @@
 		  $estado_pasaje_vuelta=$vuelo_vuelta_separada[0];
 		  $tipo_avion_vuelta=$vuelo_vuelta_separada[1];
 		  $nro_vuelo_vuelta=$vuelo_vuelta_separada[2];
+		  $fila2 = $baseDatos->resultToArray($baseDatos->consulta("select * from vuelo, tipoavion, avion where`vuelo`.`matricula_avion`=`avion`.`matricula`
+          and `avion`.`nro_tipo` = `tipoavion`.`nro_tipo` and `vuelo`.`nro_vuelo`= '$nro_vuelo_vuelta'"));
 		  $precio=$fila[0]['precio_'.$clase]* 2 ;
 		  $tasa=$precio * 1.21;
 		  $_SESSION['tipo_viaje_vuelta'] =  $tipo_avion_vuelta;
@@ -34,7 +37,7 @@
 	  $tasa=$precio* 1.21;
 	}
 	
-	$_SESSION['nro_vuelo_ida'] = $nro_vuelo;
+	$_SESSION['nro_vuelo_ida'] = $nro_vuelo_ida;
 	$_SESSION['estado_pasaje_ida'] = $estado_pasaje;
 	$_SESSION['tipo_viaje_ida'] = $tipo_avion;
 	
@@ -101,12 +104,12 @@
 					<tr>
 					<td><?php echo($fila[0]['horario_partida']); ?></td>
 					<td><?php echo($fila[0]['lugar_partida']); ?></td>
-					<td>caracteristicas del vuelo AR/1682</td>
+					<td><?php echo("caracteristicas del vuelo Nro:" .$nro_vuelo_ida);?></td>
 					</tr>
 					<tr>
 					<td><span>Llegada:</span></td>
-					<td>Dia año de LLegada</td>
-					<td>Cabina: Clase economica +/Boing 737-700</td>
+					<td><?php echo($_SESSION['fecha_ida']);?></td>
+					<td><?php echo("Cabina:".$_SESSION['clase']." +/Modelo:".$fila[0]['modelo']); ?></td>
 					</tr>
 					<tr>
 					<td><?php echo($fila[0]['horario_llegada']);?></td>
@@ -120,24 +123,24 @@
 		     echo("<p><img src='../img/cuadradito.gif' alt='cuadradito' width='16' height='16' /><span class='titulito'>VUELTA</span></p>
 		     <div class='recuadro_tabla_verificacion'>
 				<table>
-				    <tr>
+				   <tr>
 				    <td><span>salida:</span></td>
-					<td>Dia año de salida</td>
+					<td>Dia de salida</td>
 					<td>Aerolinea Rustics</td>
 					</tr>
 					<tr>
-					<td>Hora</td>
-					<td>Lugar de Partida</td>
-					<td>caracteristicas del vuelo AR/1682</td>
+					<td>".$fila2[0]['horario_partida']."</td>
+					<td>".$fila2[0]['lugar_partida']. "</td>
+					<td>caracteristicas del vuelo:" .$nro_vuelo_vuelta."</td>
 					</tr>
 					<tr>
 					<td><span>Llegada:</span></td>
-					<td>Dia año de LLegada</td>
-					<td>Cabina: Clase economica +/Boing 737-700</td>
+					<td>".$_SESSION['fecha_vuelta']."</td>
+					<td>Cabina:".$_SESSION['clase']." +/Modelo:".$fila2[0]['modelo']."</td>
 					</tr>
 					<tr>
-					<td>Hora</td>
-					<td>Lugar de llegada</td>
+					<td>".$fila2[0]['horario_llegada']."</td>
+					<td>".$fila2[0]['lugar_llegada']."</td>
 					<td>&nbsp;</td>
 					</tr>
 				</table>
