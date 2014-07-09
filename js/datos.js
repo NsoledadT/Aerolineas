@@ -15,7 +15,7 @@ function valida () {
 	var expRegApe = /^[a-zA-Z]{4,15}$/;
 	var expRegDni = /^\d{8}$/;
 	var expRegEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	var expRegTelefono = /^[0-9]{2,3}-? ?[0-9]{6,7}$/;
+	var expRegTelefono = /^[0-9]{10}$/;
 
 	if(nombre == ""){
 		alert("Por favor ingrese el nombre");
