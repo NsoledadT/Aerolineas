@@ -1,19 +1,12 @@
+
 <?php
 	if(isset($_POST['bot2'])){
-		require_once('../../../php/pear/jpgraph/src/jpgraph.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph_pie.php');
-
-		$vector = array(5,5,5,25,17,35,10);
-
-		$ancho = 600;
-		$alto = 300;
-		$graph = new PieGraph($ancho,$alto,'auto');
-		$graph->setScale('intint');
-
-		$curva = new PiePlot($vector);
-		$graph->add($curva);
-		$graph->stroke(); 
-
+	
+	require_once('../../../php/pear/dompdf/dompdf_config.inc.php');	
+	$html = '<html><body>'.'<img src="../graficos/pasajes_vendidos.php" alt="grafico morondanga!"/>'.'</body></html>';
+	$dompdf = new DOMPDF();
+	$dompdf->load_html($html);
+	$dompdf->render();
+	$dompdf->stream("graficos.pdf"); 
 	}
-
 ?>
