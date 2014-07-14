@@ -24,7 +24,7 @@
 		$pdf->cell(40,10,'Cantidad',1,0,'C',true);
 
 		$BDD = new DataBase();
-		$consulta = $BDD->consulta("select count(*) as Pasajes_vendidos from reserva where estado = 'Pago'");
+		$consulta = $BDD->consulta("select count(*) as Pasajes_vendidos from reserva where estado_pasaje = 'Pago'");
 		$regs = $BDD->resultToArray($consulta);
 		$pdf->ln();
 		$pdf->setX($xTit+55);
@@ -36,7 +36,7 @@
 		$pdf->ln();
 		$pdf->setX($xTit);
 		$pdf->cell(100,8,"Cantidad de pasajes venididos por categoria y destino:",0,0,'L');
-		$consulta = $BDD->consulta("select reserva.clase,vuelo.lugar_llegada,count(*) as Pasajes_vendidos from reserva join vuelo on reserva.nro_vuelo = vuelo.nro_vuelo where reserva.estado = 'Pago' group by reserva.clase,vuelo.lugar_llegada");
+		$consulta = $BDD->consulta("select reserva.clase,vuelo.lugar_llegada,count(*) as Pasajes_vendidos from reserva join vuelo on reserva.nro_vuelo = vuelo.nro_vuelo where reserva.estado_pasaje = 'Pago' group by reserva.clase,vuelo.lugar_llegada");
 		$regs = $BDD->resultToArray($consulta);
 		
 		$pdf->ln();
@@ -123,7 +123,7 @@
 		$pdf->cell(100,10,"Cantidad de reservas caidas:");
 		$pdf->ln();
 		$pdf->ln();
-		$consulta = $BDD->consulta("select count(*) as Reservas_caidas from reserva where estado = 'reserva'");
+		$consulta = $BDD->consulta("select count(*) as Reservas_caidas from reserva where estado_pasaje = 'reserva'");
 		$regs = $BDD->resultToArray($consulta);
 		$pdf->setX($xTit+55);
 		
