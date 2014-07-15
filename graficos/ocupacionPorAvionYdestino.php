@@ -1,4 +1,6 @@
 <?php
+	
+	session_start();
 	include('../clases/DataBase.php');
 		require_once('../../../php/pear/jpgraph/src/jpgraph.php');
 		require_once('../../../php/pear/jpgraph/src/jpgraph_bar.php');
@@ -34,5 +36,9 @@
 		$serie = new BarPlot($resultados);
 		$serie->SetFillgradient('orange','red',GRAD_VER); 
 		$graph->add($serie);
-		$graph->stroke();
+		$numero = mt_rand(1,10000);
+		$_SESSION['g_ocupacion'] = $numero;
+		$graph->stroke("graficoC".$numero.".png");
+		echo "grafico generado"."<a href= ../pag/loginAdmin.php>volver</a>";
+	
 ?>

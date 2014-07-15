@@ -39,23 +39,42 @@
 	 
 	   		<h1>Bienvenido Administrador</h1>
 	   
-	  		<h3>Aqui verificar&aacute; las estadisticas de la empresa.</h3>
-	    
-	    	<div>
+	  		<div id="nominal">
+	    		<h3>Estadisticas en forma nominal</h3>
 	    		<form action="nominal.php" method="post">
-	    				<input type="submit" value="Ver en forma nominal" name="bot1"/>
+	    				<input type="image" name="bot1" src="../img/boton_ver.png"/>
 	    		</form>
 	    	</div>
+			<div id="graficos">
 				<div>
+					<h3>Estadisticas en graficos</h3>
+					<p>Pasajes vendidos y reservas caidas</p>
+					<form action="../graficos/pasajes_vendidos.php" method="post">
+						<input type="image" name="bot2" src="../img/boton_generar.png"/>
+					</form>
+				</div>
+				<div>	
+					<p>Cantidad de pasajes vendidos por categoria y destino</p>
+					<form action="../graficos/pasajesPorCategoriaYdestino.php" method="post">
+						<input type="image" name="bot3" src="../img/boton_generar.png"/>
+					</form>
+				</div>
+				<div>
+					<p>Ocupacion por avion y destino</p>	
+					<form action="../graficos/ocupacionPorAvionYdestino.php" method="post">
+						<input type="image" name="bot4" src="../img/boton_generar.png"/>
+					</form>
+				</div>
+				<div>
+					<p>Ver graficos</p>
 					<form action="graficos.php" method="post">
-						<input type="submit" value="Ver en graficos" name="bot2"/>
+						<input type="image" name="bot5" src="../img/boton_ver.png"/>
 					</form>
 				</div>	
-			    
+			 </div>   
 				
              
-                 <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		             <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>
+                 
 				  
 	     	
 	   

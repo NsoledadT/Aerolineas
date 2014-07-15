@@ -655,6 +655,15 @@ h5{
 .botonContinuar{
 	margin-left: 190px;
 }
+
+#nominal{
+	float:left;
+margin-left: 160px;
+margin-right: 70px;
+}
+#graficos{
+	float:left;
+}
 /*Estilo Paula*/
 /*-------------------------------------------------------------------------------------------*/
 
