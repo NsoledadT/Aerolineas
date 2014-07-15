@@ -1,9 +1,10 @@
 <?php
 	
+	session_start();
 		include('../clases/DataBase.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph_pie.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph_pie3d.php');
+		require_once('../jpgraph/src/jpgraph.php');
+		require_once('../jpgraph/src/jpgraph_pie.php');
+		require_once('../jpgraph/src/jpgraph_pie3d.php');
 	
 		$BD = new DataBase();
 
@@ -45,6 +46,10 @@
 		$nombres = array("Pasajes Vendidos","Reservas Caidas");
 		$serie->setLegends($nombres);
 		$graph->add($serie);
-		$graph->stroke(); 
-
-?>
+		$num = mt_rand(1,10000);
+		$_SESSION['g_torta'] = $num;
+		$graph->stroke("graficoA".$num.".png"); 
+		
+		echo "grafico generado"."<a href= ../pag/loginAdmin.php>volver</a>";
+	
+	?>
