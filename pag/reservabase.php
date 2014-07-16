@@ -36,7 +36,7 @@ $_SESSION['asiento']= $_POST['asiento'];
 				}
 			}
 	/* En la base anterior se observa si hay asiento ocupado seleccionado o sino se selecciono nada.*/
-	
+	/* --------------------------------------------------Inserta el asiento y fila... ------------------------------------------------------- */
 			$tipo =$_SESSION['tipo'];
 			$clase =$_SESSION['clase'];
 			$fila =$_SESSION['fila'];
@@ -78,7 +78,7 @@ $_SESSION['asiento']= $_POST['asiento'];
 					mysql_close();
 				}
 			}
-			
+			/*---------------------- se actualizan los datos en el lugar correcto de la base -----------------------*/
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
 			$sql6 = "SELECT codigo_reserva FROM reserva WHERE codigo_reserva = $cambiar";
@@ -101,7 +101,7 @@ $_SESSION['asiento']= $_POST['asiento'];
 					mysql_query("update reserva SET tipo_viaje='$tipo', clase='$clase',asiento='$asiento',fila='$fila' where codigo_reserva = $cambiar",$link)or die("Error de envio");
 					echo "<br>registro de datos completo";
 			
-					/* se actualizan los datos en el lugar correcto de la base */
+					
 					$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo_viaje = '$tipo' AND asiento = '$asiento' AND fila = '$fila 'AND nro_vuelo = '$_SESSION[nro_vuelo]'";
 					$code = mysql_query($sql2);
 					while ($row = mysql_fetch_row($code))

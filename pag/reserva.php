@@ -3,9 +3,11 @@
 session_start();
 $_SESSION['codigo']=$_POST['codigo_reserva'];
 $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
+
+/* --------------------- Controlo el codigo, si es valido entro a la pagina.------------------------------------*/
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-				$sql11 = "SELECT codigo_reserva FROM reserva " ; /* Controlo el codigo */
+				$sql11 = "SELECT codigo_reserva FROM reserva " ; 
 					$ubicacion11 = mysql_query($sql11);
 						while ($rowcodigo = mysql_fetch_row($ubicacion11))
 						{
@@ -20,7 +22,8 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 						header('location:../index.php');
 						}
 				mysql_close();
-
+/* --------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------- Comienzo de html ----------------------------------------------------- */
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml"> <!-- Inicio de sesion y luego contenido de estilos y java en el header, Tambien titulo y validacion strict. -->
 	<head><title>Aerolinea Rustics</title>
@@ -31,7 +34,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 	</head>
 <body>
 
-	<div id="general"> <!-- Contenido normal de div, form de usuario para el gerente y visualizacion de estadisticas -->
+	<div id="general"> <!------------- Contenido normal de div, form de usuario para el gerente y visualizacion de estadisticas --------------->
 		<div id="encabezado">
 			<div id="formulario">
 				<form action="usuario.html" method="post">
@@ -46,7 +49,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 			<img src="../img/logotipo_chico.png" id="logotipo" alt="logotipo aerolinea rutics" width="242" height="100"/>
 			<img src="../img/chica_reserva.png" class="aeromoza" alt="azafata" width="227" height="280"/>
 		<ul>
-			<li><a href="pag/construccion.html">LA EMPRESA</a></li> <!-- Menu superior -->
+			<li><a href="pag/construccion.html">LA EMPRESA</a></li> <!---------------- Menu superior ---------------->
 			<li><a href="reservas.html">RESERVAS </a></li>
 			<li><a href="pag/construccion.html">INFORMACION</a></li>
 			<li><a href="pag/construccion.html">CORPORATIVO</a></li>
@@ -58,7 +61,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 				<div id="menu_contenedor_li">
 					<p>01</p>
 					<div id="contenedor_li">
-						<div class="blanco_columna_li"> <!-- Menu lateral por esta zona -->
+						<div class="blanco_columna_li"> <!------------- Menu lateral por esta zona ------------------>
 						</div>
 					<a href="vuelos.html">Selecciona tu vuelo</a>
 					<a href="verificacion.html">Verifica tu elecci&oacute;n</a>
@@ -79,9 +82,20 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 	   <img src="../img/china_reserva.png" alt="imagen de recepcionista" width="199" height="179"/>
 
 	<?php
-			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
+	
+/* ------------------------------------------------------- Estableciendo fecha y fecha modifica con 48hs mas ---------------------------------- */	
+	date_default_timezone_set("America/Buenos_Aires");
+	$hoy = date("Y-m-d H:i:s");
+	echo "$hoy<br/>";
+	$sumarhs =  strtotime( '+48hour' , strtotime($hoy)) ;
+	$nuevafecha = date ( 'Y-m-d, H:i:s' , $sumarhs );
+	//echo "$nuevafecha<br/>";
+	
+/* --------------------------------------------------------------------------------------------------------- */	
+/* ------------------------------------------------------ Confirma si el pasaje esta o no pago --------------------------------- */	
+	$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-				$sql7 = "SELECT estado_pasaje FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; /* Busqueda de tipo, clase, max code*/
+				$sql7 = "SELECT estado_pasaje FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; 
 					$ubicacion7 = mysql_query($sql7);
 						while ($row = mysql_fetch_row($ubicacion7))
 						{
@@ -94,12 +108,58 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 						}
 						
 				mysql_close();
-			
+/* --------------------------------------------------------------------------------------------------------- */
 
-	
+/* ----------------------------------------------------- Determinando horario de partida segun el vuelo ----------------------*/				
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-				$sql7 = "SELECT tipo_viaje, clase FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; /* Busqueda de tipo, clase, max code*/
+				$sql77 = "SELECT horario_partida FROM vuelo WHERE nro_vuelo LIKE '$_SESSION[nro_vuelo]'" ; 
+					$ubicacion77 = mysql_query($sql77);
+						while ($row77 = mysql_fetch_row($ubicacion77))
+						{						
+							$row77[0];
+							$horarioini = $row77[0];
+						}
+				mysql_close();
+/* --------------------------------------------------------------------------------------------------------- */			
+/* ------------------------------------------------- Determinando la fecha de reserva para su uso en limite de horas y fechas -------------------------------------------------------- */				
+	$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
+			$db = mysql_select_db('aerolineas',$link);
+				$sql99 = "SELECT fecha_reserva FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; 
+					$ubicacion99 = mysql_query($sql99);
+						while ($row99 = mysql_fetch_row($ubicacion99))
+						{
+							$row99[0];
+
+							if ($nuevafecha<=$row99[0])
+							{
+								die("Debe esperar hasta 48 hs antes del vuelo para seleccionar asiento, <a href=../index.php> volver </a>");
+							}
+							$hoytiempo = date ( 'H:i:s');
+							
+							$restarhs= strtotime( '-2hour' , strtotime($horarioini)) ;
+							$doshora = date ( 'H:i:s' , $restarhs );
+							
+							if ($hoy==$row99[0])
+							{
+								if ($hoytiempo<=$doshora)
+								{
+									die("Limite de tiempo de 2hs, consultar en agencia. <a href=../index.php> volver </a>");
+								}
+							}
+							if($hoy>$row99[0])
+							{
+								echo("$row99[0]");
+								die("Ha perdido el avion, <a href=../index.php> volver </a>");
+							}
+						}
+						mysql_close();
+/* --------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------- Busqueda de tipo de avion y clase ----------------------------------------------------------- */
+						
+			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
+			$db = mysql_select_db('aerolineas',$link);
+				$sql7 = "SELECT tipo_viaje, clase FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; 
 					$ubicacion7 = mysql_query($sql7);
 						while ($row = mysql_fetch_row($ubicacion7))
 						{
@@ -112,9 +172,11 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 						}
 						
 				mysql_close();
+				
+/* --------------------------------------------------------------------------------------------------------- */
 	
-	/* Coneccion a la base es utilizada en otro paso para determinar si ya se ha reservado el asiento para hacer 1 asiento 1 persona. */
-	/* como el codigo de reserva se hace en este caso de manera simple se utiliza un AI*/
+/* Coneccion a la base es utilizada en otro paso para determinar si ya se ha reservado el asiento para hacer 1 asiento 1 persona. */
+	
 		echo"Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.";
 		echo "<form action=reserva2.php id=formulary3 method=post enctype=multipart/form-data >"; /* Pequeño formulario que direcciona a otra pagina para el cambio de reserva */
 			echo "Ingrese codigo de reserva si quiere cambiar su reserva: de ser incorrecto sera enviado a la pagina principal.
@@ -704,7 +766,8 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 			</tr>
 		</table>
 	</div>";
-
+/* --------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------------- Envio de codigo para poder realizar el boarding ------------------------------------------------------ */
 	echo"<p><a href=../index.php><img src=../img/volver.png alt=boton volver id=boton_volver width=99 height=37/></a></p>
 		<p id=boton_continuar><a href=boarding.php?idCliente=$_SESSION[codigo]><img src=../img/continuar.png alt=boton continuar width=99 height=37/></a></p>";
 	?>

@@ -6,7 +6,7 @@
 	{
 		$cambiar=$_POST['cambiar'];
 	}
-
+/* --------------------------------------------- Se establece si el usuario quiere cambiar reserva ------------------------------------------------------ */
 		$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
 				$sql11 = "SELECT codigo_reserva FROM reserva " ; /* */
@@ -24,6 +24,7 @@
 						die ("El codigo de reserva no existe <a href=../index.php>Volver</a>");
 						}
 				mysql_close();
+/* --------------------------------------------------------------------------------------------------------- */
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- Se puede acceder a la pagina solo desde la principal con el codigo de reserva -->
 	<head><title>Aerolinea Rustics</title>
@@ -85,7 +86,7 @@
 	echo"Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.";
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-				$sql7 = "SELECT tipo_viaje, clase FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; /* Busqueda de tipo, clase, max code*/
+				$sql7 = "SELECT tipo_viaje, clase FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; /* Busqueda de tipo, clase*/
 					$ubicacion7 = mysql_query($sql7);
 						while ($row = mysql_fetch_row($ubicacion7))
 						{
