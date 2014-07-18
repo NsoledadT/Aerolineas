@@ -6,6 +6,13 @@
 <body>
 <?php
 session_start();
+if (isset($_SESSION['nro_vuelo']))
+{
+}
+else
+{
+die ("Accion no permitida. Volver a la pagina principal, o imprima el boarding pass.");  	
+}
 $_SESSION['cambiar']= $_POST['cambiar'];
 
 				$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");

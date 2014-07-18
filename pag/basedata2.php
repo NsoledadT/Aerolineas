@@ -6,6 +6,13 @@
 <body>
 <?php
 session_start();
+if (isset($_SESSION['nro_vuelo']))
+{
+}
+else
+{
+die ("Accion no permitida. Volver a la pagina principal, o imprima el boarding pass.");  	
+}
 $_SESSION['cambiar']= $_GET['cambiar'];
 $link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 				$db = mysql_select_db('aerolineas',$link);
@@ -49,6 +56,9 @@ $puesto=$_GET['posto'];
 			echo "<br/><input type=submit value=Confirmar >";/* se confirma el envio de la clase, tipo, asiento, fila*/
 		echo "</form>";
 	}
+
+
+
 ?>
 </body>
 </html>
