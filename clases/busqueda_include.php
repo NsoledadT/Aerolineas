@@ -53,7 +53,7 @@
 										  $tipo_avion = $filas['nro_tipo'];
 										  
 										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado_pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and (`estado_pasaje`='Reserva' or `estado_pasaje`='Pago') and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 										  
 									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Primera' and `estado_pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
@@ -101,12 +101,15 @@
 										  $tipo_avion = $filas['nro_tipo'];
 										  
 										  $nro_vuelo = $filas['nro_vuelo'];
-										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado_pasaje`='Reserva' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  $cantidad_reserva = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and  (`estado_pasaje`='Reserva' or `estado_pasaje`='Pago') and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
+										  
+										 
 										  
 									 	 $cantidad_espera = $baseDatos->resultToArray($baseDatos->consulta("SELECT count(*) as numero from `reserva` where clase='Economica' and `estado_pasaje`='Espera' and fecha_reserva='$fecha_ida_invertir' and nro_vuelo='$nro_vuelo'"));
 									
 										  
 										  evaluar_tipos( $cantidad_reserva[0]['numero'], $cantidad_espera[0]['numero'],$tipo_economica,$tipo_avion, $filas,$categoria,$value);
+											
 											
 										}
 										 echo ("</table>");

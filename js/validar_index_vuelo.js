@@ -14,7 +14,6 @@ function validar_index(){
 }
 
 function validar_vuelos(){
-alert("hola");
 
       var elementos = document.getElementById("formulario_vuelos").elements;
 	  var tipo = document.getElementById("tipo_viaje").value;
