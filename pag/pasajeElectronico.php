@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(isset($_SESSION['cod_reserva']))
+{
+$codigito=$_SESSION['cod_reserva'];
+}
+else
+{
+header('location:../index.php');
+}
+?>
+
 <html>
 <body>
 <?php
@@ -6,6 +18,9 @@ require("../dompdf/dompdf_config.inc.php");
 include("../clases/DataBase.php");
 $baseDatos = new DataBase("");
 
+if(isset($_POST['enviar'])){
+$cambiar_estadoPasaje =$baseDatos -> consulta("update `reserva` set estado_pasaje = 'Pago' WHERE codigo_reserva = '$codigito'" );
+}
 //$pago= $baseDatos -> consulta("SELECT codigo_reserva, estado_pasaje
 //FROM reserva
 //WHERE codigo_reserva='$codigoReserva'
@@ -14,18 +29,18 @@ $baseDatos = new DataBase("");
 $economica=$baseDatos -> consulta("SELECT reserva.codigo_reserva, clase, reserva.nro_vuelo, fecha_reserva, vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, vuelo.precio_economica, pasajero.dni, pasajero.nombre, pasajero.apellido
 FROM reserva
 INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-WHERE reserva.codigo_reserva");
+INNER JOIN boarding_pass ON reserva.codigo_reserva = boarding_pass.codigo_reserva
+INNER JOIN pasajero ON boarding_pass.dni = pasajero.dni
+WHERE reserva.codigo_reserva = '$codigito'");
 
 $primera = $baseDatos -> consulta("SELECT reserva.codigo_reserva, clase, reserva.nro_vuelo, fecha_reserva, 
 vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, vuelo.precio_primera, 
 pasajero.dni, pasajero.nombre, pasajero.apellido
 FROM reserva
 INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-WHERE reserva.codigo_reserva");
+INNER JOIN boarding_pass ON reserva.codigo_reserva = boarding_pass.codigo_reserva
+INNER JOIN pasajero ON boarding_pass.dni = pasajero.dni
+WHERE reserva.codigo_reserva = '$codigito'");
 
 if($economica){
       while ($row = mysql_fetch_row($economica)){

@@ -1,4 +1,10 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Aerolinea Rustics</title>
@@ -7,46 +13,91 @@
 <script type="text/javascript" src="../js/tarjeta_seleccionada.js"></script>
 <script type="text/javascript" src="../js/confirmacion.js"></script>
 <?php 
-if (isset($_POST['cod_reserva'])){
-	             $codigoReserva = $_POST['cod_reserva'];
-				           }
-if(isset($_POST['dni_pasajero'])){
-             $dniPasajero = $_POST['dni_pasajero'];
-             }
 include("../clases/DataBase.php");
 $baseDatos = new DataBase("");
 
+if (isset($_POST['cod_reserva'])){
+	             $codigoReserva = $_POST['cod_reserva'];
+				 $_SESSION['cod_reserva']=$codigoReserva;      }
+if(isset($_POST['dni_pasajero'])){
+             $dniPasajero = $_POST['dni_pasajero'];
+             }
 
-//$reserva = $baseDatos -> consulta("select clase, nro_vuelo from `reserva` where codigo_reserva='$codigoReserva'");
-//$datosPasajeros = $baseDatos -> consulta("select nombre, apellido from `pasajero` where dni='$dniPasajero'");		 
-//$vuelos = $baseDatos -> consulta("select * from `vuelo`, `reserva` WHERE `vuelo`.`nro_vuelo` = `reserva`.`nro_vuelo` and `codigo_reserva`='$codigoReserva'");	
-$precioEconomica = $baseDatos -> consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_economica, pasajero.dni
-FROM reserva
-INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-WHERE reserva.codigo_reserva"); 		
 
-$precioPrimera= $baseDatos ->consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_primera, pasajero.dni
-FROM reserva
-INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-WHERE reserva.codigo_reserva"); 	
+$reserva = $baseDatos -> consulta("select clase, nro_vuelo from `reserva` where codigo_reserva='$codigoReserva'");
+$datosPasajeros = $baseDatos -> consulta("select nombre, apellido from `pasajero` where dni='$dniPasajero'");		 
+$vuelos = $baseDatos -> consulta("select * from `vuelo`, `reserva` WHERE `vuelo`.`nro_vuelo` = `reserva`.`nro_vuelo` and `codigo_reserva`='$codigoReserva'");	
+
+//$precio = $baseDatos->consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_economica, vuelo.precio_primera, pasajero.dni FROM reserva
+//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo INNER JOIN boarding_pass ON reserva.codigo_reserva = boarding_pass.codigo_reserva INNER JOIN
+ //pasajero ON boarding_pass.dni = pasajero.dni WHERE reserva.codigo_reserva = '$codigoReserva'");
+
+//$precioEconomica = $baseDatos -> consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_economica, pasajero.dni
+//FROM reserva
+//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
+//INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
+//INNER JOIN pasajero ON pasaje.dni = pasajero.dni
+//WHERE reserva.codigo_reserva"); 		
+
+//$precioPrimera= $baseDatos ->consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_primera, pasajero.dni
+//FROM reserva
+//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
+//INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
+//INNER JOIN pasajero ON pasaje.dni = pasajero.dni
+//WHERE reserva.codigo_reserva"); 	
+
+$sql6= $baseDatos->consulta("select nro_vuelo, clase from reserva where codigo_reserva = '$codigoReserva'");
+while($row = mysql_fetch_row($sql6)){
+$row[0];
+$row[1];
+$nro_vuelo=$row[0];
+$clase=$row[1];
+}
+
+$sql10=$baseDatos->consulta("select precio_economica, precio_primera from vuelo where nro_vuelo='$nro_vuelo'");
+while($row2=mysql_fetch_array($sql10)){
+$row2[0];
+$row2[1];
+$precio_econ=$row2[0];
+$precio_prim=$row2[1];
+}
+
+//$sql7=$baseDatos->consulta("select precio_economica from vuelo where nro_vuelo='$nro_vuelo'");
+//while($row2= mysql_fetch_row($sql7))
+//{
+//$row2[0];
+//$precio_econ=$row2[0];
+//}
+
+//$sql8=$baseDatos->consulta("select precio_primera from vuelo where nro_vuelo='$nro_vuelo'");
+//while($row3= mysql_fetch_row($sql8))
+//{
+//$row3[0];
+//$precio_prim=$row3[0];
+//}
+
+$preciopasaje = $precio_econ;
+$preciopasaje2 = $precio_prim;
 
 $int_mensual = 0.03;
 $cuota1 = 1;
 $cuota2 = 3;
 $cuota3 = 6;
 $cuota4 = 12;
-$iva = $precioPrimera * 1.21;
-$iva2 = $precioEconomica * 1.21;
+$iva = $preciopasaje * 1.21;
+$iva2 = $preciopasaje2 * 1.21;
 $resultado1= $iva + ($iva * $int_mensual) * ($cuota2);
 $resultado2= $iva + ($iva * $int_mensual) * ($cuota3);
 $resultado3= $iva + ($iva * $int_mensual) * ($cuota4);
+$resultado4= $iva2 + ($iva2 * $int_mensual) * ($cuota2);
+$resultado5= $iva2 + ($iva2 * $int_mensual) * ($cuota3);
+$resultado6= $iva2 + ($iva2 * $int_mensual) * ($cuota4);
 $porcuota1 = $resultado1 / $cuota2;
 $porcuota2 = $resultado2 / $cuota3;
 $porcuota3 = $resultado3 / $cuota4; 
+$porcuota4 = $resultado4 / $cuota2;
+$porcuota5 = $resultado5 / $cuota3;
+$porcuota6 = $resultado6 / $cuota4; 
 						?>
 						   
 </head>
@@ -101,7 +152,6 @@ $porcuota3 = $resultado3 / $cuota4;
 	   }?></h5>
 	   <div id="formulario_pagos">
        <form action="pasajeElectronico.php" method="post" onsubmit="return valida_pago()">
-	    <?php $cambiar_estadoPasaje =$baseDatos -> consulta("update `reserva` set estado_pasaje = 'Pago' WHERE codigo_reserva = '$codigoReserva'"); ?>
           <div id="documentacion">
             <p>Documento
             <select name="tipo_documento" id="tipo_documento">
@@ -142,9 +192,21 @@ $porcuota3 = $resultado3 / $cuota4;
 		  <div class="cuotas">
 		     <input type="radio" name="cuotas" value="una_cuota"/> 	  
 	         <h6>Un pago sin inter&eacute;s</h6>
-	         <h6>Importe total: <?php while ($row =  mysql_fetch_array($precioPrimera)){
-	            echo $row['precio_primera'];
-	             }?></h6>
+	         <h6>Importe total: <?php 
+              if($clase == "Primera")
+			  {
+				echo "$iva2";			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo "$iva";			 
+			  }		 
+			//if($clase=['Economica']){
+			 //echo "$iva";
+			  // }
+            //else 
+			 // }
+			 ?></h6>
 		  </div>	 
 	      <div class="cuotas">
 		     <input type="radio" name="cuotas" value="tres_cuotas"/>
@@ -169,8 +231,9 @@ $porcuota3 = $resultado3 / $cuota4;
 		  <div><img src="../img/linea_separadora.png" alt="linea separadora" width="700" height="6"/></div>
 		  <p>&iexcl;Comprando en therustics.com te ahorr&aacute;s el cargo de gesti&oacute;n&#33;</p>
           <p>Te recordamos que las tarifas adquiridas a trav&eacute;s de nuestro site para Argentina son exclusivas para residentes del territorio argentino</p>   
-		  <p><input type="submit" name="submit" value="Enviar"/></p>
-		  <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>		  
+		  <input type="submit" name="enviar" value="enviar"/>
+		  <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
+		  <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>		  
 		</form>
       </div>
 	   </div>
