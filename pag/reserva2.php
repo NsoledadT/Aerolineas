@@ -18,6 +18,10 @@
 							{
 							$bandera=1;
 							}
+							else 
+							{
+							$bandera=0;
+							}
 						}
 					if ($bandera!=1)
 						{
