@@ -26,7 +26,7 @@ $cambiar_estadoPasaje =$baseDatos -> consulta("update `reserva` set estado_pasaj
 //WHERE codigo_reserva='$codigoReserva'
 //AND estado_pasaje = 'Pago'");
 
-$economica=$baseDatos -> consulta("SELECT reserva.codigo_reserva, clase, reserva.nro_vuelo, fecha_reserva, vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, vuelo.precio_economica, pasajero.dni, pasajero.nombre, pasajero.apellido
+$economica=$baseDatos -> consulta("SELECT reserva.codigo_reserva, clase, reserva.nro_vuelo, fecha_reserva, vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, pasajero.dni, pasajero.nombre, pasajero.apellido
 FROM reserva
 INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
 INNER JOIN boarding_pass ON reserva.codigo_reserva = boarding_pass.codigo_reserva
@@ -34,7 +34,7 @@ INNER JOIN pasajero ON boarding_pass.dni = pasajero.dni
 WHERE reserva.codigo_reserva = '$codigito'");
 
 $primera = $baseDatos -> consulta("SELECT reserva.codigo_reserva, clase, reserva.nro_vuelo, fecha_reserva, 
-vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, vuelo.precio_primera, 
+vuelo.lugar_partida, vuelo.lugar_llegada, vuelo.horario_partida, vuelo.horario_llegada, 
 pasajero.dni, pasajero.nombre, pasajero.apellido
 FROM reserva
 INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
@@ -47,10 +47,10 @@ if($economica){
    
 	   $pasaje = '<table border="1"><tr bgcolor="#5882FA"><td colspan="2" align="center">Datos vuelo</td></tr><tr><td>Codigo Reserva</td><td>'.$row[0].'</td></tr><tr><td>Clase</td><td>'.$row[1].'</td></tr><tr><td>Nro. Vuelo</td><td>'.$row[2].'</td></tr>
 	       <tr><td>Fecha Reserva</td><td>'.$row[3].'</td></tr><tr><td>Origen</td><td>'.$row[4].'</td></tr><tr><td>Destino</td><td>'.$row[5].'</td></tr><tr><td>Horario partida</td><td>'.$row[6].'</td></tr>
-		   <tr><td>Horario llegada</td><td>'.$row[7].'</td></tr><tr><td>Precio</td><td>'.$row[8].'</td></tr></table>
+		   <tr><td>Horario llegada</td><td>'.$row[7].'</td></tr></table>
 		   
-		   <table border="1"><tr bgcolor="#5882FA" color="white"><td colspan="2" align="center">Datos pasajero</td></tr><tr><td>Documento</td><td>'.$row[9].'</td></tr><tr><td>Nombre</td><td>'.$row[10].'</td><</tr>
-		   <tr><td>Apellido</td><td>'.$row[11].'</td></tr></table>';
+		   <table border="1"><tr bgcolor="#5882FA" color="white"><td colspan="2" align="center">Datos pasajero</td></tr><tr><td>Documento</td><td>'.$row[8].'</td></tr><tr><td>Nombre</td><td>'.$row[9].'</td><</tr>
+		   <tr><td>Apellido</td><td>'.$row[10].'</td></tr></table>';
 			}
          }
  
@@ -59,10 +59,10 @@ if($economica){
    
 	      $pasaje = '<table border="1"><tr bgcolor="#5882FA"><td colspan="2" align="center">Datos vuelo</td></tr><tr><td>Codigo Reserva</td><td>'.$row[0].'</td></tr><tr><td>Clase</td><td>'.$row[1].'</td></tr><tr><td>Nro. Vuelo</td><td>'.$row[2].'</td></tr>
 	       <tr><td>Fecha Reserva</td><td>'.$row[3].'</td></tr><tr><td>Origen</td><td>'.$row[4].'</td></tr><tr><td>Destino</td><td>'.$row[5].'</td></tr><tr><td>Horario partida</td><td>'.$row[6].'</td></tr>
-		   <tr><td>Horario llegada</td><td>'.$row[7].'</td></tr><tr><td>Precio</td><td>'.$row[8].'</td></tr></table>
+		   <tr><td>Horario llegada</td><td>'.$row[7].'</td></tr></table>
 		   
-		   <table border="1"><tr bgcolor="#5882FA"><td colspan="2" align="center">Datos pasajero</td></tr><tr><td>Documento</td><td>'.$row[9].'</td></tr><tr><td>Nombre</td><td>'.$row[10].'</td><</tr>
-		   <tr><td>Apellido</td><td>'.$row[11].'</td></tr></table>';
+		   <table border="1"><tr bgcolor="#5882FA"><td colspan="2" align="center">Datos pasajero</td></tr><tr><td>Documento</td><td>'.$row[8].'</td></tr><tr><td>Nombre</td><td>'.$row[9].'</td><</tr>
+		   <tr><td>Apellido</td><td>'.$row[10].'</td></tr></table>';
 			}
      }
 
