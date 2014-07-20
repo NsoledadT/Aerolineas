@@ -115,11 +115,11 @@
 	   
 	   <div id="tabs-3">
 	   <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
-	   <form action="pag/pago.php" method="post">
+	   <form action="pag/confirmacion.php" method="post">
 	   <p><label>Codigo de reserva</label></p>
-	   <p><input type="text" placeholder="codigo_reserva"/></p>
+	   <p><input type="text" name="cod_reserva" placeholder="cod_reserva"/></p>
 	   <p><label>DNI</label></p>
-	   <p><input type="text" placeholder="dni_pasajero" /></p>
+	   <p><input type="text" name="dni_pasajero" placeholder="dni_pasajero" /></p>
 	   <p><input type="image" src="img/boton_buscar.png" /></p>
 	   </form>
 	   <div class="blanco_tabs"></div>
