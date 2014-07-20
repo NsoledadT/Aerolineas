@@ -655,15 +655,6 @@ h5{
 .botonContinuar{
 	margin-left: 190px;
 }
-
-#nominal{
-	float:left;
-margin-left: 160px;
-margin-right: 70px;
-}
-#graficos{
-	float:left;
-}
 /*Estilo Paula*/
 /*-------------------------------------------------------------------------------------------*/
 
@@ -705,25 +696,19 @@ font-weight: bold;
 
 #pagos_cuotas{
 width: 680px;
-height: 100px;
+height: 150px;
 }
 
 .cuotas{
 width: 145px;
-height: 100px;
+height: 130px;
 float: left;
 text-align:center;
-font-size: 12px;
+font-size: 13px;
 margin-left: 5px;
 }
 
-#tarjetas {
-margin-left: 30px;
-}
 
-#tarjetas_dos{
-margin-left: 20px;
-}
 
 /*Estilo Andres*/
 /*-------------------------------------------------------------------------------------------*/

@@ -11,7 +11,7 @@ session_start();
 <link type="text/css" rel="stylesheet" href="../css/estilo.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
 <script type="text/javascript" src="../js/tarjeta_seleccionada.js"></script>
-<script type="text/javascript" src="../js/confirmacion.js"></script>
+<script type="text/javascript" src="../js/pago.js"></script>
 <?php 
 include("../clases/DataBase.php");
 $baseDatos = new DataBase("");
@@ -27,24 +27,6 @@ if(isset($_POST['dni_pasajero'])){
 $reserva = $baseDatos -> consulta("select clase, nro_vuelo from `reserva` where codigo_reserva='$codigoReserva'");
 $datosPasajeros = $baseDatos -> consulta("select nombre, apellido from `pasajero` where dni='$dniPasajero'");		 
 $vuelos = $baseDatos -> consulta("select * from `vuelo`, `reserva` WHERE `vuelo`.`nro_vuelo` = `reserva`.`nro_vuelo` and `codigo_reserva`='$codigoReserva'");	
-
-//$precio = $baseDatos->consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_economica, vuelo.precio_primera, pasajero.dni FROM reserva
-//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo INNER JOIN boarding_pass ON reserva.codigo_reserva = boarding_pass.codigo_reserva INNER JOIN
- //pasajero ON boarding_pass.dni = pasajero.dni WHERE reserva.codigo_reserva = '$codigoReserva'");
-
-//$precioEconomica = $baseDatos -> consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_economica, pasajero.dni
-//FROM reserva
-//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-//INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-//INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-//WHERE reserva.codigo_reserva"); 		
-
-//$precioPrimera= $baseDatos ->consulta("SELECT reserva.codigo_reserva, reserva.nro_vuelo, vuelo.precio_primera, pasajero.dni
-//FROM reserva
-//INNER JOIN vuelo ON reserva.nro_vuelo = vuelo.nro_vuelo
-//INNER JOIN pasaje ON reserva.codigo_reserva = pasaje.codigo_reserva
-//INNER JOIN pasajero ON pasaje.dni = pasajero.dni
-//WHERE reserva.codigo_reserva"); 	
 
 $sql6= $baseDatos->consulta("select nro_vuelo, clase from reserva where codigo_reserva = '$codigoReserva'");
 while($row = mysql_fetch_row($sql6)){
@@ -161,18 +143,6 @@ $porcuota6 = $resultado6 / $cuota4;
              <option value='cedula'>Ced&uacute;la</option>
             </select>
 			</p>
-			
-          <p>Provincias
-            <select name="provincias" id="provincias">
-            <option value=''>Seleccione...</option>
-			<?php  
-		    $listaprovincias=$baseDatos->resultToArray($baseDatos->consulta('select nombre from provincia'));
-		    foreach($listaprovincias as $value){
-		    echo("<option>".$value['nombre']."</option>");
-			}
-			?>
-           </select>
-		   </p>
          <p>N&uacute;mero
             <input type="text" name="numerodni" id="numero_documento" value="<?php echo "$dniPasajero"; ?>"></input></p>
           </div>
@@ -201,30 +171,67 @@ $porcuota6 = $resultado6 / $cuota4;
 			  {
 					echo "$iva";			 
 			  }		 
-			//if($clase=['Economica']){
-			 //echo "$iva";
-			  // }
-            //else 
-			 // }
 			 ?></h6>
 		  </div>	 
 	      <div class="cuotas">
 		     <input type="radio" name="cuotas" value="tres_cuotas"/>
 	         <h6>Tres pagos con inter&eacute;s</h6>
-	         <h6>Importe total: ARS 3632.85</h6>
-		     <h6>Importe por cuota: ARS 1210.95</h6>
+	         <h6>Importe total: <?php if($clase == "Primera")
+			  {
+				echo "$resultado4";			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo "$resultado1";			 
+			  } ?> </h6>
+		     <h6>Importe por cuota:<?php if($clase == "Primera")
+			  {
+				echo number_format($porcuota4,2,',','.');			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo number_format($porcuota1,2,',','.');			 
+			  } ?></h6>
 		  </div>	 
 	      <div class="cuotas">
 		     <input type="radio" name="cuotas" value="seis_cuotas"/>
 	         <h6>Seis pagos con inter&eacute;s</h6>
-	         <h6>Importe total: ARS 3845.05</h6>
-		     <h6>Importe por cuota: ARS 640.84</h6>
+	         <h6>Importe total: <?php if($clase == "Primera")
+			  {
+				echo "$resultado5";			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo "$resultado2";			 
+			  } ?></h6>
+		     <h6>Importe por cuota:<?php if($clase == "Primera")
+			  {
+				echo number_format($porcuota5,2,',','.');			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo number_format($porcuota2,2,',','.');			 
+			  } ?></h6>
 		  </div>
 		  <div class="cuotas">
 		     <input type="radio" name="cuotas" value="doce_cuotas"/>
 	         <h6>Doce pagos con inter&eacute;s</h6>
-	         <h6>Importe total: ARS 4371.65</h6>
-		     <h6>Importe por cuota: ARS 364.30</h6>
+	         <h6>Importe total: <?php if($clase == "Primera")
+			  {
+				echo "$resultado6";			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo "$resultado3";			 
+			  } ?></h6>
+		     <h6>Importe por cuota:<?php if($clase == "Primera")
+			  {
+				echo number_format($porcuota6,2,',','.');			 
+			  }
+			  else if ($clase == "Economica")
+			  {
+					echo number_format($porcuota3,2,',','.');			 
+			  } ?></h6>
 		  </div>
 		  </div>		
 
