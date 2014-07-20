@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-07-2014 a las 16:54:30
+-- Tiempo de generación: 21-07-2014 a las 01:39:45
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -64,7 +64,12 @@ CREATE TABLE IF NOT EXISTS `boarding_pass` (
 --
 
 INSERT INTO `boarding_pass` (`dni`, `nro_vuelo`, `codigo_reserva`) VALUES
-(55566644, 1234, 136);
+(55566644, 1234, 136),
+(23212324, 9876, 288),
+(33553355, 1234, 407),
+(93641758, 1234, 488),
+(93641757, 1234, 448),
+(56568946, 4567, 402);
 
 -- --------------------------------------------------------
 
@@ -112,9 +117,14 @@ CREATE TABLE IF NOT EXISTS `pasajero` (
 --
 
 INSERT INTO `pasajero` (`dni`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`) VALUES
+(23212324, 'Erza', 'Scarlet', '1991-11-15', 'fairy@yahoo.com.ar', 1556568946),
 (23232311, 'Astrada', 'barbieri', '2014-07-10', 'andres_sav@hotmail.com', 0),
 (23232332, 'Astrada', 'Acosta', '2014-07-08', 'indestructibles@yahoo.com.ar', 0),
+(33553355, 'Natsu', 'Dragneel', '1966-04-15', 'fairy@hotmail.com', 1533211567),
 (55566644, 'Luffy', 'barbosa', '1907-12-15', 'asdsad@hotmail.com', 2147483647),
+(56568946, 'Rambas', 'Silvio', '1989-03-01', 'asdsada@hotmail.com', 1556568894),
+(93641757, 'Luffy', 'Carlitos', '2000-11-15', 'astrrad@yahoo.com.ar', 1556568954),
+(93641758, 'leonel', 'messi', '1997-07-15', 'leo@yahoo.com.ar', 1556568947),
 (93641759, 'Diego', 'Acosta', '2014-07-08', 'vicentebarbieri@yahoo.com.ar', 0);
 
 -- --------------------------------------------------------
@@ -183,11 +193,16 @@ CREATE TABLE IF NOT EXISTS `reserva` (
 
 INSERT INTO `reserva` (`codigo_reserva`, `clase`, `asiento`, `fila`, `estado_pasaje`, `tipo_viaje`, `nro_vuelo`, `fecha_reserva`) VALUES
 (10, 'Economica', 'A', '2', 'Pago', 1, 1234, '2014-07-08'),
-(11, 'Economica', 'C', '4', 'Pago', 1, 1234, '2014-07-08'),
+(11, 'Economica', 'C', '4', 'Reserva', 1, 1234, '2014-07-08'),
 (12, 'Economica', 'B', '9', 'Pago', 2, 4567, '2014-07-10'),
 (13, 'Economica', '', '', 'Pago', 2, 5555, '2014-07-13'),
 (15, 'Economica', NULL, NULL, 'Pago', 2, 4567, '2014-07-09'),
-(136, 'Economica', 'B', '2', 'Pago', 1, 1234, '2014-07-14');
+(136, 'Economica', 'B', '2', 'Pago', 1, 1234, '2014-07-14'),
+(288, 'Primera', 'A', '5', 'Pago', 4, 9876, '2014-07-15'),
+(402, 'Primera', 'B', '4', 'Pago', 2, 4567, '2014-07-17'),
+(407, 'Economica', '', '', 'Pago', 1, 1234, '2014-07-22'),
+(448, 'Economica', 'B', '4', 'Pago', 1, 1234, '2014-07-16'),
+(488, 'Economica', '', '', 'Pago', 1, 1234, '2014-07-14');
 
 -- --------------------------------------------------------
 
@@ -242,11 +257,11 @@ CREATE TABLE IF NOT EXISTS `vuelo` (
 
 INSERT INTO `vuelo` (`nro_vuelo`, `lugar_partida`, `lugar_llegada`, `matricula_avion`, `horario_partida`, `horario_llegada`, `precio_primera`, `precio_economica`) VALUES
 (1234, 'Buenos Aires', 'Cordoba', 'AB1234', '08:00:00', '10:00:00', 0, 2000),
-(4567, 'Buenos Aires', 'Cordoba', 'BC1234', '11:00:00', '13:00:00', 3000, 2000),
-(5555, 'Cordoba', 'Buenos Aires', 'BC1234', '04:00:00', '06:00:00', 9000, 99),
-(6789, 'Buenos Aires', 'Cordoba', 'FG12345', '07:00:00', '09:00:00', 5000, 3000),
-(8967, 'Buenos Aires', 'Cordoba', 'BC1234', '21:00:00', '23:00:00', 6000, 2789),
-(9876, 'Buenos Aires', 'Cordoba', 'HI34567', '13:00:00', '15:00:00', 5000, 3000);
+(4567, 'Buenos Aires', 'Cordoba', 'BC1234', '11:00:00', '13:00:00', 3000, 3000),
+(5555, 'Cordoba', 'Buenos Aires', 'BC1234', '04:00:00', '06:00:00', 9000, 9000),
+(6789, 'Buenos Aires', 'Cordoba', 'FG12345', '07:00:00', '09:00:00', 5000, 5000),
+(8967, 'Buenos Aires', 'Cordoba', 'BC1234', '21:00:00', '23:00:00', 6000, 6000),
+(9876, 'Buenos Aires', 'Cordoba', 'HI34567', '13:00:00', '15:00:00', 5000, 5000);
 
 -- --------------------------------------------------------
 
