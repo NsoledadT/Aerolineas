@@ -7,24 +7,76 @@
 		$cambiar=$_POST['cambiar'];
 	}
 /* --------------------------------------------- Se establece si el usuario quiere cambiar reserva ------------------------------------------------------ */
+		$bandera=0;
 		$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-				$sql11 = "SELECT codigo_reserva FROM reserva " ; /* */
+				$sql11 = "SELECT codigo_reserva FROM reserva"; /* */
 					$ubicacion11 = mysql_query($sql11);
 						while ($rowcodigo = mysql_fetch_row($ubicacion11))
 						{
 							$rowcodigo[0];
 							if($rowcodigo[0]==$cambiar)
 							{
-							$bandera=1;
-							}
-							else 
-							{
-							$bandera=0;
+							$bandera=$bandera+1;
 							}
 						}
-					if ($bandera!=1)
+						if ($bandera!=1)
 						{
+					echo "<html xmlns=http://www.w3.org/1999/xhtml>"; /* Se puede acceder a la pagina solo desde la principal con el codigo de reserva */
+						echo "<head><title>Aerolinea Rustics</title>
+							<meta http-equiv=Content-Type content=text/html; charset=iso-8859-1/>
+							<link type=text/css rel=stylesheet href=../css/estilo.css />
+							<script src=//code.jquery.com/jquery-1.11.0.min.js></script>	
+							<script type=text/javascript src=../js/seleccion.js></script>
+						</head>
+					<body>
+
+						<div id=general>
+							<div id=encabezado>
+								<div id=formulario>
+									<form action=usuario.html method=post>
+										<p><label>Usuario:</label><input type=text name=usuario/>
+										<label>Contrase&ntilde;a:</label><input type=text name=usuario/></p>
+										<p><input type=image src=../img/boton_enviar.png/></p>
+									</form>
+								</div>
+							</div>
+						
+							<div id=encabezado_medio_vuelos>
+								<img src=../img/logotipo_chico.png id=logotipo alt=logotipo aerolinea rutics width=242 height=100/>
+								<img src=../img/chica_reserva.png class=aeromoza alt=azafata width=227 height=280/>
+							<ul>
+								<li><a href=pag/construccion.html>LA EMPRESA</a></li>
+								<li><a href=reservas.html>RESERVAS </a></li>
+								<li><a href=pag/construccion.html>INFORMACION</a></li>
+								<li><a href=pag/construccion.html>CORPORATIVO</a></li>
+							</ul>
+							</div>
+						
+							<div id=contenido>
+								<div id=menu_lateral>
+									<div id=menu_contenedor_li>
+										<p>01</p>
+										<div id=contenedor_li>
+											<div class=blanco_columna_li>
+											</div>
+										<a href=vuelos.html>Selecciona tu vuelo</a>
+										<a href=verificacion.html>Verifica tu elecci&oacute;n</a>
+										<a href=datos.html>Completa tus datos</a>
+										<a href=confirmacion.html>Compra tu pasaje</a>
+										<a href=reserva.html>Reserva tu asiento</a>
+										</div>
+									</div>
+								</div>
+							<div id=columna_contenido>
+								<div id=barra_titulo>
+									<img src=../img/cuadradito.gif alt=cuadradito width=16 height=16/>
+									<h4>REALIZA TU RESERVA</h4>
+								</div>
+						   <p>Aqu&iacute; podr&aacute; realizar su reserva la cual contendr&aacute; los datos del 
+						   tipo de avion, clase, asiento, fechas y lugar de partida como de llegada.
+						   Recuerde confirmar su reserva pagandola 48hs antes.</p>
+						   <img src=../img/china_reserva.png alt=imagen de recepcionista width=199 height=179/>";
 						die ("El codigo de reserva no existe <a href=../index.php>Volver</a>");
 						}
 				mysql_close();
