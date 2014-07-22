@@ -67,8 +67,8 @@
 	   <div id="tabs">
 	   <ul>
        <li><a href="#tabs-1">VUELOS</a></li>
-       <li><a href="#tabs-2">CHECK-IN WEB</a></li>
-	   <li><a href="#tabs-3">PAGO ONLINE</a></li>
+       <li><a href="#tabs-2">PAGO ONLINE</a></li>
+	   <li><a href="#tabs-3">CHECK-IN</a></li>
        </ul>
 	   <div id="tabs-1">
 	   <form action="pag/vuelos.php" method="post" onSubmit="return validar_index()">
@@ -102,28 +102,30 @@
 	   </div>
 	   
 	   <div id="tabs-2">
-	   <form action="pag/reserva.php" method="post">
-       <p><input type="text" name="dni"  placeholder="documento"/></p>
-	   <div class="input_invisible"></div>
-	   <p><input type="text" name="nro_vuelo" placeholder="Numero de vuelo AR"/>
-	   <input type="text" name="codigo_reserva" placeholder="Numero de reserva" /></p>
-	   <p><input type="image" src="img/boton_buscar.png" /></p>
-	   </form>
-	   <div class="blanco_tabs"></div>
-	   <div class="blanco_tabs"></div>
+	       <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
+		   <form action="pag/confirmacion.php" method="post">
+		   <p><label>Codigo de reserva</label></p>
+		   <p><input type="text" name="cod_reserva" placeholder="cod_reserva"/></p>
+		   <p><label>DNI</label></p>
+		   <p><input type="text" name="dni_pasajero" placeholder="dni_pasajero" /></p>
+		   <p><input type="image" src="img/boton_buscar.png" /></p>
+		   </form>
+	       <div class="blanco_tabs"></div>
+		 
 	   </div>
 	   
 	   <div id="tabs-3">
-	   <p>Para comenzar a realizar el pago ingresá la siguiente información</p>
-	   <form action="pag/confirmacion.php" method="post">
-	   <p><label>Codigo de reserva</label></p>
-	   <p><input type="text" name="cod_reserva" placeholder="cod_reserva"/></p>
-	   <p><label>DNI</label></p>
-	   <p><input type="text" name="dni_pasajero" placeholder="dni_pasajero" /></p>
-	   <p><input type="image" src="img/boton_buscar.png" /></p>
-	   </form>
-	   <div class="blanco_tabs"></div>
-	   </div>
+		 <form action="pag/reserva.php" method="post">
+		   <p><label>DNI</label></p>
+		   <p><input type="text" name="dni" placeholder="documento"/></p>
+		   <p><label>Numero Vuelo</label></p>
+		   <p><input type="text" name="nro_vuelo" placeholder="Numero de vuelo AR"/></p>
+		   <p><label>Numero Reserva</label></p>
+		   <p><input type="text" name="codigo_reserva" placeholder="Numero de reserva" /></p>
+		   <p><input type="image" src="img/boton_buscar.png" /></p>
+		   <div class="blanco_tabs"></div>
+		   </form>
+		</div>
 	   </div>
 	 </div>
 	 

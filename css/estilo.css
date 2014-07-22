@@ -151,7 +151,6 @@ margin-top:-5px;
 
 .columna form  p  input[type="image"]{
 float:right;
-margin-top:10px;
 }
 
 #tabs{
@@ -215,7 +214,6 @@ margin-top:25px;
 
 #tabs-2 p input[type="text"]{
 width:120px;
-float:left;
 margin-right:20px;
 color:#BFBFBF;
 font-size:10px;

@@ -18,9 +18,6 @@ require("../dompdf/dompdf_config.inc.php");
 include("../clases/DataBase.php");
 $baseDatos = new DataBase("");
 
-if(isset($_POST['enviar'])){
-$cambiar_estadoPasaje =$baseDatos -> consulta("update `reserva` set estado_pasaje = 'Pago' WHERE codigo_reserva = '$codigito'" );
-}
 //$pago= $baseDatos -> consulta("SELECT codigo_reserva, estado_pasaje
 //FROM reserva
 //WHERE codigo_reserva='$codigoReserva'

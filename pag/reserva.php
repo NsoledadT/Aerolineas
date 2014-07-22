@@ -177,13 +177,13 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 	
 /* Coneccion a la base es utilizada en otro paso para determinar si ya se ha reservado el asiento para hacer 1 asiento 1 persona. */
 	
-		echo"Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.";
+		echo"<p style='color:red'>Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.</p>";
 		echo "<form action=reserva2.php id=formulary3 method=post enctype=multipart/form-data >"; /* Pequeño formulario que direcciona a otra pagina para el cambio de reserva */
-			echo "Ingrese codigo de reserva si quiere cambiar su reserva: de ser incorrecto sera enviado a la pagina principal.
-			<input type=text name=cambiar id=cambiar size=20 maxlength=8 >";/* ingresando el codigo podra cambiar la reserva.*/
+			echo "<p style='color:red' >Ingrese codigo de reserva si quiere cambiar su reserva: de ser incorrecto sera enviado a la pagina principal.</p>
+			<p><input type=text name=cambiar id=cambiar size=20 maxlength=8 ></p>";/* ingresando el codigo podra cambiar la reserva.*/
 			$tipo = $tipos; /* envio el tipo ya que es lo que la pagina necesita para la mayoria de las acciones */
 			echo "<input type=hidden name=tipo value=$tipo>";
-			echo "<br/><br/><input type=submit value=Confirmar /><input type=reset value=Reset />";
+			echo "<p><input type=submit value=Confirmar /><input type=reset value=Reset /></p>";
 		echo "</form>";
 		
 	echo "<form action=basedata.php target=basedata id=formulary method=post enctype=multipart/form-data onsubmit= seleccion() >";
@@ -191,7 +191,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 		echo "<input type=hidden name=posto value=0>";/* usado para determinar que se usan los select */
 		echo "<input type=hidden name=cambiar value=0>";/* auto asignado el valor de cambiar en cero para en la ultima pagina determinar si se desea o no cambiar de reserva*/
 		echo "<p>";
-		echo "<br/>Clase: Seleccionar via Select!<br/>";
+		echo "<p style='color:red' >Seleccionar asiento via Select con el boton! O utilice el avion!</p><br/>";
 		$tipo = $tipos; 
 		if ($clase=="Economica")
 		{
@@ -204,7 +204,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 		
 		echo "<input type=hidden name=tipo value=$tipo>";
 
-		echo "<br/><br/><input type=submit value=Iniciar /></p>";
+		echo "<br/><br/><input type=submit value='Seleccionar Asiento Con El Boton' /></p>";
 	echo "</form>";
 	
 	echo "<iframe name=basedata>"; /* iframe en el que se cargan la paginas. */
@@ -769,7 +769,7 @@ $_SESSION['nro_vuelo']=$_POST['nro_vuelo'];
 /* --------------------------------------------------------------------------------------------------------- */
 /* --------------------------------------------------- Envio de codigo para poder realizar el boarding ------------------------------------------------------ */
 	echo"<p><a href=../index.php><img src=../img/volver.png alt=boton volver id=boton_volver width=99 height=37/></a></p>
-		<p id=boton_continuar><a href=boarding.php?idCliente=$_SESSION[codigo]><img src=../img/continuar.png alt=boton continuar width=99 height=37/></a></p>";
+		<p id=boton_continuar><a href=reservaconfirma.php?idCliente=$_SESSION[codigo]><img src=../img/continuar.png alt=boton continuar width=99 height=37/></a></p>";
 	?>
 	</div>
     <div id="pie">

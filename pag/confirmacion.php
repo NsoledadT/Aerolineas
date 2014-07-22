@@ -18,12 +18,16 @@ $baseDatos = new DataBase("");
 
 if (isset($_POST['cod_reserva'])){
 	             $codigoReserva = $_POST['cod_reserva'];
-				 $_SESSION['cod_reserva']=$codigoReserva;      }
+			}
 if(isset($_POST['dni_pasajero'])){
              $dniPasajero = $_POST['dni_pasajero'];
              }
-
-
+	$validacion = $baseDatos->consulta("select codigo_reserva,dni from boarding_pass where codigo_reserva = '$codigoReserva' and dni = '$dniPasajero'");
+	$lista = $baseDatos->resultToArray($validacion);
+	if(!$lista){
+		header('location:../index.php');
+	}
+ $_SESSION['cod_reserva']=$codigoReserva;
 $reserva = $baseDatos -> consulta("select clase, nro_vuelo from `reserva` where codigo_reserva='$codigoReserva'");
 $datosPasajeros = $baseDatos -> consulta("select nombre, apellido from `pasajero` where dni='$dniPasajero'");		 
 $vuelos = $baseDatos -> consulta("select * from `vuelo`, `reserva` WHERE `vuelo`.`nro_vuelo` = `reserva`.`nro_vuelo` and `codigo_reserva`='$codigoReserva'");	
@@ -133,7 +137,7 @@ $porcuota6 = $resultado6 / $cuota4;
 	   echo $row['nombre'].$row['apellido'];
 	   }?></h5>
 	   <div id="formulario_pagos">
-       <form action="pasajeElectronico.php" method="post" onsubmit="return valida_pago()">
+       <form action="confirmacion2.php" method="post" onsubmit="return valida_pago()">
           <div id="documentacion">
             <p>Documento
             <select name="tipo_documento" id="tipo_documento">
@@ -239,8 +243,7 @@ $porcuota6 = $resultado6 / $cuota4;
 		  <p>&iexcl;Comprando en therustics.com te ahorr&aacute;s el cargo de gesti&oacute;n&#33;</p>
           <p>Te recordamos que las tarifas adquiridas a trav&eacute;s de nuestro site para Argentina son exclusivas para residentes del territorio argentino</p>   
 		  <input type="submit" name="enviar" value="enviar"/>
-		  <p><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></p>
-		  <p id="boton_continuar"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></p>		  
+	  
 		</form>
       </div>
 	   </div>

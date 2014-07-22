@@ -143,7 +143,9 @@ session_start();
 								$codigo_ida_mostrar = traer_codigo($busquedaResult);
 								
 								$boardingInsertIda = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_ida','$codigo_ida_mostrar')");	
-								
+								$_SESSION['doc_ida'] = $documento;
+								$_SESSION['vuelo1'] = $nro_vuelo_ida;
+								$_SESSION['cod_ida'] = $codigo_ida_mostrar;
 
 								$codigo_vuelta_mostrar = 0;
 								if(isset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta'])){
@@ -171,7 +173,9 @@ session_start();
 									$codigo_vuelta_mostrar = traer_codigo($busquedaResult2);
 									
 									$boardingInsertVuelta = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_vuelta','$codigo_vuelta_mostrar')");	
-									
+									$_SESSION['doc_vuelta'] = $documento;
+									$_SESSION['vuelo2'] = $nro_vuelo_vuelta;
+									$_SESSION['cod_vuelta'] = $codigo_vuelta_mostrar;
 									unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta']);
 								}
 								
@@ -215,8 +219,8 @@ session_start();
             ?>
               
               
-                 <p><a href="verificacion.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
-		             <p id="boton_continuar"><a href="../index.php"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></a></p>
+                 <p><a href="../index.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
+		             <p id="boton_continuar"><a href="ticket_reserva.php"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></a></p>
 				  </form>
 	     	</div>
 	   </div>
