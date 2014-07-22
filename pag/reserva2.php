@@ -139,7 +139,7 @@
 	   <img src="../img/china_reserva.png" alt="imagen de recepcionista" width="199" height="179"/>
 
 	<?php	
-	echo"Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.";
+	echo"<p style='color:red'>Presione continuar si desea imprimir su pasaje,volver para ir a la pagina principal.</p>";
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
 				$sql7 = "SELECT tipo_viaje, clase FROM reserva WHERE codigo_reserva LIKE '$_SESSION[codigo]'" ; /* Busqueda de tipo, clase*/
@@ -167,13 +167,14 @@
 			if ($cambiar==$rowreserva[0])
 			{
 				//codigo de la pagina por aca. Es igual a la pag. principal pero con la funcion de cambio de reserva.
-				echo "Siga los pasos para reservar normalmente";
+				echo "<p style='color:red'>Siga los pasos para reservar normalmente</p>";
 			echo "<form action=basedata.php target=basedata id=formulary method=post enctype=multipart/form-data onsubmit= seleccion() >";
 			/* Formulario que apunta al iframe y carga basedata.php en el.. Selects de fila y asiento */
 				echo "<input type=hidden name=posto value=0>";/* usado para determinar que se usan los select */
 				echo "<input type=hidden name=cambiar value=$cambiar>";/* auto asignado el valor de cambiar en cero para en la ultima pagina determinar si se desea o no cambiar de reserva*/
+				
+				echo "<br/><p style='color:red' >Seleccionar asiento via Select Con El Boton! O utilice el avion</p><br/>";
 				echo "<p>";
-				echo "<br/>Clase: Seleccionar via Select!<br/>";
 				$tipo = $tipos; 
 				if ($clase=="Economica")
 				{
@@ -186,7 +187,7 @@
 				
 				echo "<input type=hidden name=tipo value=$tipo>";
 
-				echo "<br/><br/><input type=submit value=Iniciar /></p>";
+				echo "<br/><br/><input type=submit value='Seleccionar Asiento Por Opciones' /></p>";
 			echo "</form>";
 			
 			echo "<iframe name=basedata>"; /* iframe en el que se cargan la paginas. */
@@ -775,7 +776,7 @@
 		}
 
 			echo"<p><a href=../index.php><img src=../img/volver.png alt=boton volver id=boton_volver width=99 height=37/></a></p>
-			<p id=boton_continuar><a href=boarding.php?idCliente=$_SESSION[codigo]><img src=../img/continuar.png alt=boton continuar width=99 height=37/></a></p>";
+			<p id=boton_continuar><a href=reservaconfirma.php?idCliente=$_SESSION[codigo]><img src=../img/continuar.png alt=boton continuar width=99 height=37/></a></p>";
 ?>
 			</div>
 			<div id="pie">

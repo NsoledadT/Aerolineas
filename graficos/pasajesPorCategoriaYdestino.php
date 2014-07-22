@@ -2,8 +2,8 @@
 
 		session_start();
 		include('../clases/DataBase.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph_bar.php');
+		require_once('../jpgraph/src/jpgraph.php');
+		require_once('../jpgraph/src/jpgraph_bar.php');
 	
 		$BD = new DataBase();
 
@@ -29,7 +29,7 @@
 		
 		$graph = new Graph(500,300);
 		$graph->img->setMargin(50,40,20,40);
-		$graph->setScale("textlin",0,10);
+		$graph->setScale("textlin",0,20);
 		$graph->title->set("Pasajes vendidos por categoria y destino");
 		$graph->xaxis->SetTitle("categoria-destino","middle");
 		$graph->xaxis->setTickLabels($clasificaciones);

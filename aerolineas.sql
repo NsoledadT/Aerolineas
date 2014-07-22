@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-07-2014 a las 01:39:45
+-- Tiempo de generación: 22-07-2014 a las 04:46:40
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -69,7 +69,18 @@ INSERT INTO `boarding_pass` (`dni`, `nro_vuelo`, `codigo_reserva`) VALUES
 (33553355, 1234, 407),
 (93641758, 1234, 488),
 (93641757, 1234, 448),
-(56568946, 4567, 402);
+(56568946, 4567, 402),
+(99999998, 1234, 516),
+(15008009, 4567, 301),
+(15008001, 9876, 883),
+(12800001, 1234, 36),
+(12800001, 5555, 802),
+(33222222, 8967, 184),
+(99999997, 8888, 721),
+(76767676, 8888, 699),
+(23456765, 1234, 256),
+(55887744, 2222, 103),
+(55887744, 8888, 904);
 
 -- --------------------------------------------------------
 
@@ -117,15 +128,25 @@ CREATE TABLE IF NOT EXISTS `pasajero` (
 --
 
 INSERT INTO `pasajero` (`dni`, `nombre`, `apellido`, `fecha_nacimiento`, `email`, `telefono`) VALUES
+(0, '', '', '0000-00-00', '', 0),
+(12800001, 'Marcos', 'Scalzotto', '1911-11-11', 'ansyhausmab@yahoo.com.ar', 1234567322),
+(15008001, 'yayo', 'pelado', '1990-02-10', 'fary@yahoo.com.ar', 1234567844),
+(15008009, 'Lucisa', 'Perez', '1991-01-23', 'lucisa@yahoo.com.ar', 1234567322),
 (23212324, 'Erza', 'Scarlet', '1991-11-15', 'fairy@yahoo.com.ar', 1556568946),
 (23232311, 'Astrada', 'barbieri', '2014-07-10', 'andres_sav@hotmail.com', 0),
 (23232332, 'Astrada', 'Acosta', '2014-07-08', 'indestructibles@yahoo.com.ar', 0),
+(23456765, 'Alex', 'Rusti', '1970-09-15', 'ale@pepe.com', 2147483647),
+(33222222, 'Fernando', 'Niagara', '1999-12-10', 'vicentebarbieri@yahoo.com.ar', 1556568943),
 (33553355, 'Natsu', 'Dragneel', '1966-04-15', 'fairy@hotmail.com', 1533211567),
 (55566644, 'Luffy', 'barbosa', '1907-12-15', 'asdsad@hotmail.com', 2147483647),
+(55887744, 'Diego', 'Acosta', '1999-11-11', 'andres_sav@hotmail.com', 1234567802),
 (56568946, 'Rambas', 'Silvio', '1989-03-01', 'asdsada@hotmail.com', 1556568894),
+(76767676, 'sdsdafsdaf', 'sdfsfsf', '1990-02-10', 'andres_sav@hotmail.com', 1234567844),
 (93641757, 'Luffy', 'Carlitos', '2000-11-15', 'astrrad@yahoo.com.ar', 1556568954),
 (93641758, 'leonel', 'messi', '1997-07-15', 'leo@yahoo.com.ar', 1556568947),
-(93641759, 'Diego', 'Acosta', '2014-07-08', 'vicentebarbieri@yahoo.com.ar', 0);
+(93641759, 'Diego', 'Acosta', '2014-07-08', 'vicentebarbieri@yahoo.com.ar', 0),
+(99999997, 'Arnold', 'Swacheneger', '1991-11-10', 'fary@yahoo.com.ar', 1234567322),
+(99999998, 'Ricardo', 'Moreno', '1993-02-10', 'rambo@hotmail.com', 1545458945);
 
 -- --------------------------------------------------------
 
@@ -197,12 +218,23 @@ INSERT INTO `reserva` (`codigo_reserva`, `clase`, `asiento`, `fila`, `estado_pas
 (12, 'Economica', 'B', '9', 'Pago', 2, 4567, '2014-07-10'),
 (13, 'Economica', '', '', 'Pago', 2, 5555, '2014-07-13'),
 (15, 'Economica', NULL, NULL, 'Pago', 2, 4567, '2014-07-09'),
+(36, 'Economica', 'B', '6', 'Pago', 1, 1234, '2014-07-23'),
+(103, 'Economica', '', '', 'Reserva', 4, 2222, '2014-08-26'),
 (136, 'Economica', 'B', '2', 'Pago', 1, 1234, '2014-07-14'),
+(184, 'Primera', '', '', 'Pago', 2, 8967, '2014-07-22'),
+(256, 'Economica', 'B', '5', 'Pago', 1, 1234, '2014-07-29'),
 (288, 'Primera', 'A', '5', 'Pago', 4, 9876, '2014-07-15'),
+(301, 'Economica', '', '', 'Pago', 2, 4567, '2014-07-24'),
 (402, 'Primera', 'B', '4', 'Pago', 2, 4567, '2014-07-17'),
-(407, 'Economica', '', '', 'Pago', 1, 1234, '2014-07-22'),
+(407, 'Economica', 'C', '6', 'Pago', 1, 1234, '2014-07-22'),
 (448, 'Economica', 'B', '4', 'Pago', 1, 1234, '2014-07-16'),
-(488, 'Economica', '', '', 'Pago', 1, 1234, '2014-07-14');
+(488, 'Economica', '', '', 'Pago', 1, 1234, '2014-07-14'),
+(516, 'Economica', 'A', '4', 'Pago', 1, 1234, '2014-07-22'),
+(699, 'Economica', '', '', 'Pago', 3, 8888, '2014-07-25'),
+(721, 'Primera', '', '', 'Pago', 3, 8888, '2014-07-25'),
+(802, 'Economica', '', '', 'Pago', 2, 5555, '2014-07-27'),
+(883, 'Economica', 'C', '12', 'Pago', 4, 9876, '2014-07-22'),
+(904, 'Economica', '', '', 'Reserva', 3, 8888, '2014-08-29');
 
 -- --------------------------------------------------------
 
@@ -256,12 +288,14 @@ CREATE TABLE IF NOT EXISTS `vuelo` (
 --
 
 INSERT INTO `vuelo` (`nro_vuelo`, `lugar_partida`, `lugar_llegada`, `matricula_avion`, `horario_partida`, `horario_llegada`, `precio_primera`, `precio_economica`) VALUES
-(1234, 'Buenos Aires', 'Cordoba', 'AB1234', '08:00:00', '10:00:00', 0, 2000),
-(4567, 'Buenos Aires', 'Cordoba', 'BC1234', '11:00:00', '13:00:00', 3000, 3000),
-(5555, 'Cordoba', 'Buenos Aires', 'BC1234', '04:00:00', '06:00:00', 9000, 9000),
-(6789, 'Buenos Aires', 'Cordoba', 'FG12345', '07:00:00', '09:00:00', 5000, 5000),
-(8967, 'Buenos Aires', 'Cordoba', 'BC1234', '21:00:00', '23:00:00', 6000, 6000),
-(9876, 'Buenos Aires', 'Cordoba', 'HI34567', '13:00:00', '15:00:00', 5000, 5000);
+(1234, 'Buenos Aires', 'Cordoba', 'AB1234', '08:00:00', '10:00:00', 0, 3000),
+(2222, 'Salta', 'Buenos Aires', 'HI34567', '23:00:00', '06:00:00', 7500, 5000),
+(4567, 'Buenos Aires', 'Cordoba', 'BC1234', '11:00:00', '13:00:00', 5000, 3000),
+(5555, 'Cordoba', 'Buenos Aires', 'BC1234', '04:00:00', '06:00:00', 5000, 3000),
+(6789, 'Buenos Aires', 'Cordoba', 'FG12345', '07:00:00', '09:00:00', 5000, 3000),
+(8888, 'Buenos Aires', 'Salta', 'FG12345', '11:00:00', '19:00:00', 7500, 5000),
+(8967, 'Buenos Aires', 'Cordoba', 'BC1234', '21:00:00', '23:00:00', 5000, 3000),
+(9876, 'Buenos Aires', 'Cordoba', 'HI34567', '13:00:00', '15:00:00', 5000, 3000);
 
 -- --------------------------------------------------------
 
@@ -289,7 +323,9 @@ INSERT INTO `vuelos_dias` (`nro_vuelo`, `dias_semana`) VALUES
 (4567, 4),
 (9876, 2),
 (8967, 2),
-(5555, 7);
+(5555, 7),
+(2222, 2),
+(8888, 5);
 
 --
 -- Restricciones para tablas volcadas

@@ -2,8 +2,8 @@
 	
 	session_start();
 	include('../clases/DataBase.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph.php');
-		require_once('../../../php/pear/jpgraph/src/jpgraph_bar.php');
+		require_once('../jpgraph/src/jpgraph.php');
+		require_once('../jpgraph/src/jpgraph_bar.php');
 	
 		$BD = new DataBase();
 

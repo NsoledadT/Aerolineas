@@ -58,10 +58,20 @@ $_SESSION['asiento']= $_POST['asiento'];
 		}
 		if ($cambiar!=0)/* determina que se esta cambiando de asiento o reserva */
 		{	
+		$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
+			$db = mysql_select_db('aerolineas',$link);
+				$sql99 = "SELECT fecha_reserva FROM reserva WHERE codigo_reserva LIKE '$cambiar'" ; 
+					$ubicacion99 = mysql_query($sql99);
+						while ($row99 = mysql_fetch_row($ubicacion99))
+						{
+							$row99[0];
+							$fechacambia=$row99[0];
+						}
+		mysql_close();
 		
 			$link = mysql_connect('localhost','root','') or die("No se ha podido acceder");
 			$db = mysql_select_db('aerolineas',$link);
-			$sql = "SELECT asiento, fila FROM reserva WHERE tipo_viaje = $_SESSION[tipo] AND nro_vuelo = $_SESSION[nro_vuelo] AND codigo_reserva ='$_SESSION[codigo]'";
+			$sql = "SELECT asiento, fila FROM reserva WHERE tipo_viaje = $_SESSION[tipo] AND nro_vuelo = $_SESSION[nro_vuelo] AND fecha_reserva ='$fechacambia'";
 			$ubicacion = mysql_query($sql);
 			while ($row = mysql_fetch_row($ubicacion))
 			{
@@ -102,7 +112,7 @@ $_SESSION['asiento']= $_POST['asiento'];
 					echo "<br>registro de datos completo";
 			
 					
-					$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo_viaje = '$tipo' AND asiento = '$asiento' AND fila = '$fila 'AND nro_vuelo = '$_SESSION[nro_vuelo]'";
+					$sql2 = "SELECT codigo_reserva FROM reserva WHERE tipo_viaje = '$tipo' AND asiento = '$asiento' AND fila = '$fila 'AND nro_vuelo = '$_SESSION[nro_vuelo]' AND fecha_reserva ='$fechacambia'";
 					$code = mysql_query($sql2);
 					while ($row = mysql_fetch_row($code))
 					{
