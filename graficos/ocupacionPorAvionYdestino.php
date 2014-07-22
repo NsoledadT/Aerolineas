@@ -26,7 +26,7 @@
 		$graph3->xaxis->SetTitle("avion-destino","middle");
 		$graph3->xaxis->setTickLabels($clasificaciones);
 		$graph3->yaxis->setTitle("ocupacion","middle");
-		$serie3 = new BarPlot($resultados);
+		$serie3 = new BarPlot($resultados2);
 		$serie3->SetFillgradient('orange','red',GRAD_VER); 
 		$graph3->add($serie3);
 		$numero = mt_rand(1,10000);
