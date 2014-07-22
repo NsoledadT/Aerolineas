@@ -1,15 +1,16 @@
 <?php
  session_start();
  if(!isset($_SESSION['log'])){
- 	header('location:datos.php');
+ 	header('location:../index.php');
  }
  ?>
  	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
-<title>Aerolinea Rustics</title>
-<link type="text/css" rel="stylesheet" href="../css/estilo.css" />
+<title>Aerolinea Rustics</title>	
+	<link type="text/css" rel="stylesheet" href="../css/estilo.css" />
+	<script type="text/javascript" src="../js/alert.js"></script>
 </head>
 <body>
  <div id="general">
@@ -48,23 +49,12 @@
 			<div id="graficos">
 				<div>
 					<h3>Estadisticas en graficos</h3>
-					<p>Pasajes vendidos y reservas caidas</p>
-					<form action="../graficos/pasajes_vendidos.php" method="post">
-						<input type="image" name="bot2" src="../img/boton_generar.png"/>
+					<p>Generar Graficos</p>
+					<form action="../graficos/generarGraficos.php" method="post">
+						<input type="image" name="bot2" src="../img/boton_generar.png" onclick="javaScript: cartelito()"/>
 					</form>
 				</div>
-				<div>	
-					<p>Cantidad de pasajes vendidos por categoria y destino</p>
-					<form action="../graficos/pasajesPorCategoriaYdestino.php" method="post">
-						<input type="image" name="bot3" src="../img/boton_generar.png"/>
-					</form>
-				</div>
-				<div>
-					<p>Ocupacion por avion y destino</p>	
-					<form action="../graficos/ocupacionPorAvionYdestino.php" method="post">
-						<input type="image" name="bot4" src="../img/boton_generar.png"/>
-					</form>
-				</div>
+				
 				<div>
 					<p>Ver graficos</p>
 					<form action="graficos.php" method="post">

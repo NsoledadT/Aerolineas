@@ -57,7 +57,7 @@ session_start();
 	    <div><img src="../img/chica_vuelos_chico.jpg" alt="imagen de recepcionista" width="137" height="179"/></div>
 			<div id="formulario_datos">
 			    <div class="pasajero">Pasajero:</div>
-				<form action="validaDatos.php" method="post"> 
+				<form action="ticket_reserva.php" method="post"> 
 						<?php
 								include('../clases/DataBase.php');
 								include('../clases/funcion_random.php');
@@ -143,10 +143,10 @@ session_start();
 								$codigo_ida_mostrar = traer_codigo($busquedaResult);
 								
 								$boardingInsertIda = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_ida','$codigo_ida_mostrar')");	
-								$_SESSION['doc_ida'] = $documento;
-								$_SESSION['vuelo1'] = $nro_vuelo_ida;
-								$_SESSION['cod_ida'] = $codigo_ida_mostrar;
-
+								
+								echo "<input type = 'hidden' name = 'doc_ida' value = '$documento'/>";
+								echo "<input type = 'hidden' name = 'vuelo1' value = '$nro_vuelo_ida'/>";
+								echo "<input type = 'hidden' name = 'cod_ida' value = '$codigo_ida_mostrar'/>";
 								$codigo_vuelta_mostrar = 0;
 								if(isset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta'])){
 									
@@ -173,10 +173,12 @@ session_start();
 									$codigo_vuelta_mostrar = traer_codigo($busquedaResult2);
 									
 									$boardingInsertVuelta = $BD->consulta("insert into boarding_pass values('$documento','$nro_vuelo_vuelta','$codigo_vuelta_mostrar')");	
-									$_SESSION['doc_vuelta'] = $documento;
-									$_SESSION['vuelo2'] = $nro_vuelo_vuelta;
-									$_SESSION['cod_vuelta'] = $codigo_vuelta_mostrar;
-									unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta']);
+									
+								
+								echo "<input type='hidden' name='vuelo2' value='$nro_vuelo_vuelta'/>";
+								echo "<input type='hidden' name='cod_vuelta' value='$codigo_vuelta_mostrar'/>";
+								
+								unset($_SESSION['nro_vuelo_vuelta'],$_SESSION['estado_pasaje_vuelta'],$_SESSION['tipo_viaje_vuelta'],$_SESSION['fecha_vuelta']);
 								}
 								
 								if(isset($reserva2)){
@@ -190,11 +192,6 @@ session_start();
 								}
 						echo "<p><label class = mensajeValido>".$mensaje.".</label></p>";	
             
-            echo "<p><label class = codigoIda>Su codigo de reserva de ida es: ".$codigo_ida_mostrar.".</label></p>";
-            
-            if($codigo_vuelta_mostrar != 0){
-            	echo "<p><label class = codigoVuelta>Su codigo de reserva de vuelta es: ".$codigo_vuelta_mostrar.".</label></p>";
-            }
            	echo "<p><label class=ltipo0><span class=asterisco>*</span>Nombre:</label>
 										<input type = text name = nombre id = nom value ='$nombre' /></p>";
 
@@ -215,12 +212,13 @@ session_start();
 						  <input class= chico  type= text  name= mes  maxlength= 2  id=m value='$mes' /><label class= barra >/</label>
 						  <input class= grande  type= text  name= anio  maxlength= 4  id= a value='$anio' /></p>";
             
-            echo "<p><label class = mensajeValido>Para realizar el pago usted debera ingresar su codigo de reserva y dni en la pagina principal de Aerolineas.</label></p>";	
+            echo "<p><label class = mensajeValido>Para ver los datos de su reserva presione el boton continuar, para realizar el pago precione el boton volver.</label></p>";	
+           
             ?>
               
               
                  <p><a href="../index.php"><img src="../img/volver.png" alt="boton volver" id="boton_volver" width="99" height="37"/></a></p>
-		             <p id="boton_continuar"><a href="ticket_reserva.php"><img src="../img/continuar.png"  alt="boton continuar" width="99" height="37"/></a></p>
+		             <p id="boton_continuar"><input type="image" name="ticket" src="../img/continuar.png"/></p>
 				  </form>
 	     	</div>
 	   </div>

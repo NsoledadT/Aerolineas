@@ -1,13 +1,5 @@
 <?php
 	
-	session_start();
-		include('../clases/DataBase.php');
-		require_once('../jpgraph/src/jpgraph.php');
-		require_once('../jpgraph/src/jpgraph_pie.php');
-		require_once('../jpgraph/src/jpgraph_pie3d.php');
-	
-		$BD = new DataBase();
-
 		$consulta1 = $BD->consulta("select count(*) as total from reserva");
 		$consulta2 = $BD->consulta("select count(*) as cantidad_pagas from reserva where estado_pasaje = 'Pago'");
 		$consulta3 = $BD->consulta("select count(*) as cantidad_caidas from reserva where estado_pasaje = 'Reserva'");
@@ -16,8 +8,8 @@
 		$result2 = $BD->resultToArray($consulta2);
 
 		$result3 = $BD->resultToArray($consulta3);
-		foreach ($result as $value) {
-			$total = $value['total'];
+		foreach ($result as $value1) {
+			$total = $value1['total'];
 		}
 
 		foreach ($result2 as $value2) {
@@ -50,6 +42,6 @@
 		$_SESSION['g_torta'] = $num;
 		$graph->stroke("graficoA".$num.".png"); 
 		
-		echo "grafico generado"."<a href= ../pag/loginAdmin.php>volver</a>";
+		
 	
 	?>

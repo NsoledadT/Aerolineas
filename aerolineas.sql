@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2014 a las 04:46:40
+-- Tiempo de generación: 22-07-2014 a las 16:38:57
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -224,7 +224,7 @@ INSERT INTO `reserva` (`codigo_reserva`, `clase`, `asiento`, `fila`, `estado_pas
 (184, 'Primera', '', '', 'Pago', 2, 8967, '2014-07-22'),
 (256, 'Economica', 'B', '5', 'Pago', 1, 1234, '2014-07-29'),
 (288, 'Primera', 'A', '5', 'Pago', 4, 9876, '2014-07-15'),
-(301, 'Economica', '', '', 'Pago', 2, 4567, '2014-07-24'),
+(301, 'Economica', 'B', '10', 'Pago', 2, 4567, '2014-07-24'),
 (402, 'Primera', 'B', '4', 'Pago', 2, 4567, '2014-07-17'),
 (407, 'Economica', 'C', '6', 'Pago', 1, 1234, '2014-07-22'),
 (448, 'Economica', 'B', '4', 'Pago', 1, 1234, '2014-07-16'),
